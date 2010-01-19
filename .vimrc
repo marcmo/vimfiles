@@ -112,8 +112,9 @@ map <F5> :call OpenInGhci()<CR><CR>
 " Prepare a :substitute command using the current word or the selected text:
 vnoremap <F6> y:%s/\<<C-r>"\>//gc<Left><Left><Left>
 nmap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
-map <F7> :mksession! ~/vim_session <cr> " Quick write session 
-map <S-F7> :source ~/vim_session <cr>   " And load session 
+map <F7> :!gnome-terminal --profile=light --geometry=160x50 %<CR>
+" map <F7> :mksession! ~/vim_session <cr> " Quick write session 
+" map <S-F7> :source ~/vim_session <cr>   " And load session 
 nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
 
 vmap // y/<C-R>"<CR> " search for visually highlighted text
