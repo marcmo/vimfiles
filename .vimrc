@@ -143,12 +143,18 @@ function! ToggleSpell()
     endif
 endfunction
 
+function! RakeCommand(command)
+  cexpr system("rake " . a:command)
+  cw " show quickfix window already
+endfunction
+command! -nargs=+ -complete=file Rake call RakeCommand(<q-args>)
 function! AckGrep(command)
   cexpr system("ack-grep " . a:command)
   cw " show quickfix window already
 endfunction
 command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
 map <leader>a :Ack<space>
+map <leader>r :Rake<space>
 map <leader>d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
 map <leader>f :execute 'NERDTreeFind'<CR> 
 map <leader>m :execute 'make'<CR>
