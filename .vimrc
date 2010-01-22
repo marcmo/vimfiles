@@ -7,11 +7,22 @@ if has('gui_running')
   set guitablabel=%t " only display the filename not the path
   set guioptions-=T "remove toolbar
   set autochdir
+<<<<<<< HEAD:.vimrc
   set lines=60
   set columns=200
   let g:SuperTabMappingForward = '<c-space>'
   let g:SuperTabMappingBackward = '<s-c-space>'
 endif
+=======
+endif
+let g:SuperTabMappingForward = '<c-space>'
+let g:SuperTabMappingBackward = '<s-c-space>'
+let g:SuperTabLongestHighlight = 1
+let g:SuperTabDefaultCompletionType = 'context'
+syntax on
+" enable filetype detection and plugin loading
+filetype plugin on
+>>>>>>> added missing plugins from mac:_vimrc_universal
 colorscheme delek
 set completeopt=longest,menuone,preview
 set wildmode=longest:full " bash like filename completion
@@ -77,7 +88,7 @@ let MRU_Window_Height = 25
 " haskell syntax config
 let hs_highlight_delimiters = 1 " Highlight delimiter characters
 let hs_highlight_boolean = 1 " Treat True and False as keywords.
-" let hs_highlight_types " Treat names of primitive types as keywords.
+let hs_highlight_types = 1 " Treat names of primitive types as keywords.
 let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
 " hs_highlight_debug - Highlight names of debugging functions.
 let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
