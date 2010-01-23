@@ -2,7 +2,7 @@ ScriptID SourceID Filename
 --------------------------
 1984 11852 :AutoInstall: FuzzyFinder
 642 8136 :AutoInstall: getscript.vim
-1643 1 :AutoInstall: supertab.vim
+1643 11853 :AutoInstall: supertab.vim
 1697 1 :AutoInstall: surround.vim
 1173 1 tComment.vim
 1234 1 :AutoInstall: yankring.vim
