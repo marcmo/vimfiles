@@ -1,0 +1,25 @@
+" linux
+if has('gui_running')
+  set guifont=Courier\ 10\ pitch\ 8
+  set lines=60
+  set columns=200
+endif
+let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
+map <F7> :!gnome-terminal --profile=light --geometry=160x50 %<CR>
+function! OpenInGhci()
+  !gnome-terminal --profile=small --geometry=160x50 -e "ghci %"
+endfunction
+let g:haddock_browser = "/usr/bin/firefox"
+let g:haddock_browser_callformat = "%s --new-tab file://%s &"
+function! AckGrep(command)
+  cexpr system("ack-grep " . a:command)
+  cw " show quickfix window already
+endfunction
+command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
+" moving lines
+nnoremap <M-j> mz:m+<CR>`z==
+nnoremap <M-k> mz:m-2<CR>`z==
+inoremap <M-j> <Esc>:m+<CR>==gi
+inoremap <M-k> <Esc>:m-2<CR>==gi
+vnoremap <M-j> :m'>+<CR>gv=`<my`>mzgv`yo`z
+vnoremap <M-k> :m'<-2<CR>gv=`>my`<mzgv`yo`z
