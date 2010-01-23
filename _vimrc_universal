@@ -107,6 +107,7 @@ nmap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
 " map <F7> :mksession! ~/vim_session <cr> " Quick write session 
 " map <S-F7> :source ~/vim_session <cr>   " And load session 
 nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
+nnoremap <silent> <F11> :YRShow<CR>
 
 vmap // y/<C-R>"<CR> " search for visually highlighted text
 " use ghc functionality for haskell files
