@@ -7,6 +7,7 @@ let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
 let g:SuperTabLongestHighlight = 1
 let g:SuperTabDefaultCompletionType = 'context'
+let g:GetLatestVimScripts_allowautoinstall=1
 syntax on
 " enable filetype detection and plugin loading
 filetype plugin on
