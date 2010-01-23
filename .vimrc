@@ -97,6 +97,9 @@ let g:utl_opt_verbose=1	" Switched on
 " leo search of current word
 nmap ,l :exe ":Utl ol http://dict.leo.org/?search=" . expand("<cword>")<CR>
 
+" FindFile plugin shortcuts
+nmap <C-S> :FindFile<CR>
+
 "Vertical split then hop to new buffer
 :noremap ,v :vsp<CR>^W^W<CR>
 :noremap ,h :split<CR>^W^W<CR>
