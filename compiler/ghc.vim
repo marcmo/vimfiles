@@ -30,7 +30,8 @@ if (!exists("b:ghc_staticoptions"))
 endif
 
 " set makeprg (for quickfix mode) 
-execute 'setlocal makeprg=' . g:ghc . '\ ' . escape(b:ghc_staticoptions,' ') .'\ -e\ :q\ %'
+execute 'setlocal makeprg=' . g:ghc . '\ ' . escape(b:ghc_staticoptions,' ') .'\ -i\"..\"\ -e\ :q\ %'
+" execute 'setlocal makeprg=' . g:ghc . '\ ' . escape(b:ghc_staticoptions,' ') .'\ -e\ :q\ %'
 "execute 'setlocal makeprg=' . g:ghc .'\ -e\ :q\ %'
 "execute 'setlocal makeprg=' . g:ghc .'\ --make\ %'
 
