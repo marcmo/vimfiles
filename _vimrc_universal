@@ -138,6 +138,7 @@ endfunction
 command! -nargs=+ -complete=file Rake call RakeCommand(<q-args>)
 
 map <leader>a :Ack<space>
+nmap <unique> <Leader>x <Plug>ToggleAutoCloseMappings
 map <leader>r :Rake<space>
 map <leader>d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
 map <leader>f :execute 'NERDTreeFind'<CR> 

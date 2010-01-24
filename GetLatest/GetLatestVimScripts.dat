@@ -7,3 +7,4 @@ ScriptID SourceID Filename
 1173 11513 tComment.vim
 1234 11289 :AutoInstall: yankring.vim
 1658 11834 :AutoInstall: NERD_tree.vim
+1849 10873 autoclose.vim
