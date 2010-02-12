@@ -5,9 +5,9 @@ if has('gui_running')
   set columns=200
 endif
 " let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
-map <F7> :!cmd %<CR>
+map <F7> :!start cmd %<CR>
 function! OpenInGhci()
-  !cmd ghci %
+  !start ghci %
 endfunction
 let g:haddock_browser = "c:\Programs\firefox3\firefox.exe"
 let g:haddock_browser_callformat = "%s -a Firefox %s"
