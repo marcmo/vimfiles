@@ -85,6 +85,7 @@ nmap <C-S> :FindFile<CR>
 "Make current window the only one
 :noremap ,O :only<CR>:tabo<CR>
 :noremap ,o :only<CR>
+:noremap ,m :execute 'make'<CR>
 "Buffer next,previous (ctrl-{n,p})
 :noremap ^N :bn<CR>
 :noremap ^P :bp<CR>
@@ -105,9 +106,10 @@ map <F5> :call OpenInGhci()<CR><CR>
 " Prepare a :substitute command using the current word or the selected text:
 vnoremap <F6> y:%s/\<<C-r>"\>//gc<Left><Left><Left>
 nmap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
-map <F7> :set list!<CR>   " toggle display of invisible characters
-map <S-F7> :set wrap!<CR> " toggle wrap lines
+map <F7> :call OpenInTerminal()<CR><CR>
 nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
+map <F9> :set list!<CR>   " toggle display of invisible characters
+map <S-F9> :set wrap!<CR> " toggle wrap lines
 nnoremap <silent> <F11> :YRShow<CR>
 
 vmap // y/<C-R>"<CR> " search for visually highlighted text
@@ -142,7 +144,6 @@ nmap <unique> <Leader>x <Plug>ToggleAutoCloseMappings
 map <leader>r :Rake<space>
 map <leader>d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
 map <leader>f :execute 'NERDTreeFind'<CR> 
-map <leader>m :execute 'make'<CR>
 
 " create html from text
 function! Text2html()

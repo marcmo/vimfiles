@@ -5,9 +5,11 @@ if has('gui_running')
   set columns=200
 endif
 let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
-map <F7> :!gnome-terminal --profile=light --geometry=160x50 %<CR>
+function! OpenInTerminal()
+  !gnome-terminal --profile=light --geometry=160x50 %
+endfunction
 function! OpenInGhci()
-  !gnome-terminal --profile=small --geometry=160x50 -e "ghci %"
+  !gnome-terminal --profile=small --geometry=160x50 -e "ghci -i.. %"
 endfunction
 let g:haddock_browser = "/usr/bin/firefox"
 let g:haddock_browser_callformat = "%s --new-tab file://%s &"
