@@ -5,7 +5,10 @@ if has('gui_running')
   set columns=200
 endif
 " let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
-map <F7> :!start cmd %<CR>
+
+function! OpenInTerminal()
+  !start cmd %<CR>
+endfunction
 function! OpenInGhci()
   !start ghci %
 endfunction
