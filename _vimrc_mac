@@ -5,7 +5,8 @@ if has('gui_running')
   set lines=60
   set columns=200
 endif
-" let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
+let g:utl_cfg_hdl_mt_application_pdf = ':silent !open %p &'
+let g:utl_cfg_hdl_scm_http = 'silent !open %u'
 map <F7> :!term %<CR>
 function! OpenInGhci()
   !term ghci %
