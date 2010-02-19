@@ -110,6 +110,11 @@ map <F7> :call OpenInTerminal()<CR><CR>
 nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
 map <F9> :set list!<CR>   " toggle display of invisible characters
 map <S-F9> :set wrap!<CR> " toggle wrap lines
+" highlight current word wit F-12 and on mouse click
+nnoremap <LeftRelease> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+inoremap <LeftRelease> <Esc>:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>li
+noremap <F12> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+inoremap <F12> <Esc>:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>li
 nnoremap <silent> <F11> :YRShow<CR>
 
 vmap // y/<C-R>"<CR> " search for visually highlighted text
