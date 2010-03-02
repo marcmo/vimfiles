@@ -187,8 +187,24 @@ else
   vnoremap <M-j> :m'>+<CR>gv=`<my`>mzgv`yo`z
   vnoremap <M-k> :m'<-2<CR>gv=`>my`<mzgv`yo`z
 endif
-if has("unix")
+if has("mac")
+  let $PATH=$PATH . ":/opt/local/bin"
   if has('gui_running')
+    set guifont=Courier:h11
+    set lines=60
+    set columns=200
+  endif
+  let g:utl_cfg_hdl_mt_application_pdf = ':silent !open %p &'
+  let g:utl_cfg_hdl_scm_http = 'silent !open %u'
+  map <F7> :!term %<CR>
+  function! OpenInGhci()
+    !term ghci %
+  endfunction
+  let g:haddock_browser = "open"
+  let g:haddock_browser_callformat = "%s -a Firefox %s"
+  let g:ack_grep_commend_string="ack "
+elseif has("unix")
+if has('gui_running')
     set guifont=Courier\ 10\ pitch\ 8
     set lines=60
     set columns=200
@@ -218,22 +234,6 @@ elseif has("win32") || has("win64")
     !start ghci -i.. %
   endfunction
   let g:haddock_browser = "c:\Programs\firefox3\firefox.exe"
-  let g:haddock_browser_callformat = "%s -a Firefox %s"
-  let g:ack_grep_commend_string="ack "
-elseif has("mac")   
-  let $PATH=$PATH . ":/opt/local/bin"
-  if has('gui_running')
-    set guifont=Courier:h11
-    set lines=60
-    set columns=200
-  endif
-  let g:utl_cfg_hdl_mt_application_pdf = ':silent !open %p &'
-  let g:utl_cfg_hdl_scm_http = 'silent !open %u'
-  map <F7> :!term %<CR>
-  function! OpenInGhci()
-    !term ghci %
-  endfunction
-  let g:haddock_browser = "open"
   let g:haddock_browser_callformat = "%s -a Firefox %s"
   let g:ack_grep_commend_string="ack "
 endif
