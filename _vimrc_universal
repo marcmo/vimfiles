@@ -93,9 +93,10 @@ nmap <C-S> :FindFile<CR>
 :noremap ^C :bd<CR>
 
 "mapping of F-*
-imap <F1> <esc>:BufExplorer<CR>
-map <F1> :BufExplorer<CR>
-map <S-F1> :FufBuffer<CR>
+imap <S-F1> <esc>:BufExplorer<CR>
+map <S-F1> :BufExplorer<CR>
+map <F1> :FufBuffer<CR>
+imap <F1> <esc>:FufBuffer<CR>
 map <F2> :FufDir<CR>
 map <S-F2> :FufFile<CR>
 imap <F3> <Esc><c-]><CR>
