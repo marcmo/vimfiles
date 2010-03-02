@@ -203,7 +203,7 @@ if has("unix")
   let g:haddock_browser = "/usr/bin/firefox"
   let g:haddock_browser_callformat = "%s --new-tab file://%s &"
   let g:ack_grep_commend_string="ack-grep "
-elseif has("win32") || has("win64")   
+elseif has("win32") || has("win64")
   if has('gui_running')
     set guifont=courier_New:h8
     set lines=75
