@@ -13,6 +13,7 @@ function! OpenInGhci()
 endfunction
 let g:haddock_browser = "/usr/bin/firefox"
 let g:haddock_browser_callformat = "%s --new-tab %s &"
+let g:haddock_docdir="/usr/local/share/doc/ghc/html/"
 " let g:haddock_browser_callformat = "%s --new-tab file://%s &"
 function! AckGrep(command)
   cexpr system("ack-grep " . a:command)
