@@ -1,6 +1,7 @@
 if has('gui_running')
   set guitablabel=%t " only display the filename not the path
   set guioptions-=T "remove toolbar
+  set guioptions-=m  "remove menu bar
   set autochdir
 endif
 let g:SuperTabMappingForward = '<c-space>'
@@ -97,8 +98,8 @@ imap <S-F1> <esc>:BufExplorer<CR>
 map <S-F1> :BufExplorer<CR>
 map <F1> :FufBuffer<CR>
 imap <F1> <esc>:FufBuffer<CR>
-map <F2> :FufDir<CR>
-map <S-F2> :FufFile<CR>
+map <F2> :FufFile<CR>
+map <S-F2> :FufDir<CR>
 imap <F3> <Esc><c-]><CR>
 map <F3> <c-]><CR>
 nmap <F4> :call ToggleSpell()<CR>
