@@ -15,8 +15,11 @@ let g:haddock_browser = "open"
 let g:haddock_browser_callformat = "%s -a Firefox %s"
 let g:haddock_docdir="/usr/local/share/doc/ghc/"
 function! AckGrep(command)
-  cexpr system("ack " . a:command)
+  set noautochdir
+  wincmd l
+  cexpr system("ack -a " . a:command)
   cw " show quickfix window already
+  set autochdir
 endfunction
 command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
 " moving lines, only for mac because of stupid option key behavior
