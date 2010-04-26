@@ -2,7 +2,6 @@ if has('gui_running')
   set guitablabel=%t " only display the filename not the path
   set guioptions-=T "remove toolbar
   set guioptions-=m  "remove menu bar
-  set autochdir
 endif
 let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
@@ -92,6 +91,14 @@ nmap <C-S> :FindFile<CR>
 :noremap ^P :bp<CR>
 "Buffer delete (ctrl-c)
 :noremap ^C :bd<CR>
+" set current dir to that of current file
+" map ,d :cd %:p:h<CR> 
+function! ToCurrentDir()
+  cd %:p:h
+  :pwd
+endfunction 
+map ,cd :call ToCurrentDir()<CR>
+" map ,cd :cd <C-R>=expand("%:p:h")<CR><CR>
 
 "mapping of F-*
 imap <S-F1> <esc>:BufExplorer<CR>
@@ -145,6 +152,13 @@ function! RakeCommand(command)
   cw " show quickfix window already
 endfunction
 command! -nargs=+ -complete=file Rake call RakeCommand(<q-args>)
+" use ack to search in files
+function! AckGrep(command)
+  wincmd l
+  cexpr system("ack -a " . a:command)
+  cw " show quickfix window already
+endfunction
+command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
 
 map <leader>a :Ack<space>
 nmap <unique> <Leader>x <Plug>ToggleAutoCloseMappings
