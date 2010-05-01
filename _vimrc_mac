@@ -7,8 +7,12 @@ if has('gui_running')
 endif
 let g:utl_cfg_hdl_mt_application_pdf = ':silent !open %p &'
 let g:utl_cfg_hdl_scm_http = 'silent !open %u'
-map <F7> :!term %<CR>
+function! OpenInTerminal()
+  cd %:p:h
+  !term %
+endfunction
 function! OpenInGhci()
+  cd %:p:h
   !term ghci -i.. %
 endfunction
 let g:haddock_browser = "open"
