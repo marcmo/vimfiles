@@ -2,6 +2,7 @@ if has('gui_running')
   set guitablabel=%t " only display the filename not the path
   set guioptions-=T "remove toolbar
   set guioptions-=m  "remove menu bar
+  set cursorline
 endif
 let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
@@ -42,6 +43,8 @@ set autowrite               "write file to disk on :make, :!, :first, :next
 :map <A-k> gt
 :noremap <A-Left> gT
 :noremap <A-Right> gt
+" ctags - Open the definition in a vertical split
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 imap <C-Tab> <Esc> :bn<CR>
 map <C-Tab> :bn<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
@@ -62,6 +65,8 @@ else
 endif
 
 " plugin specific config
+let g:ctags_statusline=1
+set tags=tags;$HOME
 let macvim_hig_shift_movement = 1
 let MRU_Max_Entries = 200 
 let MRU_Window_Height = 25 
@@ -85,7 +90,7 @@ nmap <C-S> :FindFile<CR>
 "Make current window the only one
 :noremap ,O :only<CR>:tabo<CR>
 :noremap ,o :only<CR>
-:noremap ,m :execute 'make'<CR>
+:noremap ,m :cd %:p:h<CR> :execute 'make'<CR>
 "Buffer next,previous (ctrl-{n,p})
 :noremap ^N :bn<CR>
 :noremap ^P :bp<CR>
@@ -117,6 +122,7 @@ vnoremap <F6> y:%s/\<<C-r>"\>//gc<Left><Left><Left>
 nmap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
 map <F7> :call OpenInTerminal()<CR><CR>
 nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
+map <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 map <F9> :set list!<CR>   " toggle display of invisible characters
 map <S-F9> :set wrap!<CR> " toggle wrap lines
 " highlight current word wit F-12 and on mouse click
