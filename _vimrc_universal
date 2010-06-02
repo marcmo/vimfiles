@@ -13,6 +13,7 @@ syntax on
 " enable filetype detection and plugin loading
 filetype plugin on
 colorscheme delek
+set cursorline
 set completeopt=longest,menuone,preview
 set wildmode=longest:full " bash like filename completion
 set wildmenu " show possible completions for filenames
@@ -90,7 +91,7 @@ nmap <C-S> :FindFile<CR>
 "Make current window the only one
 :noremap ,O :only<CR>:tabo<CR>
 :noremap ,o :only<CR>
-:noremap ,m :cd %:p:h<CR> :execute 'make'<CR>
+:noremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
 "Buffer next,previous (ctrl-{n,p})
 :noremap ^N :bn<CR>
 :noremap ^P :bp<CR>
