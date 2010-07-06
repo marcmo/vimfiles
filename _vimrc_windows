@@ -7,6 +7,7 @@ endif
 " let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
 
 function! OpenInTerminal()
+  cd %:p:h
   !start cmd %<CR>
 endfunction
 function! OpenInGhci()
