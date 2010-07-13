@@ -9,6 +9,7 @@ function! OpenInTerminal()
   cd %:p:h
   !gnome-terminal --profile=light --geometry=160x50 % &
 endfunction
+let g:ghc="/usr/local/bin/ghc"
 function! OpenInGhci()
   cd %:p:h
   !gnome-terminal --profile=small --geometry=160x50 -e "ghci -i.. %" &

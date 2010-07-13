@@ -136,7 +136,6 @@ nnoremap <silent> <F11> :YRShow<CR>
 vmap // y/<C-R>"<CR> " search for visually highlighted text
 " use ghc functionality for haskell files
 au BufEnter *.hs compiler ghc
-:let g:ghc="/usr/bin/ghc"
 function! GhciMake()
    cd %:h
    set makeprg=ghci\ %
