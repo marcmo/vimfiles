@@ -13,11 +13,11 @@ function! OpenInTerminal()
 endfunction
 function! OpenInGhci()
   cd %:p:h
-  !term ghci -i.. %
+  !term ghci -hide-package mtl -i.. %
 endfunction
 let g:haddock_browser = "open"
 let g:haddock_browser_callformat = "%s -a Firefox %s"
-let g:haddock_docdir="/usr/local/share/doc/ghc/"
+let g:haddock_docdir="/Library/Frameworks/GHC.framework/Versions/612/usr/share/doc/ghc/html/"
 " moving lines, only for mac because of stupid option key behavior
 nnoremap ∆ mz:m+<CR>`z==
 nnoremap ˚ mz:m-2<CR>`z==
