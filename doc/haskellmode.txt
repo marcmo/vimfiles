@@ -1,4 +1,4 @@
-*haskellmode.txt*	Haskell Mode Plugins	23/04/2009
+*haskellmode.txt*	Haskell Mode Plugins	02/05/2009
 
 Authors:
     Claus Reinke <claus.reinke@talk21.com> ~
@@ -242,8 +242,17 @@ CONTENTS                                                         *haskellmode*
                         show the errors otherwise.
 
                                                            *:GHCStaticOptions*
-:GHCStaticOptions       Edit the static GHC options for the current buffer.
-                        Useful for adding hidden packages (-package ghc).
+:GHCStaticOptions       Edit the static GHC options (more generally, options
+                        that cannot be set by in-file OPTIONS_GHC pragmas)
+                        for the current buffer. Useful for adding hidden 
+                        packages (-package ghc), or additional import paths
+                        (-isrc; you will then also want to augment |path|).
+                        If you have static options you want to set as
+                        defaults, you could use b:ghc_staticoptions, eg:
+>
+                        au FileType haskell let b:ghc_staticoptions = '-isrc'
+                        au FileType haskell setlocal path += src
+<
 
                                                                        *:GHCi*
 :GHCi {command/expr}    Run GHCi commands/expressions in the current module.                  
