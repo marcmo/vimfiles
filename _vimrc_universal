@@ -40,10 +40,10 @@ set vb                      "visual beep
 set autoread                "reload file if permissions change due to BufWritePost below
 set autowrite               "write file to disk on :make, :!, :first, :next
 
-:noremap <A-j> gT 
-:map <A-k> gt
-:noremap <A-Left> gT
-:noremap <A-Right> gt
+noremap <A-j> gT 
+noremap <A-k> gt
+noremap <A-Left> gT
+noremap <A-Right> gt
 " ctags - Open the definition in a vertical split
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 imap <C-Tab> <Esc> :bn<CR>
@@ -54,16 +54,6 @@ imap <C-S-Tab> <Esc> :bp<CR>
 
 noremap ;; :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
-
-" au CursorMoved * exec 'match MyGroup /\<'.expand('<cword>').'\>/'
-highlight MyGroup ctermbg=green guibg=green
-" Make ',e' (in normal mode) give a prompt for opening files
-" in the same dir as the current buffer's file.
-if has("unix")
-  map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
-else
-  map ,e :e <C-R>=expand("%:p:h") . "\\" <CR>
-endif
 
 " plugin specific config
 let g:ctags_statusline=1
@@ -79,34 +69,29 @@ let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
 " hs_highlight_debug - Highlight names of debugging functions.
 let g:utl_opt_verbose=1	" Switched on
 
+" prompt for opening files in the same dir as the current buffer's file.
+if has("unix")
+  map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
+else
+  map ,e :e <C-R>=expand("%:p:h") . "\\" <CR>
+endif
 " leo search of current word
-nmap ,l :exe ":Utl ol http://dict.leo.org/?search=" . expand("<cword>")<CR>
-
-" FindFile plugin shortcuts
-nmap <C-S> :FindFile<CR>
-
+nnoremap ,l :exe ":Utl ol http://dict.leo.org/?search=" . expand("<cword>")<CR>
 "Vertical split then hop to new buffer
-:noremap ,v :vsp<CR>^W^W<CR>
-:noremap ,h :split<CR>^W^W<CR>
-:noremap ,vi :e ~/.vim/_vimrc_universal <CR>
+nnoremap ,v :vsp<CR>^W^W<CR>
+nnoremap ,h :split<CR>^W^W<CR>
+nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
 "Make current window the only one
-:noremap ,O :only<CR>:tabo<CR>
-:noremap ,o :only<CR>
-:noremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
-nmap ,u :MRU<CR>/
-"Buffer next,previous (ctrl-{n,p})
-:noremap ^N :bn<CR>
-:noremap ^P :bp<CR>
-"Buffer delete (ctrl-c)
-:noremap ^C :bd<CR>
+nnoremap ,O :only<CR>:tabo<CR>
+nnoremap ,o :only<CR>
+nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
+nnoremap ,u :MRU<CR>/
 " set current dir to that of current file
-" map ,d :cd %:p:h<CR> 
+map ,cd :call ToCurrentDir()<CR>
 function! ToCurrentDir()
   cd %:p:h
   :pwd
 endfunction 
-map ,cd :call ToCurrentDir()<CR>
-" map ,cd :cd <C-R>=expand("%:p:h")<CR><CR>
 
 "mapping of F-*
 imap <S-F1> <esc>:BufExplorer<CR>
