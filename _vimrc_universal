@@ -187,8 +187,21 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
-
-augroup mkd
-  autocmd BufRead *.mkd,*.md  set ai formatoptions=tcroqn2 comments=n:&gt;
-augroup END
+if has("autocmd")
+  autocmd bufwritepost _vimrc_universal source ~/.vim/_vimrc_universal
+  augroup mkd
+    autocmd BufRead *.mkd,*.md  set ai formatoptions=tcroqn2 comments=n:&gt;
+  augroup END
+  " Enable file type detection
+  filetype on
+  autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+  autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 noexpandtab
+ 
+  " Treat .rss files as XML
+  autocmd BufNewFile,BufRead *.rss setfiletype xml
+endif
 
