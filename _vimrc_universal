@@ -88,10 +88,12 @@ nmap <C-S> :FindFile<CR>
 "Vertical split then hop to new buffer
 :noremap ,v :vsp<CR>^W^W<CR>
 :noremap ,h :split<CR>^W^W<CR>
+:noremap ,vi :e ~/.vim/_vimrc_universal <CR>
 "Make current window the only one
 :noremap ,O :only<CR>:tabo<CR>
 :noremap ,o :only<CR>
 :noremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
+nmap ,u :MRU<CR>/
 "Buffer next,previous (ctrl-{n,p})
 :noremap ^N :bn<CR>
 :noremap ^P :bp<CR>
@@ -111,7 +113,7 @@ imap <S-F1> <esc>:BufExplorer<CR>
 map <S-F1> :BufExplorer<CR>
 map <F1> :FufBuffer<CR>
 imap <F1> <esc>:FufBuffer<CR>
-map <F2> :FufFile<CR>
+map <F2> :FufFile **/<CR>
 map <S-F2> :FufDir<CR>
 imap <F3> <Esc><c-]><CR>
 map <F3> <c-]><CR>
@@ -124,7 +126,6 @@ nmap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
 map <F7> :call OpenInTerminal()<CR><CR>
 nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
 map <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-map <F9> :set list!<CR>   " toggle display of invisible characters
 map <S-F9> :set wrap!<CR> " toggle wrap lines
 " highlight current word wit F-12 and on mouse click
 nnoremap <LeftRelease> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
@@ -160,19 +161,20 @@ endfunction
 command! -nargs=+ -complete=file Rake call RakeCommand(<q-args>)
 " use ack to search in files
 function! AckGrep(command)
-  execute 'NERDTreeToggle'<CR> 
+  execute 'NERDTreeToggle' 
   cexpr system("ack " . a:command)
-  execute 'NERDTreeToggle'<CR> 
+  execute 'NERDTreeToggle' 
   " wincmd l
   cw " show quickfix window already
 endfunction
 command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
 
 map <leader>a :Ack<space>
-nmap <unique> <Leader>x <Plug>ToggleAutoCloseMappings
+nmap<leader>x <Plug>ToggleAutoCloseMappings
 map <leader>r :Rake<space>
 map <leader>d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
 map <leader>f :execute 'NERDTreeFind'<CR> 
+nmap<leader>l :set list!<CR>
 
 " create html from text
 function! Text2html()
