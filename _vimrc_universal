@@ -12,8 +12,7 @@ let g:GetLatestVimScripts_allowautoinstall=1
 syntax on
 " enable filetype detection and plugin loading
 filetype plugin on
-colorscheme delek
-set cursorline
+colorscheme delek_local
 set completeopt=longest,menuone,preview
 set wildmode=longest:full " bash like filename completion
 set wildmenu " show possible completions for filenames
@@ -29,8 +28,9 @@ set smartcase
 set scrolloff=1
 set dictionary+=/usr/share/dict/words
 set history=1000	          "keep 1000 lines of command line history
-set ruler		                "show the cursor position all the time
+set ruler                   "show the cursor position all the time
 set showcmd
+set listchars=tab:▸\ ,eol:¬ " Use the same symbols as TextMate for tabstops and EOLs
 set tabstop=2
 set shiftwidth=2
 set expandtab
