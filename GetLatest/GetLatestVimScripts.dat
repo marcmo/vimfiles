@@ -9,7 +9,7 @@ ScriptID SourceID Filename
 1658 11834 :AutoInstall: NERD_tree.vim
 1849 10873 autoclose.vim
 1071 3388 BufOnly.vim
-42 12363 bufexplorer.vim
+42 12904 bufexplorer.vim
 521 11919 mru.vim
 1147 3671 bufkill.vim
 69 6273 project.vim

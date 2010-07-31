@@ -624,6 +624,8 @@ utl-vimsHeuristicUrl	utl_usr.txt	/*utl-vimsHeuristicUrl*
 utl-writeUrls	utl_usr.txt	/*utl-writeUrls*
 utl_chgcfgscm	utl_usr.txt	/*utl_chgcfgscm*
 utl_usr.txt	utl_usr.txt	/*utl_usr.txt*
+vS	surround.txt	/*vS*
+vgS	surround.txt	/*vgS*
 vs	surround.txt	/*vs*
 yS	surround.txt	/*yS*
 ySS	surround.txt	/*ySS*
