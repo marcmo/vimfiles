@@ -19,6 +19,8 @@ let g:haddock_browser = "open"
 let g:haddock_browser_callformat = "%s -a Firefox %s"
 let g:haddock_docdir="/Library/Frameworks/GHC.framework/Versions/612/usr/share/doc/ghc/html/"
 " moving lines, only for mac because of stupid option key behavior
+" <A-j> == ∆ (for moving down) 
+" <A-k> == ˚ (for moving up)
 nnoremap ∆ mz:m+<CR>`z==
 nnoremap ˚ mz:m-2<CR>`z==
 inoremap ∆ <Esc>:m+<CR>==gi

@@ -10,18 +10,17 @@ let g:SuperTabLongestHighlight = 1
 let g:SuperTabDefaultCompletionType = 'context'
 let g:GetLatestVimScripts_allowautoinstall=1
 syntax on
-" enable filetype detection and plugin loading
-filetype plugin on
-colorscheme delek_local
+filetype plugin on            " enable filetype detection and plugin loading
+colorscheme delek_local       " personal copy of delek color scheme
 set completeopt=longest,menuone,preview
-set wildmode=longest:full " bash like filename completion
-set wildmenu " show possible completions for filenames
+set wildmode=longest:full     " bash like filename completion
+set wildmenu                  " show possible completions for filenames
 set nocompatible
 set backspace=indent,eol,start
 set hlsearch
 set incsearch
 set hidden
-set noswapfile " disable swapfiles
+set noswapfile                " disable swapfiles
 set ignorecase
 set number
 set smartcase
@@ -40,8 +39,6 @@ set vb                      "visual beep
 set autoread                "reload file if permissions change due to BufWritePost below
 set autowrite               "write file to disk on :make, :!, :first, :next
 
-noremap <A-j> gT 
-noremap <A-k> gt
 noremap <A-Left> gT
 noremap <A-Right> gt
 " ctags - Open the definition in a vertical split
@@ -54,6 +51,8 @@ imap <C-S-Tab> <Esc> :bp<CR>
 
 noremap ;; :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
+" leave the cursor at the point where it was before editing started
+nmap . .`[
 
 " plugin specific config
 let g:ctags_statusline=1
