@@ -3,6 +3,9 @@ if has('gui_running')
   set guioptions-=T "remove toolbar
   set guioptions-=m  "remove menu bar
   set cursorline
+  colorscheme delek_local       " personal copy of delek color scheme
+else
+  colorscheme morning
 endif
 let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
@@ -11,7 +14,6 @@ let g:SuperTabDefaultCompletionType = 'context'
 let g:GetLatestVimScripts_allowautoinstall=1
 syntax on
 filetype plugin on            " enable filetype detection and plugin loading
-colorscheme delek_local       " personal copy of delek color scheme
 set completeopt=longest,menuone,preview
 set wildmode=longest:full     " bash like filename completion
 set wildmenu                  " show possible completions for filenames
@@ -84,6 +86,7 @@ nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
 nnoremap ,O :only<CR>:tabo<CR>
 nnoremap ,o :only<CR>
 nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
+nnoremap <silent>,, :A<CR>
 nnoremap ,u :MRU<CR>/
 " set current dir to that of current file
 map ,cd :call ToCurrentDir()<CR>
