@@ -50,6 +50,8 @@ map <C-Tab> :bn<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
 map <C-S-Tab> :bp<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
+map <C-S-R> :CommandT<CR>
+imap <C-S-R> <Esc>:CommandT<CR>
 
 noremap ;; :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
