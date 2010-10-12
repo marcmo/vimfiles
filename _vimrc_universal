@@ -40,7 +40,12 @@ set smartindent
 set vb                      "visual beep
 set autoread                "reload file if permissions change due to BufWritePost below
 set autowrite               "write file to disk on :make, :!, :first, :next
-
+" use normal regexes in search
+nnoremap / /\v
+vnoremap / /\v
+" make the tab key match bracket pairs
+nnoremap <tab> %
+vnoremap <tab> %
 noremap <A-Left> gT
 noremap <A-Right> gt
 " ctags - Open the definition in a vertical split
@@ -50,8 +55,6 @@ map <C-Tab> :bn<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
 map <C-S-Tab> :bp<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
-map <C-S-R> :CommandT<CR>
-imap <C-S-R> <Esc>:CommandT<CR>
 
 noremap ;; :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
@@ -89,7 +92,7 @@ nnoremap ,O :only<CR>:tabo<CR>
 nnoremap ,o :only<CR>
 nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
 nnoremap <silent>,, :A<CR>
-nnoremap ,u :MRU<CR>/
+nnoremap ,u :MRU<CR>
 " set current dir to that of current file
 map ,cd :call ToCurrentDir()<CR>
 function! ToCurrentDir()
@@ -104,6 +107,7 @@ map <F1> :FufBuffer<CR>
 imap <F1> <esc>:FufBuffer<CR>
 map <F2> :FufFile **/<CR>
 map <S-F2> :FufDir<CR>
+" lookup symple in tags file
 imap <F3> <Esc><c-]><CR>
 map <F3> <c-]><CR>
 nmap <F4> :call ToggleSpell()<CR>
@@ -116,7 +120,7 @@ map <F7> :call OpenInTerminal()<CR><CR>
 nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
 map <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 map <S-F9> :set wrap!<CR> " toggle wrap lines
-" highlight current word wit F-12 and on mouse click
+" highlight current word with <F12> and on mouse click
 nnoremap <LeftRelease> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 inoremap <LeftRelease> <Esc>:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>li
 noremap <F12> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
@@ -131,6 +135,10 @@ function! GhciMake()
    set makeprg=ghci\ %
    make
 endfunction
+" automatic save on lost focus
+au FocusLost * :wa
+" quick way to escape from insert mode
+inoremap jj <ESC>
 
 " Spell check
 function! ToggleSpell()
