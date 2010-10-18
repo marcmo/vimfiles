@@ -74,7 +74,6 @@ let hs_highlight_boolean = 1 " Treat True and False as keywords.
 let hs_highlight_types = 1 " Treat names of primitive types as keywords.
 let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
 " hs_highlight_debug - Highlight names of debugging functions.
-let g:utl_opt_verbose=1	" Switched on
 
 " prompt for opening files in the same dir as the current buffer's file.
 if has("unix")
@@ -82,8 +81,6 @@ if has("unix")
 else
   map ,e :e <C-R>=expand("%:p:h") . "\\" <CR>
 endif
-" leo search of current word
-nnoremap ,l :exe ":Utl ol http://dict.leo.org/?search=" . expand("<cword>")<CR>
 "Vertical split then hop to new buffer
 nnoremap ,v :vsp<CR>^W^W<CR>
 nnoremap ,h :split<CR>^W^W<CR>

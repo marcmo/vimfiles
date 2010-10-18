@@ -4,7 +4,6 @@ if has('gui_running')
   set lines=75
   set columns=200
 endif
-" let g:utl_cfg_hdl_mt_application_pdf = ':silent !gnome-open %p &'
 
 function! OpenInTerminal()
   cd %:p:h
