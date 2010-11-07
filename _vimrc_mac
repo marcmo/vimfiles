@@ -1,7 +1,7 @@
 " macos
 let $PATH=$PATH . ":/opt/local/bin"
 if has('gui_running')
-  set guifont=Courier:h11
+  set guifont=Monaco:h11
   set lines=60
   set columns=200
 endif

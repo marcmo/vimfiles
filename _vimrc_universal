@@ -3,7 +3,8 @@ if has('gui_running')
   set guioptions-=T "remove toolbar
   set guioptions-=m  "remove menu bar
   set cursorline
-  colorscheme delek_local       " personal copy of delek color scheme
+  " colorscheme delek_local       " personal copy of delek color scheme
+  colorscheme camo
 else
   colorscheme morning
 endif
