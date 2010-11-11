@@ -156,9 +156,9 @@ endfunction
 command! -nargs=+ -complete=file Rake call RakeCommand(<q-args>)
 " use ack to search in files
 function! AckGrep(command)
-  execute 'NERDTreeToggle' 
+  " execute 'NERDTreeToggle' 
   cexpr system("ack " . a:command)
-  execute 'NERDTreeToggle' 
+  " execute 'NERDTreeToggle' 
   " wincmd l
   cw " show quickfix window already
 endfunction
