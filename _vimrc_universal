@@ -65,6 +65,23 @@ noremap ;' :%s:::cg<Left><Left><Left><Left>
 nmap . .`[
 
 " plugin specific config
+" fswitch plugin
+let g:fsnonewfiles=1
+let g:fswitchnonewfiles=1
+" Create the destination path by substituting any
+" 'include' string from the pathname with 'src'
+let b:fswitchlocs = 'reg:/include/src/'
+augroup mycppfiles
+  au!
+  au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
+  au BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/'
+  au BufEnter *.c  let b:fswitchdst  = 'h'
+  au BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
+  au BufEnter *.cpp  let b:fswitchdst  = 'h'
+  au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
+augroup END
+nmap <silent>,, :FSHere<cr>
+
 let g:ctags_statusline=1
 set tags=tags;$HOME
 let macvim_hig_shift_movement = 1
@@ -91,7 +108,6 @@ nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
 nnoremap ,O :only<CR>:tabo<CR>
 nnoremap ,o :only<CR>
 nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
-nnoremap <silent>,, :A<CR>
 nnoremap ,u :MRU<CR>
 " set current dir to that of current file
 map ,cd :call ToCurrentDir()<CR>
