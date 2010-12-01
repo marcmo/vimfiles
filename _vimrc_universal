@@ -151,8 +151,6 @@ function! GhciMake()
    set makeprg=ghci\ %
    make
 endfunction
-" automatic save on lost focus
-au FocusLost * :wa
 " quick way to escape from insert mode
 inoremap jj <ESC>
 
