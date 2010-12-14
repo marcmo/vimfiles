@@ -8,7 +8,7 @@ if has('gui_running')
   " colorscheme delek_local       " personal copy of delek color scheme
   colorscheme camo
 else
-  colorscheme morning
+  colorscheme desert
 endif
 let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
@@ -133,9 +133,12 @@ map <F5> :call OpenInGhci()<CR><CR>
 vnoremap <F6> y:%s/\<<C-r>"\>//gc<Left><Left><Left>
 nmap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
 map <F7> :call OpenInTerminal()<CR><CR>
-nnoremap <F8> :grep <C-R><C-W> *<CR> " search for the keyword under the cursor in the current directory using the 'grep' command
+" search for the keyword under the cursor in the current directory using the 'grep' command
+nnoremap <F8> :grep <C-R><C-W> *<CR>
 map <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 map <S-F9> :set wrap!<CR> " toggle wrap lines
+nnoremap <S-F11> g- 
+nnoremap <S-F12> g+ 
 " highlight current word with <F12> and on mouse click
 nnoremap <LeftRelease> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 inoremap <LeftRelease> <Esc>:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>li
