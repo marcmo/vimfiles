@@ -1,40 +1,44 @@
 "=============================================================================
-" Copyright (c) 2007-2009 Takeshi NISHIDA
+" Copyright (c) 2007-2010 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if exists('g:loaded_autoload_fuf_quickfix') || v:version < 702
+if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
   finish
 endif
-let g:loaded_autoload_fuf_quickfix = 1
 
 " }}}1
 "=============================================================================
 " GLOBAL FUNCTIONS {{{1
 
 "
-function fuf#quickfix#createHandler(base)
+function fuf#changelist#createHandler(base)
   return a:base.concretize(copy(s:handler))
 endfunction
 
 "
-function fuf#quickfix#getSwitchOrder()
-  return g:fuf_quickfix_switchOrder
+function fuf#changelist#getSwitchOrder()
+  return g:fuf_changelist_switchOrder
 endfunction
 
 "
-function fuf#quickfix#renewCache()
+function fuf#changelist#getEditableDataNames()
+  return []
 endfunction
 
 "
-function fuf#quickfix#requiresOnCommandPre()
+function fuf#changelist#renewCache()
+endfunction
+
+"
+function fuf#changelist#requiresOnCommandPre()
   return 0
 endfunction
 
 "
-function fuf#quickfix#onInit()
-  call fuf#defineLaunchCommand('FufQuickfix', s:MODE_NAME, '""')
+function fuf#changelist#onInit()
+  call fuf#defineLaunchCommand('FufChangeList', s:MODE_NAME, '""', [])
 endfunction
 
 " }}}1
@@ -44,29 +48,37 @@ endfunction
 let s:MODE_NAME = expand('<sfile>:t:r')
 
 "
-function s:getJumpsLines()
+function s:getChangesLines()
   redir => result
-  :silent jumps
+  :silent changes
   redir END
   return split(result, "\n")
 endfunction
 
 "
-function s:parseJumpsLine(line)
-  return matchlist(a:line, '^\(.\)\s\+\(\d\+\)\s\(.*\)$')
+function s:parseChangesLine(line)
+  " return matchlist(a:line, '^\(.\)\s\+\(\d\+\)\s\(.*\)$')
+  let elements = matchlist(a:line, '\v^(.)\s*(\d+)\s+(\d+)\s+(\d+)\s*(.*)$')
+  if empty(elements)
+    return {}
+  endif
+  return  {
+        \   'prefix': elements[1],
+        \   'count' : elements[2],
+        \   'lnum'  : elements[3],
+        \   'text'  : printf('|%d:%d|%s', elements[3], elements[4], elements[5]),
+        \ }
 endfunction
 
 "
-function s:makeItem(qfItem)
-  if !a:qfItem.valid
+function s:makeItem(line)
+  let parsed = s:parseChangesLine(a:line)
+  if empty(parsed)
     return {}
   endif
-  let item = fuf#makeNonPathItem(
-        \ printf('%s|%d:%d|%s', bufname(a:qfItem.bufnr), a:qfItem.lnum,
-        \        a:qfItem.col, matchstr(a:qfItem.text, '\s*\zs.*\S'))
-        \ , '')
-  let item.bufnr = a:qfItem.bufnr
-  let item.lnum = a:qfItem.lnum
+  let item = fuf#makeNonPathItem(parsed.text, '')
+  let item.abbrPrefix = parsed.prefix
+  let item.lnum = parsed.lnum
   return item
 endfunction
 
@@ -83,7 +95,7 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(g:fuf_quickfix_prompt, self.partialMatching)
+  return fuf#formatPrompt(g:fuf_changelist_prompt, self.partialMatching, '')
 endfunction
 
 "
@@ -92,8 +104,8 @@ function s:handler.getPreviewHeight()
 endfunction
 
 "
-function s:handler.targetsPath()
-  return 0
+function s:handler.isOpenable(enteredPattern)
+  return 1
 endfunction
 
 "
@@ -108,7 +120,7 @@ function s:handler.makePreviewLines(word, count)
   if empty(items)
     return []
   endif
-  let lines = fuf#getFileLines(items[0].bufnr)
+  let lines = fuf#getFileLines(self.bufNrPrev)
   return fuf#makePreviewLinesAround(
         \ lines, [items[0].lnum - 1], a:count, self.getPreviewHeight())
 endfunction
@@ -121,22 +133,32 @@ endfunction
 "
 function s:handler.onOpen(word, mode)
   call fuf#prejump(a:mode)
-  call filter(self.items, 'v:val.word ==# a:word')
-  if !empty(self.items)
-    execute 'cc ' . self.items[0].index
-  endif
+  let older = 0
+  for line in reverse(s:getChangesLines())
+    if stridx(line, '>') == 0
+      let older = 1
+    endif
+    let parsed = s:parseChangesLine(line)
+    if !empty(parsed) && parsed.text ==# a:word
+      if parsed.count != 0
+        execute 'normal! ' . parsed.count . (older ? 'g;' : 'g,') . 'zvzz'
+      endif
+      break
+    endif
+  endfor
 endfunction
 
 "
 function s:handler.onModeEnterPre()
+  let self.items = s:getChangesLines()
 endfunction
 
 "
 function s:handler.onModeEnterPost()
-  let self.items = getqflist()
   call map(self.items, 's:makeItem(v:val)')
+  call filter(self.items, '!empty(v:val)')
+  call reverse(self.items)
   call fuf#mapToSetSerialIndex(self.items, 1)
-  call filter(self.items, 'exists("v:val.word")')
   call map(self.items, 'fuf#setAbbrWithFormattedWord(v:val, 1)')
 endfunction
 

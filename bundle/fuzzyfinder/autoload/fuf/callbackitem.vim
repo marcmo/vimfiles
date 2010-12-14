@@ -1,48 +1,60 @@
 "=============================================================================
-" Copyright (c) 2007-2009 Takeshi NISHIDA
+" Copyright (c) 2007-2010 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if exists('g:loaded_autoload_fuf_givendir') || v:version < 702
+if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
   finish
 endif
-let g:loaded_autoload_fuf_givendir = 1
 
 " }}}1
 "=============================================================================
 " GLOBAL FUNCTIONS {{{1
 
 "
-function fuf#givendir#createHandler(base)
+function fuf#callbackitem#createHandler(base)
   return a:base.concretize(copy(s:handler))
 endfunction
 
 "
-function fuf#givendir#getSwitchOrder()
+function fuf#callbackitem#getSwitchOrder()
   return -1
 endfunction
 
 "
-function fuf#givendir#renewCache()
+function fuf#callbackitem#getEditableDataNames()
+  return []
 endfunction
 
 "
-function fuf#givendir#requiresOnCommandPre()
+function fuf#callbackitem#renewCache()
+endfunction
+
+"
+function fuf#callbackitem#requiresOnCommandPre()
   return 0
 endfunction
 
 "
-function fuf#givendir#onInit()
+function fuf#callbackitem#onInit()
 endfunction
 
 "
-function fuf#givendir#launch(initialPattern, partialMatching, prompt, items)
+function fuf#callbackitem#launch(initialPattern, partialMatching, prompt, listener, items, forPath)
   let s:prompt = (empty(a:prompt) ? '>' : a:prompt)
-  let s:items = map(copy(a:items), 'substitute(v:val, ''[/\\]\?$'', "", "")')
-  let s:items = map(s:items, 'fuf#makePathItem(v:val, "", 0)')
-  call fuf#mapToSetSerialIndex(s:items, 1)
-  call fuf#mapToSetAbbrWithSnippedWordAsPath(s:items)
+  let s:listener = a:listener
+  let s:forPath = a:forPath
+  let s:items = copy(a:items)
+  if s:forPath
+    call map(s:items, 'fuf#makePathItem(v:val, "", 1)')
+    call fuf#mapToSetSerialIndex(s:items, 1)
+    call fuf#mapToSetAbbrWithSnippedWordAsPath(s:items)
+  else
+    call map(s:items, 'fuf#makeNonPathItem(v:val, "")')
+    call fuf#mapToSetSerialIndex(s:items, 1)
+    call map(s:items, 'fuf#setAbbrWithFormattedWord(v:val, 1)')
+  endif
   call fuf#launch(s:MODE_NAME, a:initialPattern, a:partialMatching)
 endfunction
 
@@ -65,31 +77,36 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(s:prompt, self.partialMatching)
+  return fuf#formatPrompt(s:prompt, self.partialMatching, '')
 endfunction
 
 "
 function s:handler.getPreviewHeight()
-  return g:fuf_previewHeight
+  if s:forPath
+    return g:fuf_previewHeight
+  endif
+  return 0
 endfunction
 
 "
-function s:handler.targetsPath()
+function s:handler.isOpenable(enteredPattern)
   return 1
 endfunction
 
 "
 function s:handler.makePatternSet(patternBase)
-  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForPath',
-        \                   self.partialMatching)
+  let parser = (s:forPath
+        \       ? 's:interpretPrimaryPatternForPath'
+        \       : 's:interpretPrimaryPatternForNonPath')
+  return fuf#makePatternSet(a:patternBase, parser, self.partialMatching)
 endfunction
 
 "
 function s:handler.makePreviewLines(word, count)
-  return fuf#makePreviewLinesAround(
-        \ split(glob(fnamemodify(a:word, ':p') . '*'), "\n"),
-        \ [], a:count, self.getPreviewHeight())
-  return 
+  if s:forPath
+    return fuf#makePreviewLinesForFile(a:word, a:count, self.getPreviewHeight())
+  endif
+  return []
 endfunction
 
 "
@@ -99,7 +116,7 @@ endfunction
 
 "
 function s:handler.onOpen(word, mode)
-  execute ':cd ' . fnameescape(a:word)
+  call s:listener.onComplete(a:word, a:mode)
 endfunction
 
 "
@@ -112,6 +129,9 @@ endfunction
 
 "
 function s:handler.onModeLeavePost(opened)
+  if !a:opened && exists('s:listener.onAbort()')
+    call s:listener.onAbort()
+  endif
 endfunction
 
 " }}}1

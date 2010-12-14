@@ -1,48 +1,52 @@
 "=============================================================================
-" Copyright (c) 2007-2009 Takeshi NISHIDA
+" Copyright (c) 2007-2010 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if exists('g:loaded_autoload_fuf_givencmd') || v:version < 702
+if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
   finish
 endif
-let g:loaded_autoload_fuf_givencmd = 1
 
 " }}}1
 "=============================================================================
 " GLOBAL FUNCTIONS {{{1
 
 "
-function fuf#givencmd#createHandler(base)
+function fuf#givendir#createHandler(base)
   return a:base.concretize(copy(s:handler))
 endfunction
 
 "
-function fuf#givencmd#getSwitchOrder()
+function fuf#givendir#getSwitchOrder()
   return -1
 endfunction
 
 "
-function fuf#givencmd#renewCache()
+function fuf#givendir#getEditableDataNames()
+  return []
 endfunction
 
 "
-function fuf#givencmd#requiresOnCommandPre()
+function fuf#givendir#renewCache()
+endfunction
+
+"
+function fuf#givendir#requiresOnCommandPre()
   return 0
 endfunction
 
 "
-function fuf#givencmd#onInit()
+function fuf#givendir#onInit()
 endfunction
 
 "
-function fuf#givencmd#launch(initialPattern, partialMatching, prompt, items)
+function fuf#givendir#launch(initialPattern, partialMatching, prompt, items)
   let s:prompt = (empty(a:prompt) ? '>' : a:prompt)
-  let s:items = copy(a:items)
-  call map(s:items, 'fuf#makeNonPathItem(v:val, "")')
+  let s:items = map(copy(a:items), 'substitute(v:val, ''[/\\]\?$'', "", "")')
+  let s:items = map(s:items, 'fuf#makePathItem(v:val, "", 0)')
   call fuf#mapToSetSerialIndex(s:items, 1)
-  call map(s:items, 'fuf#setAbbrWithFormattedWord(v:val, 1)')
+  call fuf#mapToSetAbbrWithSnippedWordAsPath(s:items)
   call fuf#launch(s:MODE_NAME, a:initialPattern, a:partialMatching)
 endfunction
 
@@ -65,28 +69,31 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(s:prompt, self.partialMatching)
+  return fuf#formatPrompt(s:prompt, self.partialMatching, '')
 endfunction
 
 "
 function s:handler.getPreviewHeight()
-  return 0
+  return g:fuf_previewHeight
 endfunction
 
 "
-function s:handler.targetsPath()
-  return 0
+function s:handler.isOpenable(enteredPattern)
+  return 1
 endfunction
 
 "
 function s:handler.makePatternSet(patternBase)
-  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForNonPath',
+  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForPath',
         \                   self.partialMatching)
 endfunction
 
 "
 function s:handler.makePreviewLines(word, count)
-  return []
+  return fuf#makePreviewLinesAround(
+        \ fuf#glob(fnamemodify(a:word, ':p') . '*'),
+        \ [], a:count, self.getPreviewHeight())
+  return 
 endfunction
 
 "
@@ -96,10 +103,7 @@ endfunction
 
 "
 function s:handler.onOpen(word, mode)
-  if a:word[0] =~# '[:/?]'
-    call histadd(a:word[0], a:word[1:])
-  endif
-  call feedkeys(a:word . "\<CR>", 'n')
+  execute ':cd ' . fnameescape(a:word)
 endfunction
 
 "

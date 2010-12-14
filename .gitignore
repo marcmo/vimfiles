@@ -11,3 +11,6 @@ ruby/command-t/mkmf.log
 ruby/command-t/ext.bundle
 doc/tags
 bundle/nerdtree/doc/tags
+bundle/fuzzyfinder/doc/tags
+bundle/fuzzyfinder/doc/tags-ja
+
