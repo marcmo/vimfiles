@@ -10,4 +10,4 @@ ruby/command-t/matcher.o
 ruby/command-t/mkmf.log
 ruby/command-t/ext.bundle
 doc/tags
-
+bundle/nerdtree/doc/tags
