@@ -136,6 +136,7 @@ map <F7> :call OpenInTerminal()<CR><CR>
 " search for the keyword under the cursor in the current directory using the 'grep' command
 nnoremap <F8> :grep <C-R><C-W> *<CR>
 map <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+nnoremap <silent> <F9> :TlistToggle<CR>
 map <S-F9> :set wrap!<CR> " toggle wrap lines
 nnoremap <S-F11> g- 
 nnoremap <S-F12> g+ 
