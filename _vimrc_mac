@@ -1,6 +1,7 @@
 " macos
 let $PATH=$PATH . ":/opt/local/bin"
 set listchars=tab:▸\ ,eol:¬ " Use the same symbols as TextMate for tabstops and EOLs
+command -bar -nargs=1 OpenURL :!open <args>
 if has('gui_running')
   set guifont=Monaco:h11
   set lines=60
