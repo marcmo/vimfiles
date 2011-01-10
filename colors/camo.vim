@@ -35,7 +35,7 @@ hi Title        guifg=IndianRed         guibg=grey15
 hi Visual       guifg=OliveDrab4        guibg=bisque1
 hi WarningMsg   guifg=bisque            guibg=red
 hi WildMenu     guifg=LightBlue         guibg=DarkViolet
-hi MatchParen   guifg=snow              guibg=peru 
+hi MatchParen   guifg=greenyellow       guibg=peru 
 
 
 "Syntax hilight groups
