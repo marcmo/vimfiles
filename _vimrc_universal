@@ -1,11 +1,23 @@
-call pathogen#runtime_append_all_bundles()
+" To start vim without using this .vimrc file, use:
+"     vim -u NORC
+"
+" To start vim without loading any .vimrc or plugins, use:
+"     vim -u NONE
+"
+" Use pathogen to easily modify the runtime path to include all plugins under
+" the ~/.vim/bundle directory
+"
+filetype off                    " force reloading *after* pathogen loaded
 call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
+filetype plugin indent on       " enable detection, plugins and indenting in one step
+
 if has('gui_running')
-  set guitablabel=%t " only display the filename not the path
-  set guioptions-=T "remove toolbar
-  set guioptions-=m  "remove menu bar
+  set guitablabel=%t            " only display the filename not the path
+  set guioptions-=T             " remove toolbar
+  set guioptions-=m             " remove menu bar
   set cursorline
-  " colorscheme delek_local       " personal copy of delek color scheme
+  " colorscheme delek_local     " personal copy of delek color scheme
   colorscheme camo
 else
   colorscheme desert
@@ -16,40 +28,46 @@ let g:SuperTabLongestHighlight = 1
 let g:SuperTabDefaultCompletionType = 'context'
 let g:GetLatestVimScripts_allowautoinstall=1
 syntax on
-filetype plugin on            " enable filetype detection and plugin loading
+
+
+set showmode                    " always show what mode we're currently editing in
+set nowrap                      " don't wrap lines
+set tabstop=2                   " a tab is 2 spaces by default
+set softtabstop=2               " when hitting <BS>, pretend like a tab is removed, even if spaces
+set expandtab                   " expand tabs default
+set shiftwidth=2                " number of spaces to use for autoindenting
+set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
+set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set autoindent                  " always set autoindenting on
+set copyindent                  " copy the previous indentation on autoindenting
+set number                      " always show line numbers
+set ignorecase                  " ignore case when searching
+set smartcase                   " ignore case if all lowercase, otherwise case-sensitive
+set smarttab                    " insert tabs on the start of a line according to shiftwidth
+set scrolloff=1                 " keep 1 line off the edges of the screen when scrolling
+set virtualedit=block           " allow virtual editing in Visual block mode.
+set hlsearch                    " highlight search terms
+set incsearch                   " show search matches as you type
 set completeopt=longest,menuone,preview
-set wildmode=longest:full     " bash like filename completion
-set wildmenu                  " show possible completions for filenames
-set nocompatible
-set backspace=indent,eol,start
-set hlsearch
-set incsearch
+set wildmode=longest:full       " bash like filename completion
+set wildmenu                    " show possible completions for filenames
+set nocompatible                " make Vim behave in a more useful way, less vi compatible
 set hidden
-set noswapfile                " disable swapfiles
-set ignorecase
-set number
-set smartcase
-set scrolloff=1
+set noswapfile                  " disable swapfiles
 set dictionary+=/usr/share/dict/words
-set history=1000	          "keep 1000 lines of command line history
-set ruler                   "show the cursor position all the time
-set showcmd
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set smarttab
-set smartindent
-set vb                      "visual beep
-set autoread                "reload file if permissions change due to BufWritePost below
-set autowrite               "write file to disk on :make, :!, :first, :next
+set history=1000	             " keep 1000 lines of command line history
+set ruler                      " show the cursor position all the time
+set showcmd                    " show (partial) command in the last line of the screen
+set smartindent                " do smart autoindenting when starting a new line
+set vb                         " visual beep
+set autoread                   " reload file if permissions change due to BufWritePost below
+set autowrite                  " write file to disk on :make, :!, :first, :next
 " use normal regexes in search
 nnoremap / /\v
 vnoremap / /\v
 " make the tab key match bracket pairs
 nnoremap <tab> %
 vnoremap <tab> %
-noremap <A-Left> gT
-noremap <A-Right> gt
 " ctags - Open the definition in a vertical split
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 imap <C-Tab> <Esc> :bn<CR>
@@ -63,57 +81,35 @@ noremap ;' :%s:::cg<Left><Left><Left><Left>
 " leave the cursor at the point where it was before editing started
 nmap . .`[
 
-" plugin specific config
-" fswitch plugin
+" # plugin specific config
+" ## fswitch plugin
 let g:fsnonewfiles=1
 let g:fswitchnonewfiles=1
-" Create the destination path by substituting any
-" 'include' string from the pathname with 'src'
+" ### Create the destination path by substituting any 'include' string from the pathname with 'src'
 let b:fswitchlocs = 'reg:/include/src/'
-augroup mycppfiles
-  au!
-  au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
-  au BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/'
-  au BufEnter *.c  let b:fswitchdst  = 'h'
-  au BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
-  au BufEnter *.cpp  let b:fswitchdst  = 'h'
-  au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
-augroup END
+if has("autocmd")
+  augroup mycppfiles
+    au!
+    au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
+    au BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/'
+    au BufEnter *.c  let b:fswitchdst  = 'h'
+    au BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
+    au BufEnter *.cpp  let b:fswitchdst  = 'h'
+    au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
+  augroup END
+endif
 nmap <silent>,, :FSHere<cr>
-
+" ## ctags
 let g:ctags_statusline=1
 set tags=tags;$HOME
-let macvim_hig_shift_movement = 1
+" ## mru
 let MRU_Max_Entries = 200 
 let MRU_Window_Height = 25 
-" haskell syntax config
+" ## haskell syntax config
 let hs_highlight_delimiters = 1 " Highlight delimiter characters
 let hs_highlight_boolean = 1 " Treat True and False as keywords.
 let hs_highlight_types = 1 " Treat names of primitive types as keywords.
 let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
-" hs_highlight_debug - Highlight names of debugging functions.
-
-" prompt for opening files in the same dir as the current buffer's file.
-if has("unix")
-  map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
-else
-  map ,e :e <C-R>=expand("%:p:h") . "\\" <CR>
-endif
-"Vertical split then hop to new buffer
-nnoremap ,v :vsp<CR>^W^W<CR>
-nnoremap ,h :split<CR>^W^W<CR>
-nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
-"Make current window the only one
-nnoremap ,O :only<CR>:tabo<CR>
-nnoremap ,o :only<CR>
-nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
-nnoremap ,u :MRU<CR>
-" set current dir to that of current file
-map ,cd :call ToCurrentDir()<CR>
-function! ToCurrentDir()
-  cd %:p:h
-  :pwd
-endfunction 
 
 "mapping of F-*
 imap <S-F1> <esc>:BufExplorer<CR>
@@ -183,6 +179,29 @@ function! AckGrep(command)
 endfunction
 command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
 
+" prompt for opening files in the same dir as the current buffer's file.
+if has("unix")
+  let b:delimiter="/"
+else
+  let b:delimiter="\\"
+endif
+map ,e :e <C-R>=expand("%:p:h") . b:delimiter <CR>
+"Vertical split then hop to new buffer
+nnoremap ,v :vsp<CR>^W^W<CR>
+nnoremap ,h :split<CR>^W^W<CR>
+nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
+"Make current window the only one
+nnoremap ,O :only<CR>:tabo<CR>
+nnoremap ,o :only<CR>
+nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
+nnoremap ,u :MRU<CR>
+" set current dir to that of current file
+map ,cd :call ToCurrentDir()<CR>
+function! ToCurrentDir()
+  cd %:p:h
+  :pwd
+endfunction 
+
 map <leader>a :Ack<space>
 nmap<leader>x <Plug>ToggleAutoCloseMappings
 map <leader>r :Rake<space>
@@ -208,8 +227,6 @@ if has("autocmd")
   augroup mkd
     autocmd BufRead *.mkd,*.md  set ai formatoptions=tcroqn2 comments=n:&gt;
   augroup END
-  " Enable file type detection
-  filetype on
   autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
@@ -217,6 +234,8 @@ if has("autocmd")
   autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
   autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 noexpandtab
   autocmd FileType lua setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
+  autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
+  autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
  
   " Treat .rss files as XML
   autocmd BufNewFile,BufRead *.rss setfiletype xml
