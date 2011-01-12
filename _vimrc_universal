@@ -22,11 +22,6 @@ if has('gui_running')
 else
   colorscheme desert
 endif
-let g:SuperTabMappingForward = '<c-space>'
-let g:SuperTabMappingBackward = '<s-c-space>'
-let g:SuperTabLongestHighlight = 1
-let g:SuperTabDefaultCompletionType = 'context'
-let g:GetLatestVimScripts_allowautoinstall=1
 syntax on
 
 
@@ -70,22 +65,29 @@ nnoremap <tab> %
 vnoremap <tab> %
 " ctags - Open the definition in a vertical split
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-imap <C-Tab> <Esc> :bn<CR>
-map <C-Tab> :bn<CR>
+" jump back to last file
+inoremap <C-Tab> <Esc>:e#<CR>
+noremap <C-Tab> :e#<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
 map <C-S-Tab> :bp<CR>
-imap <C-S-Tab> <Esc> :bp<CR>
 
 noremap ;; :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
 " leave the cursor at the point where it was before editing started
 nmap . .`[
 
-" # plugin specific config
-" ## fswitch plugin
+" plugin specific config ------------------------------
+" plugin:supertag
+let g:SuperTabMappingForward = '<c-space>'
+let g:SuperTabMappingBackward = '<s-c-space>'
+let g:SuperTabLongestHighlight = 1
+let g:SuperTabDefaultCompletionType = 'context'
+" plugin:getlatest
+let g:GetLatestVimScripts_allowautoinstall=1
+" plugin:fswitch
 let g:fsnonewfiles=1
 let g:fswitchnonewfiles=1
-" ### Create the destination path by substituting any 'include' string from the pathname with 'src'
+" Create the destination path by substituting any 'include' string from the pathname with 'src'
 let b:fswitchlocs = 'reg:/include/src/'
 if has("autocmd")
   augroup mycppfiles
@@ -99,13 +101,13 @@ if has("autocmd")
   augroup END
 endif
 nmap <silent>,, :FSHere<cr>
-" ## ctags
+" plugin:ctags
 let g:ctags_statusline=1
 set tags=tags;$HOME
-" ## mru
+" plugin:mru
 let MRU_Max_Entries = 200 
 let MRU_Window_Height = 25 
-" ## haskell syntax config
+" plugin:haskell syntax config
 let hs_highlight_delimiters = 1 " Highlight delimiter characters
 let hs_highlight_boolean = 1 " Treat True and False as keywords.
 let hs_highlight_types = 1 " Treat names of primitive types as keywords.
@@ -191,7 +193,7 @@ nnoremap ,v :vsp<CR>^W^W<CR>
 nnoremap ,h :split<CR>^W^W<CR>
 nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
 "Make current window the only one
-nnoremap ,O :only<CR>:tabo<CR>
+nnoremap ,O :onlyR>:tabo<CR>
 nnoremap ,o :only<CR>
 nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
 nnoremap ,u :MRU<CR>
