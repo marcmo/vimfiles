@@ -12,6 +12,9 @@ endfunction
 function! OpenInGhci()
   !start ghci -i.. %
 endfunction
+function! OpenWithLua()
+  !start lua -i %
+endfunction
 let g:haddock_browser = "c:\Programs\firefox3\firefox.exe"
 let g:haddock_browser_callformat = "%s -a Firefox %s"
 " moving lines

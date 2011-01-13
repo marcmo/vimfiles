@@ -13,6 +13,10 @@ function! OpenInGhci()
   cd %:p:h
   !gnome-terminal --profile=small --geometry=160x50 -e "ghci -i.. %" &
 endfunction
+function! OpenWithLua()
+  cd %:p:h
+  !gnome-terminal --profile=lua --geometry=160x50 -e "lua -i %" &
+endfunction
 let g:haddock_browser = "/usr/bin/firefox"
 let g:haddock_browser_callformat = "%s --new-tab %s &"
 let g:haddock_docdir="/usr/local/share/doc/ghc/html/"

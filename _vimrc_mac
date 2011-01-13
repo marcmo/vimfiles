@@ -16,6 +16,10 @@ function! OpenInGhci()
   cd %:p:h
   !term ghci -i.. %
 endfunction
+function! OpenWithLua()
+  cd %:p:h
+  !term lua -i %
+endfunction
 let g:haddock_browser = "open"
 let g:haddock_browser_callformat = "%s -a Firefox %s"
 let g:haddock_docdir="/Library/Frameworks/GHC.framework/Versions/612/usr/share/doc/ghc/html/"

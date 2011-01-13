@@ -11,7 +11,6 @@ filetype off                    " force reloading *after* pathogen loaded
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on       " enable detection, plugins and indenting in one step
-
 if has('gui_running')
   set guitablabel=%t            " only display the filename not the path
   set guioptions-=T             " remove toolbar
@@ -60,9 +59,6 @@ set autowrite                  " write file to disk on :make, :!, :first, :next
 " use normal regexes in search
 nnoremap / /\v
 vnoremap / /\v
-" make the tab key match bracket pairs
-nnoremap <tab> %
-vnoremap <tab> %
 " ctags - Open the definition in a vertical split
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " jump back to last file
@@ -125,7 +121,6 @@ imap <F3> <Esc><c-]><CR>
 map <F3> <c-]><CR>
 nmap <F4> :call ToggleSpell()<CR>
 imap <F4> <Esc>:call ToggleSpell()<CR>a
-map <F5> :call OpenInGhci()<CR><CR>
 " Prepare a :substitute command using the current word or the selected text:
 vnoremap <F6> y:%s/\<<C-r>"\>//gc<Left><Left><Left>
 nmap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
@@ -183,11 +178,11 @@ command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
 
 " prompt for opening files in the same dir as the current buffer's file.
 if has("unix")
-  let b:delimiter="/"
+  let g:os_specific_delimiter="/"
 else
-  let b:delimiter="\\"
+  let g:os_specific_delimiter="\\"
 endif
-map ,e :e <C-R>=expand("%:p:h") . b:delimiter <CR>
+map ,e :e <C-R>=expand("%:p:h") . g:os_specific_delimiter <CR>
 "Vertical split then hop to new buffer
 nnoremap ,v :vsp<CR>^W^W<CR>
 nnoremap ,h :split<CR>^W^W<CR>
@@ -229,13 +224,19 @@ if has("autocmd")
   augroup mkd
     autocmd BufRead *.mkd,*.md  set ai formatoptions=tcroqn2 comments=n:&gt;
   augroup END
+  augroup hs
+    autocmd bufenter *.hs,*.lhs map <F5> :call OpenInGhci()<CR><CR>
+  augroup END
+  augroup lua
+    autocmd bufenter *.lua map <F5> :call OpenWithLua()<CR><CR>
+  augroup END
+  autocmd FileType lua setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
   autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
   autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 noexpandtab
-  autocmd FileType lua setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
   autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
  
