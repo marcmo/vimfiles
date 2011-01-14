@@ -6,15 +6,19 @@ this repository contains configurations for linux,mac and windows
 
     git clone git://github.com/marcmo/vimfiles.git ~/.vim
     ln -s ~/.vim/_vimrc_universal ~/.vimrc
-    or ln -s ~/.vim/gvimrc ~/.gvimrc
     cd ~/.vim
     git submodule init
     git submodule update
-    pathogen#helptags  -- will create helptags in pathogen bundle folder
+
+in vim:
+
+    :pathogen#helptags  -- will create helptags in pathogen bundle folder
 
 ## usage of pathogen for plugins
 
 ### install vimballs
+
+in vim:
 
     :UseVimball ~/.vim/bundle/bundle-dir-name-here
 
