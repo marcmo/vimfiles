@@ -239,7 +239,7 @@ if has("autocmd")
   augroup js
       setlocal ts=4 sts=4 sw=4 noexpandtab
       set makeprg=jslint\ %
-      set efm=%f:%l:%c:%m
+      setlocal efm=%f:%l:%c:%m
   augroup END
 
   autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 noexpandtab
