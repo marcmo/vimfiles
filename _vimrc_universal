@@ -228,18 +228,22 @@ if has("autocmd")
     autocmd bufenter *.hs,*.lhs map <F5> :call OpenInGhci()<CR><CR>
   augroup END
   augroup lua
+	setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
+  " autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
     autocmd bufenter *.lua map <F5> :call OpenWithLua()<CR><CR>
   augroup END
-  autocmd FileType lua setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
   autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+  augroup js
+      setlocal ts=4 sts=4 sw=4 noexpandtab
+      set makeprg=jslint\ %
+      set efm=%f:%l:%c:%m
+  augroup END
+
   autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 noexpandtab
-  " autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
- 
   " Treat .rss files as XML
   autocmd BufNewFile,BufRead *.rss setfiletype xml
 endif
