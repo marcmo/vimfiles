@@ -222,10 +222,11 @@ endif
 if has("autocmd")
   autocmd bufwritepost _vimrc_universal source ~/.vim/_vimrc_universal
   augroup mkd
-    autocmd BufRead *.mkd,*.md  set ai formatoptions=tcroqn2 comments=n:&gt;
+    autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
   augroup END
   augroup hs
     autocmd bufenter *.hs,*.lhs map <F5> :call OpenInGhci()<CR><CR>
+    setlocal ts=2 sts=2 sw=2 expandtab
   augroup END
   augroup lua
 	setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
@@ -237,7 +238,7 @@ if has("autocmd")
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
   augroup js
-      setlocal ts=4 sts=4 sw=4 noexpandtab
+      setlocal ts=2 sts=2 sw=2 noexpandtab
       set makeprg=jslint\ %
       setlocal efm=%f:%l:%c:%m
   augroup END
