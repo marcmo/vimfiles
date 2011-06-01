@@ -19,3 +19,6 @@
 [submodule "bundle/vim-jade"]
 	path = bundle/vim-jade
 	url = https://github.com/digitaltoad/vim-jade.git
+[submodule "bundle/fugative"]
+	path = bundle/fugative
+	url = https://github.com/tpope/vim-fugitive.git
