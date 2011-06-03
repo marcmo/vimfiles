@@ -49,7 +49,7 @@ set nocompatible                " make Vim behave in a more useful way, less vi 
 set hidden
 set noswapfile                  " disable swapfiles
 set dictionary+=/usr/share/dict/words
-set history=1000	             " keep 1000 lines of command line history
+set history=1000               " keep 1000 lines of command line history
 set ruler                      " show the cursor position all the time
 set showcmd                    " show (partial) command in the last line of the screen
 set smartindent                " do smart autoindenting when starting a new line
@@ -247,7 +247,7 @@ command! Txt2html :call Text2html()
 " Only define it when not defined already.
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+      \ | wincmd p | diffthis
 endif
 if has("autocmd")
   " autocmd bufwritepost _vimrc_universal source ~/.vim/_vimrc_universal
@@ -259,7 +259,7 @@ if has("autocmd")
     autocmd bufenter *.hs,*.lhs setlocal ts=2 sts=2 sw=2 expandtab
   augroup END
   augroup lua
-	setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
+  setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
   " autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
     autocmd bufenter *.lua map <F5> :call OpenWithLua()<CR><CR>
   augroup END
