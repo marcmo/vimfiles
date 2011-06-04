@@ -131,6 +131,7 @@ nnoremap <F8> :grep <C-R><C-W> *<CR>
 map <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html .<CR>
 nnoremap <silent> <F9> :TlistToggle<CR>
 map <S-F9> :set wrap!<CR> " toggle wrap lines
+nnoremap <F10> :GundoToggle<CR>
 nnoremap <S-F11> g- 
 nnoremap <S-F12> g+ 
 " highlight current word with <F12> and on mouse click
@@ -250,7 +251,6 @@ if !exists(":DiffOrig")
       \ | wincmd p | diffthis
 endif
 if has("autocmd")
-  " autocmd bufwritepost _vimrc_universal source ~/.vim/_vimrc_universal
   augroup mkd
     autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
   augroup END
