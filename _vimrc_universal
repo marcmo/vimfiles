@@ -75,6 +75,9 @@ nmap . .`[
 " plugin specific config ------------------------------
 " plugin: CommandT
 let g:CommandTMaxFiles=50000
+" plugin:fugitiv
+autocmd BufReadPost fugitive://* set bufhidden=delete
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 " plugin:supertag
 let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
