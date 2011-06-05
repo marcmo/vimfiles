@@ -28,3 +28,6 @@
 [submodule "bundle/gundo"]
 	path = bundle/gundo
 	url = https://github.com/sjl/gundo.vim.git
+[submodule "bundle/quickrun"]
+	path = bundle/quickrun
+	url = https://github.com/thinca/vim-quickrun
