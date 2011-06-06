@@ -1,11 +1,9 @@
 
-Plugins = [
-  'surround',
-  'vim-repeat',
-  'vim-rails'
-]
+Plugins = Dir.glob("bundle/*").each do |b|
+  b.gsub!(/bundle\//,'')
+end
 
-desc "update plugins: #{Plugins.inject("") {|acc,p| "#{acc} #{p}"} }"
+desc "update plugins: [#{Plugins.join(",")}]"
 task :update do
   Plugins.each do |p|
     cd "bundle/#{p}" do
