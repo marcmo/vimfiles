@@ -75,7 +75,15 @@ nmap . .`[
 " plugin specific config ------------------------------
 " plugin: CommandT
 let g:CommandTMaxFiles=50000
+" plugin:quickrun
+let g:quickrun_config = {}
+let g:quickrun_config.haskell = {'eval' : 1 }
 " plugin:fugitiv
+function! CloseFugativeDiffAfterUsage()
+  diffoff!
+  close
+  wincmd k
+endfunction
 autocmd BufReadPost fugitive://* set bufhidden=delete
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 " plugin:supertag
@@ -148,9 +156,9 @@ vmap // y/<C-R>"<CR> " search for visually highlighted text
 " use ghc functionality for haskell files
 au BufEnter *.hs compiler ghc
 function! GhciMake()
-   cd %:h
-   set makeprg=ghci\ %
-   make
+  cd %:h
+  set makeprg=ghci\ %
+  make
 endfunction
 function! GetVisualSelection()
   try
@@ -174,13 +182,13 @@ inoremap jj <ESC>
 
 " Spell check
 function! ToggleSpell()
-    if !exists("b:spell")
-        setlocal spell spelllang=en_us
-        let b:spell = 1
-    else
-        setlocal nospell
-        unlet b:spell
-    endif
+  if !exists("b:spell")
+    setlocal spell spelllang=en_us
+    let b:spell = 1
+  else
+    setlocal nospell
+    unlet b:spell
+  endif
 endfunction
 function! SwitchWindowKeepCurrentDir()
   let current = getcwd()
@@ -229,7 +237,7 @@ nnoremap ,u :MRU<CR>
 map ,cd :call ToCurrentDir()<CR>
 noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
 noremap ,f :execute 'NERDTreeFind'<CR> 
-noremap <leader>f :execute 'NERDTreeFind'<CR> 
+noremap ,k :call CloseFugativeDiffAfterUsage()<CR> 
 function! ToCurrentDir()
   cd %:p:h
   :pwd
