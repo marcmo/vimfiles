@@ -25,7 +25,7 @@ syntax on
 
 
 set showmode                    " always show what mode we're currently editing in
-set nowrap                      " don't wrap lines
+set wrap                      " don't wrap lines
 set tabstop=2                   " a tab is 2 spaces by default
 set softtabstop=2               " when hitting <BS>, pretend like a tab is removed, even if spaces
 set expandtab                   " expand tabs default
@@ -73,6 +73,8 @@ noremap ;' :%s:::cg<Left><Left><Left><Left>
 nmap . .`[
 
 " plugin specific config ------------------------------
+" plugin: CommandT
+let g:CommandTMaxFiles=50000
 " plugin:supertag
 let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
@@ -96,7 +98,6 @@ if has("autocmd")
     au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
   augroup END
 endif
-nmap <silent>,, :FSHere<cr>
 " plugin:ctags
 let g:ctags_statusline=1
 set tags=tags;$HOME
@@ -147,6 +148,23 @@ function! GhciMake()
    set makeprg=ghci\ %
    make
 endfunction
+function! GetVisualSelection()
+  try
+    let a_save = @a
+    normal! gv"ay
+    echo @a
+    return @a
+  finally
+    let @a = a_save
+  endtry
+endfunction
+
+function EvaluateInGhc() range
+  let current = GetVisualSelection()
+  let result = system('ghc -e '.shellescape(current))
+  call setline(".", result)
+endfunction
+vmap <leader>e :call EvaluateInGhc()<CR>$x<esc>0
 " quick way to escape from insert mode
 inoremap jj <ESC>
 
@@ -159,6 +177,11 @@ function! ToggleSpell()
         setlocal nospell
         unlet b:spell
     endif
+endfunction
+function! SwitchWindowKeepCurrentDir()
+  let current = getcwd()
+  wincmd W
+  cd `=current`
 endfunction
 
 function! RakeCommand(command)
@@ -187,6 +210,12 @@ map ,e :e <C-R>=expand("%:p:h") . g:os_specific_delimiter <CR>
 nnoremap ,v :vsp<CR>^W^W<CR>
 nnoremap ,h :split<CR>^W^W<CR>
 nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
+nnoremap <silent> ,rr :QuickRun -mode n<CR>
+vnoremap <silent> ,rr :QuickRun -mode v<CR>
+nnoremap <silent>,, :FSHere<cr>
+vnoremap <silent>,, :FSHere<cr>
+nnoremap <silent> ;; :call SwitchWindowKeepCurrentDir()<CR>
+vnoremap <silent> ;; :call SwitchWindowKeepCurrentDir()<CR>
 "Make current window the only one
 nnoremap ,O :onlyR>:tabo<CR>
 nnoremap ,o :only<CR>
@@ -221,7 +250,7 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 if has("autocmd")
-  autocmd bufwritepost _vimrc_universal source ~/.vim/_vimrc_universal
+  " autocmd bufwritepost _vimrc_universal source ~/.vim/_vimrc_universal
   augroup mkd
     autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
   augroup END
