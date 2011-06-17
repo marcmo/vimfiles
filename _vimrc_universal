@@ -1,11 +1,5 @@
-" To start vim without using this .vimrc file, use:
-"     vim -u NORC
-"
-" To start vim without loading any .vimrc or plugins, use:
-"     vim -u NONE
-"
-" Use pathogen to easily modify the runtime path to include all plugins under
-" the ~/.vim/bundle directory
+" start vim without using this .vimrc file:  vim -u NORC
+" start vim without loading any .vimrc or plugins: vim -u NONE
 "
 filetype off                    " force reloading *after* pathogen loaded
 call pathogen#helptags()
@@ -16,16 +10,14 @@ if has('gui_running')
   set guioptions-=T             " remove toolbar
   set guioptions-=m             " remove menu bar
   set cursorline
-  " colorscheme delek_local     " personal copy of delek color scheme
   colorscheme camo
 else
   colorscheme desert
 endif
 syntax on
 
-
 set showmode                    " always show what mode we're currently editing in
-set wrap                      " don't wrap lines
+set wrap                        " don't wrap lines
 set tabstop=2                   " a tab is 2 spaces by default
 set softtabstop=2               " when hitting <BS>, pretend like a tab is removed, even if spaces
 set expandtab                   " expand tabs default
@@ -67,7 +59,7 @@ noremap <C-Tab> :e#<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
 map <C-S-Tab> :bp<CR>
 
-noremap ;; :%s:::g<Left><Left><Left>
+noremap :: :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
 " leave the cursor at the point where it was before editing started
 nmap . .`[
@@ -121,14 +113,14 @@ let hs_highlight_boolean = 1 " Treat True and False as keywords.
 let hs_highlight_types = 1 " Treat names of primitive types as keywords.
 let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
 
-"mapping of F-*
+" mapping of F-*
 imap <S-F1> <esc>:BufExplorer<CR>
 map <S-F1> :BufExplorer<CR>
 map <F1> :FufBuffer<CR>
 imap <F1> <esc>:FufBuffer<CR>
 map <F2> :FufFile **/<CR>
 map <S-F2> :FufDir<CR>
-" lookup symple in tags file
+" lookup symbol in tags file
 imap <F3> <Esc><c-]><CR>
 map <F3> <c-]><CR>
 nmap <F4> :call ToggleSpell()<CR>
@@ -286,7 +278,6 @@ if has("autocmd")
 
   autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 expandtab
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
-  " Treat .rss files as XML
   autocmd BufNewFile,BufRead *.rss setfiletype xml
 endif
 
