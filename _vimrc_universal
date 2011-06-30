@@ -59,7 +59,6 @@ noremap <C-Tab> :e#<CR>
 imap <C-S-Tab> <Esc> :bp<CR>
 map <C-S-Tab> :bp<CR>
 
-noremap :: :%s:::g<Left><Left><Left>
 noremap ;' :%s:::cg<Left><Left><Left><Left>
 " leave the cursor at the point where it was before editing started
 nmap . .`[
