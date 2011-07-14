@@ -144,6 +144,8 @@ noremap <F12> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 inoremap <F12> <Esc>:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>li
 nnoremap <silent> <F11> :YRShow<CR>
 
+" Will allow you to use :w!! to write to a file using sudo if you forgot to sudo vim file (will prompt password)
+cmap w!! %!sudo tee > /dev/null %
 vmap // y/<C-R>"<CR> " search for visually highlighted text
 " use ghc functionality for haskell files
 au BufEnter *.hs compiler ghc
@@ -240,6 +242,7 @@ map <leader>a :Ack<space>-G ".*\.(c\|cpp\|h\|hs\|lua\|rb)"<space>
 nmap<leader>x <Plug>ToggleAutoCloseMappings
 map <leader>r :Rake<space>
 nmap<leader>l :set list!<CR>
+map <leader>b :!open -a Google\ Chrome %<CR><CR>
 
 " create html from text
 function! Text2html()
