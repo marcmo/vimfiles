@@ -16,6 +16,7 @@ else
 endif
 syntax on
 
+set wildignore+=*.o,*.obj,*.o.d,.git,*.a
 set showmode                    " always show what mode we're currently editing in
 set wrap                        " don't wrap lines
 set tabstop=2                   " a tab is 2 spaces by default
@@ -224,6 +225,7 @@ nnoremap ,O :onlyR>:tabo<CR>
 nnoremap ,o :only<CR>
 nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
 nnoremap ,u :MRU<CR>
+nnoremap ,w :BD<CR>
 " set current dir to that of current file
 map ,cd :call ToCurrentDir()<CR>
 noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
@@ -234,7 +236,7 @@ function! ToCurrentDir()
   :pwd
 endfunction 
 
-map <leader>a :Ack<space>
+map <leader>a :Ack<space>-G ".*\.(c\|cpp\|h\|hs\|lua\|rb)"<space>
 nmap<leader>x <Plug>ToggleAutoCloseMappings
 map <leader>r :Rake<space>
 nmap<leader>l :set list!<CR>
