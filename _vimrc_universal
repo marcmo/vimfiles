@@ -16,7 +16,7 @@ else
 endif
 syntax on
 
-set wildignore+=*.o,*.obj,*.o.d,.git,*.a
+set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.d
 set showmode                    " always show what mode we're currently editing in
 set wrap                        " don't wrap lines
 set tabstop=2                   " a tab is 2 spaces by default
@@ -243,6 +243,7 @@ nmap<leader>x <Plug>ToggleAutoCloseMappings
 map <leader>r :Rake<space>
 nmap<leader>l :set list!<CR>
 map <leader>b :!open -a Google\ Chrome %<CR><CR>
+map <leader>u :cd ..<CR>:pwd<CR>
 
 " create html from text
 function! Text2html()
