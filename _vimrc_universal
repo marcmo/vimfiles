@@ -27,7 +27,7 @@ set shiftround                  " use multiple of shiftwidth when indenting with
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
-set number                      " always show line numbers
+" set number                      " always show line numbers
 set ignorecase                  " ignore case when searching
 set smartcase                   " ignore case if all lowercase, otherwise case-sensitive
 set smarttab                    " insert tabs on the start of a line according to shiftwidth
@@ -118,7 +118,7 @@ imap <S-F1> <esc>:BufExplorer<CR>
 map <S-F1> :BufExplorer<CR>
 map <F1> :FufBuffer<CR>
 imap <F1> <esc>:FufBuffer<CR>
-map <F2> :FufFile **/<CR>
+map <F2> ::call ToCurrentDir()<CR>:FufFile **/<CR>
 map <S-F2> :FufDir<CR>
 " lookup symbol in tags file
 imap <F3> <Esc><c-]><CR>
