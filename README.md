@@ -438,17 +438,3 @@ add config file for jslint: ~/.jslint
 
 When we are editing tabular data, sometimes we would want to copy only a few columns from the text as opposed to a few lines. For this, we can use the rectangular block selection mode in Vim by pressing ctrl-v. 
 
-
-## yank in command line
-
-    CTRL-R {0-9a-z"%#:-=.}
-    So the short answer is, if you want to paste the last line yanked or deleted, then do CTRL-R-".
-    'v' to enter the visual mode, highlight the region, and then 'y' to yank it. That puts it in the default register, which gets overwritten all the time. To put it in another register, prefix the 'y' with '"'. For example, to place in the 'a' register, you would type: "ay. Then to paste while in ex mode, it's CTRL-R-a.
-
-## Registers
-
-    append to a named register use it's corresponding upper case character. i.e. In your example:
-    "ayy
-    "Ayy
-    "ap
-
