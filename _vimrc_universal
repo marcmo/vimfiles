@@ -10,7 +10,7 @@ if has('gui_running')
   set guioptions-=T             " remove toolbar
   set guioptions-=m             " remove menu bar
   set cursorline
-  colorscheme camo
+  colorscheme blackboard
 else
   colorscheme desert
 endif
@@ -49,6 +49,7 @@ set smartindent                " do smart autoindenting when starting a new line
 set vb                         " visual beep
 set autoread                   " reload file if permissions change due to BufWritePost below
 set autowrite                  " write file to disk on :make, :!, :first, :next
+set gcr=n:blinkon0             " turn of blinking cursor in normal mode
 " use normal regexes in search
 nnoremap / /\v
 vnoremap / /\v
@@ -70,6 +71,9 @@ let g:CommandTMaxFiles=50000
 " plugin:quickrun
 let g:quickrun_config = {}
 let g:quickrun_config.haskell = {'eval' : 1 }
+let g:quickrun_config.c = {'type' : 
+\     executable('clang')          ? 'c/clang' :
+\     executable('gcc')            ? 'c/gcc' : ''}
 " plugin:fugitiv
 function! CloseFugativeDiffAfterUsage()
   diffoff!
@@ -94,11 +98,11 @@ if has("autocmd")
   augroup mycppfiles
     au!
     au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
-    au BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/'
+    au BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,..'
     au BufEnter *.c  let b:fswitchdst  = 'h'
     au BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
     au BufEnter *.cpp  let b:fswitchdst  = 'h'
-    au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
+    au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
   augroup END
 endif
 " plugin:ctags
@@ -275,14 +279,15 @@ if has("autocmd")
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+  autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 expandtab
   augroup js
       setlocal ts=2 sts=2 sw=2 expandtab
       set makeprg=jslint\ %
       setlocal efm=%f:%l:%c:%m
   augroup END
 
-  autocmd FileType c,cpp setlocal ts=4 sts=4 sw=4 expandtab
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
-  autocmd BufNewFile,BufRead *.rss setfiletype xml
+  autocmd BufRead,BufNewFile *.rss setfiletype xml
 endif
 

@@ -31,7 +31,7 @@ if has("gui_running")
   highlight Identifier guifg=#00D42D gui=NONE
   highlight Function guifg=#FF5600 gui=NONE
   highlight clear Search
-  highlight Search guifg=grey15 guibg=#D4FF3B
+  highlight Search guifg=grey15 guibg=#F87217
   highlight PreProc guifg=Grey
 
   "Ruby Colors
