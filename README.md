@@ -5,7 +5,13 @@ this repository contains configurations for linux,mac and windows
 ## setting up vim in new environment:
 
     git clone git://github.com/marcmo/vimfiles.git ~/.vim
-    ln -s ~/.vim/_vimrc_universal ~/.vimrc
+
+**linux**: `echo -e "source ~/.vim/_vimrc_universal\\nsource ~/.vim/_vimrc_linux" > ~/.vimrc`
+
+**macos**: `echo -e "source ~/.vim/_vimrc_universal\\nsource ~/.vim/_vimrc_mac" > ~/.vimrc`
+
+**windows**: `echo -e "source ~/.vim/_vimrc_universal\\nsource ~/.vim/_vimrc_windows" > ~/.vimrc`
+
     cd ~/.vim
     git submodule init
     git submodule update

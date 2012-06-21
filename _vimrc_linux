@@ -1,6 +1,6 @@
 " linux
 if has('gui_running')
-  set guifont=Monospace\ 9
+  set guifont=Monospace\ 10
   set lines=60
   set columns=200
 endif
