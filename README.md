@@ -13,12 +13,11 @@ this repository contains configurations for linux,mac and windows
 **windows**: `echo -e "source ~/.vim/_vimrc_universal\\nsource ~/.vim/_vimrc_windows" > ~/.vimrc`
 
     cd ~/.vim
-    git submodule init
-    git submodule update
+    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 in vim:
 
-    :pathogen#helptags  -- will create helptags in pathogen bundle folder
+    :BundleInstall -- will install all additional plugins
 
 ## usage of pathogen for plugins
 

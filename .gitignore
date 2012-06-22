@@ -1,16 +1,5 @@
 *.un~
 .VimballRecord
-.netrwhist
-bundle/command-t/ruby/command-t/Makefile
-bundle/command-t/ruby/command-t/ext.o
-bundle/command-t/ruby/command-t/ext.so
-bundle/command-t/ruby/command-t/match.o
-bundle/command-t/ruby/command-t/matcher.o
-bundle/command-t/ruby/command-t/mkmf.log
 doc/tags
-bundle/nerdtree/doc/tags
-bundle/fuzzyfinder/doc/tags
-bundle/fuzzyfinder/doc/tags-ja
-bundle/tcomment/doc/tags
-
 tags
+bundle
