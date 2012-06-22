@@ -4,7 +4,7 @@ this repository contains configurations for linux,mac and windows
 
 ## setting up vim in new environment:
 
-    git clone git://github.com/marcmo/vimfiles.git ~/.vim
+    git clone git@github.com:marcmo/vimfiles.git ~/.vim
 
 ####linux
 
