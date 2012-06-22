@@ -5,32 +5,9 @@ this repository contains configurations for linux,mac and windows
 ## setting up vim in new environment:
 
     git clone git@github.com:marcmo/vimfiles.git ~/.vim
-
-####linux
-
-    echo -e "source ~/.vim/_vimrc_universal
-    source ~/.vim/_vimrc_linux" > ~/.vimrc
-
-####macos
-
-    echo -e "source ~/.vim/_vimrc_universal
-    source ~/.vim/_vimrc_mac" > ~/.vimrc
-
-####windows
-
-    echo -e "source ~/.vim/_vimrc_universal
-    source ~/.vim/_vimrc_windows" > ~/.vimrc`
-
-### setup plugins using vundle
-
     cd ~/.vim
-    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-
-#### in vim:
-
-    :BundleInstall -- will install all additional plugins
-
----
+    rake install
+    rake link
 
 # VIM cheatsheet
 
