@@ -6,33 +6,29 @@ this repository contains configurations for linux,mac and windows
 
     git clone git://github.com/marcmo/vimfiles.git ~/.vim
 
-**linux**: `echo -e "source ~/.vim/_vimrc_universal\\nsource ~/.vim/_vimrc_linux" > ~/.vimrc`
+####linux
 
-**macos**: `echo -e "source ~/.vim/_vimrc_universal\\nsource ~/.vim/_vimrc_mac" > ~/.vimrc`
+    echo -e "source ~/.vim/_vimrc_universal
+    source ~/.vim/_vimrc_linux" > ~/.vimrc
 
-**windows**: `echo -e "source ~/.vim/_vimrc_universal\\nsource ~/.vim/_vimrc_windows" > ~/.vimrc`
+####macos
+
+    echo -e "source ~/.vim/_vimrc_universal
+    source ~/.vim/_vimrc_mac" > ~/.vimrc
+
+####windows
+
+    echo -e "source ~/.vim/_vimrc_universal
+    source ~/.vim/_vimrc_windows" > ~/.vimrc`
+
+### setup plugins using vundle
 
     cd ~/.vim
     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
-in vim:
+#### in vim:
 
     :BundleInstall -- will install all additional plugins
-
-## usage of pathogen for plugins
-
-### install vimballs
-
-in vim:
-
-    :UseVimball ~/.vim/bundle/bundle-dir-name-here
-
-### when the plugin is a git repo
-
-    cd ~/.vim && mkdir ~/.vim/bundle
-    git submodule add http://github.com/tpope/vim-fugitive.git bundle/fugitive
-    git add .
-    git commit -m "Install Fugitive.vim bundle as a submodule."
 
 ---
 
