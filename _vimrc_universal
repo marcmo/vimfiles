@@ -24,6 +24,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'msanders/snipmate.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'marcmo/haskellmode-vim'
+Bundle 'Rip-Rip/clang_complete'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'AutoClose'
@@ -31,11 +32,9 @@ Bundle 'a.vim'
 Bundle 'bufkill.vim'
 Bundle 'BufOnly.vim'
 Bundle 'ctags.vim'
-Bundle 'mru.vim'
 Bundle 'SuperTab'
 Bundle 'taglist.vim'
 Bundle 'YankRing.vim'
-Bundle 'FuzzyFinder'
 Bundle 'DrawIt'
 Bundle 'matchit.zip'
 Bundle 'FSwitch'
@@ -145,9 +144,9 @@ endif
 " plugin:ctags
 let g:ctags_statusline=1
 set tags=tags;$HOME
-" plugin:mru
-let MRU_Max_Entries = 200 
-let MRU_Window_Height = 25 
+" plugin:ctrlp
+let g:ctrlp_mruf_max = 200
+let g:ctrlp_max_height = 25
 " plugin:haskell syntax config
 let hs_highlight_delimiters = 1 " Highlight delimiter characters
 let hs_highlight_boolean = 1 " Treat True and False as keywords.
@@ -155,12 +154,8 @@ let hs_highlight_types = 1 " Treat names of primitive types as keywords.
 let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
 
 " mapping of F-*
-imap <S-F1> <esc>:BufExplorer<CR>
-map <S-F1> :BufExplorer<CR>
-map <F1> :FufBuffer<CR>
-imap <F1> <esc>:FufBuffer<CR>
-map <F2> ::call ToCurrentDir()<CR>:FufFile **/<CR>
-map <S-F2> :FufDir<CR>
+map <F1> :CtrlPBuffer<CR>
+imap <F1> <esc>:CtrlPBuffer<CR>
 " lookup symbol in tags file
 imap <F3> <Esc><c-]><CR>
 map <F3> <c-]><CR>
@@ -206,7 +201,7 @@ function! GetVisualSelection()
   endtry
 endfunction
 
-function EvaluateInGhc() range
+function! EvaluateInGhc() range
   let current = GetVisualSelection()
   let result = system('ghc -e '.shellescape(current))
   call setline(".", result)
@@ -267,7 +262,7 @@ vnoremap <silent> ;; :call SwitchWindowKeepCurrentDir()<CR>
 nnoremap ,O :onlyR>:tabo<CR>
 nnoremap ,o :only<CR>
 nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
-nnoremap ,u :MRU<CR>
+nnoremap ,u :CtrlPMRU<CR>
 nnoremap ,w :BD<CR>
 " set current dir to that of current file
 map ,cd :call ToCurrentDir()<CR>
@@ -285,6 +280,7 @@ map <leader>r :Rake<space>
 nmap<leader>l :set list!<CR>
 map <leader>b :!open -a Google\ Chrome %<CR><CR>
 map <leader>u :cd ..<CR>:pwd<CR>
+map <leader>t :CtrlP .<CR>
 
 " create html from text
 function! Text2html()
