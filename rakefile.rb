@@ -18,7 +18,10 @@ end
 
 desc "install plugins"
 task :install => :vundle do
-  sh "vim +BundleInstall +qall"
+  begin
+    sh "vim +BundleInstall +qall"
+  rescue
+  end
 end
 
 desc "link"
