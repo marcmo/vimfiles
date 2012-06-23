@@ -25,14 +25,14 @@ Bundle 'msanders/snipmate.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'marcmo/haskellmode-vim'
 Bundle 'Rip-Rip/clang_complete'
+Bundle 'ervandew/supertab'
+Bundle 'Raimondi/delimitMate'
 " vim-scripts repos
 Bundle 'L9'
-Bundle 'AutoClose'
 Bundle 'a.vim'
 Bundle 'bufkill.vim'
 Bundle 'BufOnly.vim'
 Bundle 'ctags.vim'
-Bundle 'SuperTab'
 Bundle 'taglist.vim'
 Bundle 'YankRing.vim'
 Bundle 'DrawIt'
@@ -123,8 +123,6 @@ let g:SuperTabMappingForward = '<c-space>'
 let g:SuperTabMappingBackward = '<s-c-space>'
 let g:SuperTabLongestHighlight = 1
 let g:SuperTabDefaultCompletionType = 'context'
-" plugin:getlatest
-let g:GetLatestVimScripts_allowautoinstall=1
 " plugin:fswitch
 let g:fsnonewfiles=1
 let g:fswitchnonewfiles=1
@@ -147,6 +145,7 @@ set tags=tags;$HOME
 " plugin:ctrlp
 let g:ctrlp_mruf_max = 200
 let g:ctrlp_max_height = 25
+let g:ctrlp_custom_ignore = '^\.git$\|\.hg$\|\.svn$'
 " plugin:haskell syntax config
 let hs_highlight_delimiters = 1 " Highlight delimiter characters
 let hs_highlight_boolean = 1 " Treat True and False as keywords.
