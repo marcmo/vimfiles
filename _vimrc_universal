@@ -8,9 +8,6 @@ call vundle#rc()
 " let Vundle manage Vundle
 " required! 
 Bundle 'gmarik/vundle'
-
-" Vim Bundles here:
-"
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
@@ -27,18 +24,15 @@ Bundle 'marcmo/haskellmode-vim'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'ervandew/supertab'
 Bundle 'Raimondi/delimitMate'
+Bundle 'derekwyatt/vim-fswitch'
 " vim-scripts repos
 Bundle 'L9'
-Bundle 'a.vim'
 Bundle 'bufkill.vim'
 Bundle 'BufOnly.vim'
-Bundle 'ctags.vim'
 Bundle 'taglist.vim'
 Bundle 'YankRing.vim'
 Bundle 'DrawIt'
 Bundle 'matchit.zip'
-Bundle 'FSwitch'
-" Bundle 'haskellmode'
 " non github repos
 
 filetype plugin indent on     " required!
@@ -139,9 +133,6 @@ if has("autocmd")
     au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
   augroup END
 endif
-" plugin:ctags
-let g:ctags_statusline=1
-set tags=tags;$HOME
 " plugin:ctrlp
 let g:ctrlp_mruf_max = 200
 let g:ctrlp_max_height = 25
@@ -151,6 +142,9 @@ let hs_highlight_delimiters = 1 " Highlight delimiter characters
 let hs_highlight_boolean = 1 " Treat True and False as keywords.
 let hs_highlight_types = 1 " Treat names of primitive types as keywords.
 let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
+
+" for using ctags
+set tags=tags;$HOME
 
 " mapping of F-*
 map <F1> :CtrlPBuffer<CR>
