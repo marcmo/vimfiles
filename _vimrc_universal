@@ -25,28 +25,30 @@ Bundle 'Rip-Rip/clang_complete'
 Bundle 'ervandew/supertab'
 Bundle 'Raimondi/delimitMate'
 Bundle 'derekwyatt/vim-fswitch'
+Bundle 'altercation/vim-colors-solarized'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'bufkill.vim'
 Bundle 'BufOnly.vim'
 Bundle 'taglist.vim'
-Bundle 'YankRing.vim'
 Bundle 'DrawIt'
 Bundle 'matchit.zip'
+Bundle 'mru.vim'
 " non github repos
 
 filetype plugin indent on     " required!
 
+syntax on
+set background=dark
+colorscheme solarized
 if has('gui_running')
   set guitablabel=%t            " only display the filename not the path
   set guioptions-=T             " remove toolbar
   set guioptions-=m             " remove menu bar
   set cursorline
-  colorscheme blackboard
 else
-  colorscheme desert
+  set t_Co=16
 endif
-syntax on
 
 set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.d
 set showmode                    " always show what mode we're currently editing in
@@ -98,6 +100,21 @@ noremap ;' :%s:::cg<Left><Left><Left><Left>
 nmap . .`[
 
 " plugin specific config ------------------------------
+let g:clang_auto_select=1
+let g:clang_complete_auto=0
+let g:clang_complete_copen=1
+let g:clang_snippets=1
+let g:clang_snippets_engine = "snipmate"
+let g:clang_exec="clang"
+let g:clang_user_options=""
+let g:clang_auto_user_options="path, .clang_complete"
+let g:clang_use_library=1
+let g:clang_library_path="/usr/local/lib"
+
+let g:clang_sort_algo="priority"
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=0
+nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
 " plugin:quickrun
 let g:quickrun_config = {}
 let g:quickrun_config.haskell = {'eval' : 1 }
@@ -133,10 +150,16 @@ if has("autocmd")
     au BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
   augroup END
 endif
+" plugin:mru
+let MRU_Max_Entries = 200 
+let MRU_Window_Height = 25 
 " plugin:ctrlp
-let g:ctrlp_mruf_max = 200
 let g:ctrlp_max_height = 25
 let g:ctrlp_custom_ignore = '^\.git$\|\.hg$\|\.svn$'
+let g:ctrlp_by_filename = 1
+let g:ctrlp_max_files = 30000
+let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_match_window_reversed = 0
 " plugin:haskell syntax config
 let hs_highlight_delimiters = 1 " Highlight delimiter characters
 let hs_highlight_boolean = 1 " Treat True and False as keywords.
@@ -149,6 +172,8 @@ set tags=tags;$HOME
 " mapping of F-*
 map <F1> :CtrlPBuffer<CR>
 imap <F1> <esc>:CtrlPBuffer<CR>
+map <F2> :copen<CR>
+map <S-F2> :cclose<CR>
 " lookup symbol in tags file
 imap <F3> <Esc><c-]><CR>
 map <F3> <c-]><CR>
@@ -255,7 +280,7 @@ vnoremap <silent> ;; :call SwitchWindowKeepCurrentDir()<CR>
 nnoremap ,O :onlyR>:tabo<CR>
 nnoremap ,o :only<CR>
 nnoremap <silent>,m :cd %:p:h<CR> :execute 'make'<CR>
-nnoremap ,u :CtrlPMRU<CR>
+nnoremap ,u :MRU<CR>
 nnoremap ,w :BD<CR>
 " set current dir to that of current file
 map ,cd :call ToCurrentDir()<CR>
