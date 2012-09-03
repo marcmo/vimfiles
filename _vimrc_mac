@@ -2,6 +2,7 @@
 let $PATH=$PATH . ":/opt/local/bin"
 set listchars=tab:▸\ ,eol:¬ " Use the same symbols as TextMate for tabstops and EOLs
 let macvim_hig_shift_movement = 1
+map <leader>b :!open -a Google\ Chrome %<CR><CR>
 command -bar -nargs=1 OpenURL :!open <args>
 if has('gui_running')
   set guifont=Monaco:h13
@@ -24,7 +25,7 @@ let g:haddock_browser = "open"
 let g:haddock_browser_callformat = "%s -a \"Google Chrome\" %s"
 let g:haddock_docdir="/Library/Frameworks/GHC.framework/Versions/Current/usr/share/doc/ghc/html/"
 " moving lines, only for mac because of stupid option key behavior
-" <A-j> == ∆ (for moving down) 
+" <A-j> == ∆ (for moving down)
 " <A-k> == ˚ (for moving up)
 nnoremap ∆ mz:m+<CR>`z==
 nnoremap ˚ mz:m-2<CR>`z==

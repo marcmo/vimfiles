@@ -1,4 +1,5 @@
 " linux
+set listchars=tab:▸\ ,eol:¬ " Use the same symbols as TextMate for tabstops and EOLs
 if has('gui_running')
   set guifont=Monospace\ 10
   set lines=60
@@ -8,7 +9,6 @@ function! OpenInTerminal()
   cd %:p:h
   !gnome-terminal --profile=light --geometry=160x50 % &
 endfunction
-let g:ghc="/usr/local/bin/ghc"
 function! OpenInGhci()
   cd %:p:h
   !gnome-terminal --profile=small --geometry=160x50 -e "ghci -i.. %" &
@@ -19,7 +19,7 @@ function! OpenWithLua()
 endfunction
 let g:haddock_browser = "/usr/bin/firefox"
 let g:haddock_browser_callformat = "%s --new-tab %s &"
-let g:haddock_docdir="/usr/local/share/doc/ghc/html/"
+let g:haddock_docdir="/home/muellero/.cabal/share/doc/ghc-paths-0.1.0.8/html/"
 " let g:haddock_browser_callformat = "%s --new-tab file://%s &"
 " moving lines
 nnoremap <M-j> mz:m+<CR>`z==
