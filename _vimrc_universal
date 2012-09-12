@@ -193,7 +193,14 @@ filetype plugin indent on           " required!
     " }
 " }
 " programming {
-    nnoremap <silent>,m :execute 'make'<CR>
+      nnoremap <silent>,m :execute 'make'<CR>
+    " formatting {
+        if has("autocmd")
+          autocmd BufNewFile,BufRead *.cpp,*.c,*.h set formatprg=astyle\ -A1sYHjk1
+        endif
+        " format complete file and return to starting position using mark 'b'
+        nnoremap <Leader>f mbgggqG`b
+    " }
     " taglist {
         nnoremap <silent> <F9> :TlistToggle<CR>
     " }
@@ -491,6 +498,7 @@ endif
     endfunction
 
     " Remove trailing whitespaces and ^M chars on write
+    command! ClearWhitespaces :call ClearWhitespaces()
     function! ClearWhitespaces()
       :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
     endfunction
