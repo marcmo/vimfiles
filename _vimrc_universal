@@ -35,6 +35,7 @@ Bundle 'dag/vim2hs'
 Bundle 'Shougo/vimproc'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'marcmo/haskellmode-vim'
+Bundle 'AndrewRadev/switch.vim'
 
 filetype plugin indent on           " required!
 
@@ -124,6 +125,13 @@ filetype plugin indent on           " required!
     nnoremap k gk
     nnoremap ,rc :e ~/.vim/_vimrc_universal <CR>
     nnoremap ,bc :e ~/.bashrc <CR>
+    " move lines up and down
+    nnoremap <M-Down> mz:m+<CR>`z==
+    nnoremap <M-Up> mz:m-2<CR>`z==
+    inoremap <M-Down> <Esc>:m+<CR>==gi
+    inoremap <M-Up> <Esc>:m-2<CR>==gi
+    vnoremap <M-Down> :m'>+<CR>gv=`<my`>mzgv`yo`z
+    vnoremap <M-Up> :m'<-2<CR>gv=`>my`<mzgv`yo`z
     " trailing whitespaces {
         " highlight end of line whitespace as Error
         hi link ExtraWhitespace Error
@@ -131,7 +139,7 @@ filetype plugin indent on           " required!
           autocmd BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
           " except the line I am typing on
           autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-          autocmd FileType c,cpp,haskell,vim,ruby,yml,python,lua,java,javascript,xml autocmd BufWritePre <buffer> :call ClearWhitespaces()
+          autocmd FileType c,cpp,haskell,vim,ruby,yml,markdown,python,lua,java,javascript,xml autocmd BufWritePre <buffer> :call ClearWhitespaces()
         augroup END
     " }
     " directories and files {
@@ -185,11 +193,13 @@ filetype plugin indent on           " required!
     " }
     " window handling {
         set splitbelow splitright " Create split windows in more intuitive places
-        "Vertical split then hop to new buffer
+        " [v]ertical or [h]orizontal split then hop to new buffer
         nnoremap ,v :vsp<CR>^W^W<CR>
         nnoremap ,h :split<CR>^W^W<CR>
         nnoremap <silent> ;; :call SwitchWindowKeepCurrentDir()<CR>
         vnoremap <silent> ;; :call SwitchWindowKeepCurrentDir()<CR>
+        "Make current window the only one
+        nnoremap ,o :only<CR>
     " }
 " }
 " programming {
@@ -250,6 +260,9 @@ filetype plugin indent on           " required!
         endif
         nnoremap <silent>,, :FSHere<cr>
         vnoremap <silent>,, :FSHere<cr>
+    " }
+    " switch.vim {
+        nnoremap - :Switch<cr>
     " }
     " quickrun {
         let g:quickrun_config = {}
@@ -405,11 +418,6 @@ filetype plugin indent on           " required!
 " nerdtree {
     noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
     noremap ,f :execute 'NERDTreeFind'<CR>
-" }
-" BufOnly {
-    "Make current window the only one
-    nnoremap ,O :onlyR>:tabo<CR>
-    nnoremap ,o :only<CR>
 " }
 " bufkill {
     nnoremap ,w :BD<CR>

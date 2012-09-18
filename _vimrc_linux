@@ -21,10 +21,3 @@ let g:haddock_browser = "/usr/bin/firefox"
 let g:haddock_browser_callformat = "%s --new-tab %s &"
 let g:haddock_docdir="/home/muellero/.cabal/share/doc/ghc-paths-0.1.0.8/html/"
 " let g:haddock_browser_callformat = "%s --new-tab file://%s &"
-" moving lines
-nnoremap <M-j> mz:m+<CR>`z==
-nnoremap <M-k> mz:m-2<CR>`z==
-inoremap <M-j> <Esc>:m+<CR>==gi
-inoremap <M-k> <Esc>:m-2<CR>==gi
-vnoremap <M-j> :m'>+<CR>gv=`<my`>mzgv`yo`z
-vnoremap <M-k> :m'<-2<CR>gv=`>my`<mzgv`yo`z

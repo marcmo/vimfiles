@@ -24,12 +24,3 @@ endfunction
 let g:haddock_browser = "open"
 let g:haddock_browser_callformat = "%s -a \"Google Chrome\" %s"
 let g:haddock_docdir="/Library/Frameworks/GHC.framework/Versions/Current/usr/share/doc/ghc/html/"
-" moving lines, only for mac because of stupid option key behavior
-" <A-j> == ∆ (for moving down)
-" <A-k> == ˚ (for moving up)
-nnoremap ∆ mz:m+<CR>`z==
-nnoremap ˚ mz:m-2<CR>`z==
-inoremap ∆ <Esc>:m+<CR>==gi
-inoremap ˚ <Esc>:m-2<CR>==gi
-vnoremap ∆ :m'>+<CR>gv=`<my`>mzgv`yo`z
-vnoremap ˚ :m'<-2<CR>gv=`>my`<mzgv`yo`z
