@@ -139,7 +139,7 @@ filetype plugin indent on           " required!
           autocmd BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
           " except the line I am typing on
           autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-          autocmd FileType c,cpp,haskell,vim,ruby,yml,markdown,python,lua,java,javascript,xml autocmd BufWritePre <buffer> :call ClearWhitespaces()
+          nnoremap <Leader>c :call ClearWhitespaces()<CR>
         augroup END
     " }
     " directories and files {
@@ -509,6 +509,9 @@ endif
     command! ClearWhitespaces :call ClearWhitespaces()
     function! ClearWhitespaces()
       :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+      if has("unix") " remove DOS style line endings
+        :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\r\\+$","","")'))
+      endif
     endfunction
 " }
 
