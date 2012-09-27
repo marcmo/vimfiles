@@ -380,7 +380,7 @@ filetype plugin indent on           " required!
     endif
 " }
 " Session List {
-    set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
+    set sessionoptions=blank,buffers,curdir,folds,options,tabpages,winsize
     nmap ,sl :SessionList<CR>
     nmap ,ss :SessionSave<CR>
 " }
@@ -396,20 +396,24 @@ filetype plugin indent on           " required!
 " mru {
     let MRU_Max_Entries = 200
     let MRU_Window_Height = 25
-    nnoremap ,u :MRU<CR>
+    " nnoremap ,u :MRU<CR>
 " }
 " ctrlp {
     let g:ctrlp_max_height = 25
-    let g:ctrlp_custom_ignore = '^\.git$\|\.hg$\|\.svn$'
+    let g:ctrlp_custom_ignore = '^\.git$\|\.hg$\|\.svn$\|\.metadata$'
     let g:ctrlp_by_filename = 1
     let g:ctrlp_max_files = 30000
     let g:ctrlp_match_window_bottom = 0
     let g:ctrlp_match_window_reversed = 0
+    let g:ctrlp_mruf_max = 200
+    let g:ctrlp_mruf_default_order = 0
+    let g:ctrlp_working_path_mode = 'a'
+    nnoremap ,u :CtrlPMRU<CR>
     map <F1> :CtrlPBuffer<CR>
     imap <F1> <esc>:CtrlPBuffer<CR>
     map <S-F1> :CtrlPBufTagAll<CR>
     imap <S-F1> <esc>:CtrlPBufTagAll<CR>
-    map <leader>t :CtrlP .<CR>
+    map <leader>t :CtrlP<CR>
 " }
 " Spell check {
     nmap <F5> :call ToggleSpell()<CR>
