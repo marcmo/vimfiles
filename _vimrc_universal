@@ -136,6 +136,7 @@ filetype plugin indent on           " required!
         " highlight end of line whitespace as Error
         hi link ExtraWhitespace Error
         augroup whitespaces
+          autocmd!
           autocmd BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
           " except the line I am typing on
           autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -205,9 +206,10 @@ filetype plugin indent on           " required!
 " programming {
       nnoremap <silent>,m :execute 'make'<CR>
     " formatting {
-        if has("autocmd")
+        augroup astyle
+          autocmd!
           autocmd BufNewFile,BufRead *.cpp,*.c,*.h set formatprg=astyle\ -A1sYHjk1
-        endif
+        augroup END
         " format complete file and return to starting position using mark 'b'
         nnoremap <Leader>f mbgggqG`b
     " }
@@ -247,17 +249,15 @@ filetype plugin indent on           " required!
         let g:fswitchnonewfiles=1
         " Create the destination path by substituting any 'include' string from the pathname with 'src'
         let b:fswitchlocs = 'reg:/include/src/'
-        if has("autocmd")
-          augroup mycppfiles
-            autocmd!
-            autocmd BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
-            autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,..'
-            autocmd BufEnter *.c  let b:fswitchdst  = 'h'
-            autocmd BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
-            autocmd BufEnter *.cpp  let b:fswitchdst  = 'h'
-            autocmd BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
-          augroup END
-        endif
+        augroup mycppfiles
+          autocmd!
+          autocmd BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
+          autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,..'
+          autocmd BufEnter *.c  let b:fswitchdst  = 'h'
+          autocmd BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
+          autocmd BufEnter *.cpp  let b:fswitchdst  = 'h'
+          autocmd BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
+        augroup END
         nnoremap <silent>,, :FSHere<cr>
         vnoremap <silent>,, :FSHere<cr>
     " }
@@ -279,17 +279,23 @@ filetype plugin indent on           " required!
     " ghcmod-vim {
         let g:ghcmod_hlint_options = ['--ignore=Use camelCase', '--ignore=Top-level binding $']
         let g:ghcmod_ghc_options = ['-fno-warn-missing-signatures','-fno-warn-type-defaults']
-        autocmd BufWritePost *.hs GhcModCheckAndLintAsync
-        autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gh :GhcModType<CR>
-        autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gc :GhcModTypeClear<CR>
+        augroup ghcmod
+          autocmd!
+          autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+          autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gh :GhcModType<CR>
+          autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gc :GhcModTypeClear<CR>
+        augroup END
     " }
     " haskellmode-vim {
         let hs_highlight_delimiters = 1 " Highlight delimiter characters
         let hs_highlight_boolean = 1 " Treat True and False as keywords.
         let hs_highlight_types = 1 " Treat names of primitive types as keywords.
         let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
-        autocmd BufWritePost *.hs GHCReload
-        autocmd BufEnter *.hs compiler ghc
+        augroup haskellmode
+          autocmd!
+          autocmd BufWritePost *.hs GHCReload
+          autocmd BufEnter *.hs compiler ghc
+        augroup END
     " }
     " haskell {
         " use ghc functionality for haskell files
@@ -299,30 +305,26 @@ filetype plugin indent on           " required!
           call setline(".", result)
         endfunction
         vnoremap <leader>e :call EvaluateInGhc()<CR>$x<esc>0
-        if has("autocmd")
-          augroup hs
-            autocmd bufenter *.hs,*.lhs noremap <F5> :call OpenInGhci()<CR><CR>
-            autocmd bufenter *.hs,*.lhs setlocal ts=2 sts=2 sw=2 expandtab
-          augroup END
-        endif
+        augroup hs
+          autocmd!
+          autocmd bufenter *.hs,*.lhs noremap <F5> :call OpenInGhci()<CR><CR>
+          autocmd bufenter *.hs,*.lhs setlocal ts=2 sts=2 sw=2 expandtab
+        augroup END
     " }
     " javascript {
-        if has("autocmd")
-          augroup js
-              setlocal ts=2 sts=2 sw=2 expandtab
-              set makeprg=jslint\ %
-              setlocal efm=%f:%l:%c:%m
-          augroup END
-        endif
+        augroup js
+            setlocal ts=2 sts=2 sw=2 expandtab
+            set makeprg=jslint\ %
+            setlocal efm=%f:%l:%c:%m
+        augroup END
     " }
     " lua {
-        if has("autocmd")
-          augroup lua
-            setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
-          " autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
-            autocmd bufenter *.lua noremap <F5> :call OpenWithLua()<CR><CR>
-          augroup END
-        endif
+        augroup lua
+          autocmd!
+          setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
+        " autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
+          autocmd bufenter *.lua noremap <F5> :call OpenWithLua()<CR><CR>
+        augroup END
     " }
 " }
 " neocomplcache {
@@ -360,12 +362,15 @@ filetype plugin indent on           " required!
     inoremap <expr><C-y>  neocomplcache#close_popup()
     inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
+    augroup neocompl
+      autocmd!
     " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    augroup END
 
     " Enable heavy omni completion.
     if !exists('g:neocomplcache_omni_patterns')
@@ -452,24 +457,27 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
       \ | wincmd p | diffthis
 endif
-if has("autocmd")
-  augroup mkd
-    autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
-  augroup END
-  autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-  autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
-  autocmd FileType c,cpp setlocal iskeyword-=?,!
-  augroup html
-      setlocal ts=2 sts=2 sw=2 expandtab
-      set makeprg=jslint\ %
-      setlocal efm=%f:%l:%c:%m
-  augroup END
+augroup mkd
+  autocmd!
+  autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
+augroup END
+autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
+autocmd FileType c,cpp setlocal iskeyword-=?,!
+augroup html
+  autocmd!
+  setlocal ts=2 sts=2 sw=2 expandtab
+  set makeprg=jslint\ %
+  setlocal efm=%f:%l:%c:%m
+augroup END
+augroup newbuf
+  autocmd!
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
   autocmd BufRead,BufNewFile *.rss setfiletype xml
-endif
+augroup END
 " helper functions {
     function! GetVisualSelection()
       try
