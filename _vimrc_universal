@@ -100,11 +100,12 @@ filetype plugin indent on           " required!
     set hidden
     set noswapfile                  " disable swapfiles
     set history=1000                " keep 1000 lines of command line history
-    set smartindent                " do smart autoindenting when starting a new line
-    set vb                         " visual beep
-    set autoread                   " reload file if permissions change due to BufWritePost below
-    set autowrite                  " write file to disk on :make, :!, :first, :next
-    set gcr=n:blinkon0             " turn of blinking cursor in normal mode
+    set smartindent                 " do smart autoindenting when starting a new line
+    set vb                          " visual beep
+    set autoread                    " reload file if permissions change due to BufWritePost below
+    set autowrite                   " write file to disk on :make, :!, :first, :next
+    set gcr=n:blinkon0              " turn of blinking cursor in normal mode
+    set synmaxcol=800               " Don't try to highlight lines longer than 800 characters.
 " }
 " general utilities {
     " quick way to escape from insert mode
