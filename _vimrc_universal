@@ -110,6 +110,7 @@ filetype plugin indent on           " required!
 " general utilities {
     " quick way to escape from insert mode
     inoremap jj <ESC>
+    inoremap kj <ESC>
     " use :w!! to write to a file using sudo
     cnoremap w!! %!sudo tee > /dev/null %
     nnoremap<leader>l :set list!<CR>
@@ -426,7 +427,7 @@ filetype plugin indent on           " required!
     inoremap <F5> <Esc>:call ToggleSpell()<CR>a
 " }
 " nerdtree {
-    noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W><C-W><CR>
+    noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W>b
     noremap ,f :execute 'NERDTreeFind'<CR>
 " }
 " bufkill {
