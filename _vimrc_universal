@@ -56,7 +56,7 @@ filetype plugin indent on           " required!
       set guioptions-=T             " remove [T]oolbar
       set cursorline                " highlight the screen line of the cursor
     else
-      set t_Co=256
+      set t_Co=256                  " we want full colors in terminal
     endif
     if has('statusline')
       set laststatus=2                         " always show statusline
@@ -428,6 +428,7 @@ filetype plugin indent on           " required!
 " nerdtree {
     noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W>b
     noremap ,f :execute 'NERDTreeFind'<CR>
+    let NERDTreeShowHidden=1  " display hidden files by default
 " }
 " bufkill {
     nnoremap ,w :BD<CR>
