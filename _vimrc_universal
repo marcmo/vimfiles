@@ -36,6 +36,7 @@ Bundle 'Shougo/vimproc'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'marcmo/haskellmode-vim'
 Bundle 'AndrewRadev/switch.vim'
+Bundle 'Lokaltog/vim-easymotion'
 
 filetype plugin indent on           " required!
 
@@ -74,7 +75,7 @@ filetype plugin indent on           " required!
 " }
 " basic settings {
     set laststatus=2
-    set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.d
+    set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.d,tags
     set nofoldenable                " disable folding
     set showmode                    " always show what mode we're currently editing in
     set nowrap                      " don't wrap lines
@@ -257,8 +258,8 @@ filetype plugin indent on           " required!
           autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,..'
           autocmd BufEnter *.c  let b:fswitchdst  = 'h'
           autocmd BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
-          autocmd BufEnter *.cpp  let b:fswitchdst  = 'h'
-          autocmd BufEnter *.cpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
+          autocmd BufEnter *.cpp,*.cc  let b:fswitchdst  = 'h'
+          autocmd BufEnter *.cpp,*.cc  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
         augroup END
         nnoremap <silent>,, :FSHere<cr>
         vnoremap <silent>,, :FSHere<cr>
@@ -324,7 +325,6 @@ filetype plugin indent on           " required!
         augroup lua
           autocmd!
           setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
-        " autocmd BufRead,BufNewFile *.lua set iskeyword+=.,:
           autocmd bufenter *.lua noremap <F5> :call OpenWithLua()<CR><CR>
         augroup END
     " }
@@ -360,7 +360,6 @@ filetype plugin indent on           " required!
 
     " <C-h>, <BS>: close popup and delete backword char.
     inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
     inoremap <expr><C-y>  neocomplcache#close_popup()
     inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
@@ -407,7 +406,7 @@ filetype plugin indent on           " required!
 " }
 " ctrlp {
     let g:ctrlp_max_height = 25
-    let g:ctrlp_custom_ignore = '^\.git$\|\.hg$\|\.svn$\|\.metadata$'
+    let g:ctrlp_custom_ignore = '^\.git$\|\.hg$\|\.svn$\|\.metadata$|tags$'
     let g:ctrlp_by_filename = 1
     let g:ctrlp_max_files = 30000
     let g:ctrlp_match_window_bottom = 0
@@ -450,7 +449,7 @@ filetype plugin indent on           " required!
       cw " show quickfix window already
     endfunction
     command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
-    noremap <leader>a :Ack<space>-G ".*\.(c\|cpp\|h\|hs\|lua\|rb)$"<space>
+    noremap <leader>a :Ack<space>-G ".*\.(c\|cpp\|h\|hs\|lua\|py\|rb)$"<space>
 " }
 
 " Convenient command to see the difference between the current buffer and the
@@ -480,6 +479,22 @@ augroup newbuf
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
   autocmd BufRead,BufNewFile *.rss setfiletype xml
 augroup END
+" move through camelcase words {
+    "" Use one of the following to define the camel characters.
+    " Stop on capital letters.
+    let g:camelchar = "A-Z"
+    " Also stop on numbers.
+    let g:camelchar = "A-Z0-9"
+    " Include '.' for class member, ',' for separator, ';' end-statement,
+    " and <[< bracket starts and "'` quotes.
+    let g:camelchar = "A-Z0-9.,;:{([`'\""
+    nnoremap <silent><C-Left> :<C-u>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%^','bW')<CR>
+    nnoremap <silent><C-Right> :<C-u>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%$','W')<CR>
+    inoremap <silent><C-Left> <C-o>:call search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%^','bW')<CR>
+    inoremap <silent><C-Right> <C-o>:call search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%$','W')<CR>
+    vnoremap <silent><C-Left> :<C-U>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%^','bW')<CR>v`>o
+    vnoremap <silent><C-Right> <Esc>`>:<C-U>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%$','W')<CR>v`<o
+" }
 " helper functions {
     function! GetVisualSelection()
       try
