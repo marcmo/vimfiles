@@ -18,7 +18,7 @@ Bundle 'msanders/snipmate.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Shougo/neocomplcache'
 Bundle 'osyo-manga/neocomplcache-clang_complete'
-Bundle 'Rip-Rip/clang_complete'
+" Bundle 'Rip-Rip/clang_complete'
 Bundle 'Raimondi/delimitMate'
 Bundle 'derekwyatt/vim-fswitch'
 Bundle 'godlygeek/csapprox'
@@ -37,6 +37,8 @@ Bundle 'ujihisa/neco-ghc'
 Bundle 'marcmo/haskellmode-vim'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-foreplay'
+Bundle 'guns/vim-clojure-static'
 
 filetype plugin indent on           " required!
 
@@ -231,22 +233,22 @@ filetype plugin indent on           " required!
         inoremap <S-F3> <Esc>:tn<CR>a
         noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html .<CR>
     " }
-    " clang {
-        let g:clang_auto_select=1
-        let g:clang_complete_auto=1
-        let g:clang_complete_copen=1
-        let g:clang_snippets=1
-        let g:clang_snippets_engine = "snipmate"
-        let g:clang_exec="clang"
-        let g:clang_user_options=""
-        let g:clang_auto_user_options="path, .clang_complete"
-        let g:clang_use_library=1
-        let g:clang_library_path="/usr/local/lib"
-        let g:clang_sort_algo="priority"
-        let g:clang_complete_macros=1
-        let g:clang_complete_patterns=0
-        nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-    " }
+    " " clang {
+    "     let g:clang_auto_select=1
+    "     let g:clang_complete_auto=0
+    "     let g:clang_complete_copen=1
+    "     let g:clang_snippets=1
+    "     let g:clang_snippets_engine = "snipmate"
+    "     let g:clang_exec="clang"
+    "     let g:clang_user_options=""
+    "     let g:clang_auto_user_options="path, .clang_complete"
+    "     let g:clang_use_library=1
+    "     let g:clang_library_path="/usr/local/lib"
+    "     let g:clang_sort_algo="priority"
+    "     let g:clang_complete_macros=1
+    "     let g:clang_complete_patterns=0
+    "     nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
+    " " }
     " fswitch {
         let g:fsnonewfiles=1
         let g:fswitchnonewfiles=1
@@ -446,7 +448,7 @@ filetype plugin indent on           " required!
 " }
 " ack {
     function! AckGrep(command)
-      cexpr system("ack-grep " . a:command)
+      cexpr system("ack " . a:command)
       cw " show quickfix window already
     endfunction
     command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
@@ -461,7 +463,7 @@ if !exists(":DiffOrig")
 endif
 augroup mkd
   autocmd!
-  autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
+  autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
 augroup END
 autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
