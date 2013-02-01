@@ -210,6 +210,7 @@ filetype plugin indent on           " required!
 " }
 " programming {
       nnoremap <silent>,m :execute 'make'<CR>
+      autocmd BufNewFile,BufRead *.cpp,*.h,*.html set matchpairs+=<:>
     " formatting {
         augroup astyle
           autocmd!
@@ -219,7 +220,7 @@ filetype plugin indent on           " required!
         nnoremap <Leader>f mbgggqG`b
     " }
     " taglist {
-        nnoremap <silent> <F9> :TlistToggle<CR>
+        nnoremap <silent> <S-F9> :TlistToggle<CR>
     " }
     " ctags {
         set tags=tags;$HOME
@@ -319,7 +320,7 @@ filetype plugin indent on           " required!
     " javascript {
         augroup js
             setlocal ts=2 sts=2 sw=2 expandtab
-            set makeprg=jslint\ %
+            autocmd bufenter *.js,*.html set makeprg=jslint\ %
             setlocal efm=%f:%l:%c:%m
         augroup END
     " }
@@ -329,6 +330,26 @@ filetype plugin indent on           " required!
           setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
           autocmd bufenter *.lua noremap <F5> :call OpenWithLua()<CR><CR>
         augroup END
+    " }
+    " c++ {
+        augroup cpp
+          autocmd!
+          autocmd bufenter *.cpp,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
+          autocmd bufenter *.cpp nnoremap <F5> :update<CR>:call MakeCpp()<CR>
+          autocmd QuickFixCmdPost [^l]* nested cwindow
+          autocmd QuickFixCmdPost    l* nested lwindow
+        augroup END
+        " Save and make current file.o
+        function! MakeCpp()
+          let curr_dir = expand('%:h')
+          if curr_dir == ''
+            let curr_dir = '.'
+          endif
+          echo curr_dir
+          execute 'lcd ' . curr_dir
+          execute 'make'
+          execute 'lcd -'
+        endfunction
     " }
 " }
 " neocomplcache {
@@ -424,8 +445,8 @@ filetype plugin indent on           " required!
     noremap <leader>t :CtrlP<CR>
 " }
 " Spell check {
-    nnoremap <F5> :call ToggleSpell()<CR>
-    inoremap <F5> <Esc>:call ToggleSpell()<CR>a
+    nnoremap <F9> :call ToggleSpell()<CR>
+    inoremap <F9> <Esc>:call ToggleSpell()<CR>a
 " }
 " nerdtree {
     noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W>b
@@ -473,8 +494,8 @@ autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType c,cpp setlocal iskeyword-=?,!
 augroup html
   autocmd!
-  setlocal ts=2 sts=2 sw=2 expandtab
-  set makeprg=jslint\ %
+  autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType html set makeprg=jslint\ %
   setlocal efm=%f:%l:%c:%m
 augroup END
 augroup newbuf
