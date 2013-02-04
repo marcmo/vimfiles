@@ -1,6 +1,14 @@
 " windows
+"
+" The quotes at the beginning of clang_exec and at the end of clang_user_options are important, don't remove them
+" They basically trick vim into thinking clang executed fine, because the msvc build autocompletes correctly but fails
+" to compile.
+" Don't forget to put paths with spaces in quotes other wise vim won't be able to execute the command
+let g:clang_exec = 'C:\path\to\clang.exe'
+let g:clang_user_options = '2> NUL || exit 0"'
+
 if has('gui_running')
-  set guifont=courier_New:h8
+  set guifont=consolas:h12
   set lines=75
   set columns=200
 endif
@@ -17,3 +25,12 @@ function! OpenWithLua()
 endfunction
 let g:haddock_browser = "c:\Programs\firefox3\firefox.exe"
 let g:haddock_browser_callformat = "%s -a Firefox %s"
+map <MiddleMouse> <Nop>
+imap <MiddleMouse> <Nop>
+map <2-MiddleMouse> <Nop>
+imap <2-MiddleMouse> <Nop>
+map <3-MiddleMouse> <Nop>
+imap <3-MiddleMouse> <Nop>
+map <4-MiddleMouse> <Nop>
+imap <4-MiddleMouse> <Nop>
+
