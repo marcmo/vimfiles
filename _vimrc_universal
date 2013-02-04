@@ -219,6 +219,9 @@ filetype plugin indent on           " required!
         " format complete file and return to starting position using mark 'b'
         nnoremap <Leader>f mbgggqG`b
     " }
+    " tcomment {
+        let g:tcommentOptions = {'mixedindent':1}
+    " }
     " taglist {
         nnoremap <silent> <S-F9> :TlistToggle<CR>
     " }
