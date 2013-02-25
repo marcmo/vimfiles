@@ -17,16 +17,18 @@ Bundle 'tpope/vim-repeat'
 Bundle 'godlygeek/tabular'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'digitaltoad/vim-jade'
 Bundle 'thinca/vim-quickrun'
 Bundle 'sjl/gundo.vim'
-Bundle 'msanders/snipmate.vim'
+Bundle 'chrisbra/NrrwRgn.git'
+" Bundle 'msanders/snipmate.vim'
 Bundle 'kien/ctrlp.vim'
+" Bundle 'Valloric/YouCompleteMe'
+" Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/neocomplcache'
-Bundle 'osyo-manga/neocomplcache-clang_complete'
-" Bundle 'Rip-Rip/clang_complete'
+Bundle 'Shougo/neosnippet.git'
 Bundle 'Raimondi/delimitMate'
 Bundle 'derekwyatt/vim-fswitch'
+" Make gvim-only colorschemes work transparently in terminal vim
 Bundle 'godlygeek/csapprox'
 Bundle 'sessionman.vim'
 Bundle 'altercation/vim-colors-solarized'
@@ -82,7 +84,7 @@ filetype plugin indent on           " required!
 " }
 " basic settings {
     set laststatus=2
-    set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.d,*.s,tags
+    set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.s,tags
     set nofoldenable                " disable folding
     set showmode                    " always show what mode we're currently editing in
     set nowrap                      " don't wrap lines
@@ -242,22 +244,9 @@ filetype plugin indent on           " required!
         inoremap <S-F3> <Esc>:tn<CR>a
         noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html --exclude=*.s .<CR>
     " }
-    " " clang {
-    "     let g:clang_auto_select=1
-    "     let g:clang_complete_auto=0
-    "     let g:clang_complete_copen=1
-    "     let g:clang_snippets=1
-    "     let g:clang_snippets_engine = "snipmate"
-    "     let g:clang_exec="clang"
-    "     let g:clang_user_options=""
-    "     let g:clang_auto_user_options="path, .clang_complete"
-    "     let g:clang_use_library=1
-    "     let g:clang_library_path="/usr/local/lib"
-    "     let g:clang_sort_algo="priority"
-    "     let g:clang_complete_macros=1
-    "     let g:clang_complete_patterns=0
-    "     nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-    " " }
+    " YCM {
+        let g:ycm_autoclose_preview_window_after_completion=1
+    " }
     " fswitch {
         let g:fsnonewfiles=1
         let g:fswitchnonewfiles=1
@@ -342,7 +331,7 @@ filetype plugin indent on           " required!
     " c++ {
         augroup cpp
           autocmd!
-          autocmd bufenter *.cpp,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
+          " autocmd bufenter *.cpp,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
           autocmd bufenter *.cpp nnoremap <F5> :update<CR>:call MakeCpp()<CR>
           autocmd QuickFixCmdPost [^l]* nested cwindow
           autocmd QuickFixCmdPost    l* nested lwindow
@@ -408,8 +397,21 @@ filetype plugin indent on           " required!
     if !exists('g:neocomplcache_omni_patterns')
       let g:neocomplcache_omni_patterns = {}
     endif
-    let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-    let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+    " let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+    " let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+    " For snippet_complete marker.
+    if has('conceal')
+      set conceallevel=2 concealcursor=i
+    endif
+" }
+" neosnippet {
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+
+    " SuperTab like snippets behavior.
+    imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
     " For snippet_complete marker.
     if has('conceal')
