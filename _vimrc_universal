@@ -63,8 +63,8 @@ filetype plugin indent on           " required!
         colorscheme solarized
       endif
     else
-      colorscheme wombat
       set t_Co=256                  " we want full colors in terminal
+      colorscheme wombat
     endif
     if has('statusline')
       set laststatus=2                         " always show statusline
@@ -143,13 +143,13 @@ filetype plugin indent on           " required!
     " trailing whitespaces {
         " highlight end of line whitespace as Error
         hi link ExtraWhitespace Error
-        augroup whitespaces
+        augroup whitespaces " {
           autocmd!
           autocmd BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
           " except the line I am typing on
           autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
           nnoremap <Leader>c :call ClearWhitespaces()<CR>
-        augroup END
+        augroup END " }
     " }
     " directories and files {
         noremap ,cd :call SetWorkingDirToCurrentDir()<CR>
@@ -213,12 +213,11 @@ filetype plugin indent on           " required!
 " }
 " programming {
       nnoremap <silent>,m :execute 'make'<CR>
-      autocmd BufNewFile,BufRead *.cpp,*.h,*.html set matchpairs+=<:>
     " formatting {
-        augroup astyle
+        augroup astyle " {
           autocmd!
           autocmd BufNewFile,BufRead *.cpp,*.c,*.h set formatprg=astyle\ -A1sYHjk1
-        augroup END
+        augroup END " }
         " format complete file and return to starting position using mark 'b'
         nnoremap <Leader>f mbgggqG`b
     " }
@@ -245,7 +244,7 @@ filetype plugin indent on           " required!
         let g:fswitchnonewfiles=1
         " Create the destination path by substituting any 'include' string from the pathname with 'src'
         let b:fswitchlocs = 'reg:/include/src/'
-        augroup mycppfiles
+        augroup mycppfiles " {
           autocmd!
           autocmd BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
           autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,..'
@@ -253,7 +252,7 @@ filetype plugin indent on           " required!
           autocmd BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
           autocmd BufEnter *.cpp,*.cc  let b:fswitchdst  = 'h'
           autocmd BufEnter *.cpp,*.cc  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
-        augroup END
+        augroup END " }
         nnoremap <silent>,, :FSHere<cr>
         vnoremap <silent>,, :FSHere<cr>
     " }
@@ -275,23 +274,23 @@ filetype plugin indent on           " required!
     " ghcmod-vim {
         let g:ghcmod_hlint_options = ['--ignore=Use camelCase', '--ignore=Top-level binding $']
         let g:ghcmod_ghc_options = ['-fno-warn-missing-signatures','-fno-warn-type-defaults']
-        augroup ghcmod
+        augroup ghcmod " {
           autocmd!
           autocmd BufWritePost *.hs GhcModCheckAndLintAsync
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gh :GhcModType<CR>
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gc :GhcModTypeClear<CR>
-        augroup END
+        augroup END " }
     " }
     " haskellmode-vim {
         let hs_highlight_delimiters = 1 " Highlight delimiter characters
         let hs_highlight_boolean = 1 " Treat True and False as keywords.
         let hs_highlight_types = 1 " Treat names of primitive types as keywords.
         let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
-        augroup haskellmode
+        augroup haskellmode " {
           autocmd!
           autocmd BufWritePost *.hs GHCReload
           autocmd BufEnter *.hs compiler ghc
-        augroup END
+        augroup END " }
     " }
     " haskell {
         " use ghc functionality for haskell files
@@ -301,34 +300,34 @@ filetype plugin indent on           " required!
           call setline(".", result)
         endfunction
         vnoremap <leader>e :call EvaluateInGhc()<CR>$x<esc>0
-        augroup hs
+        augroup hs " {
           autocmd!
           autocmd bufenter *.hs,*.lhs noremap <F5> :call OpenInGhci()<CR><CR>
           autocmd bufenter *.hs,*.lhs setlocal ts=2 sts=2 sw=2 expandtab
-        augroup END
+        augroup END " }
     " }
     " javascript {
-        augroup js
-            setlocal ts=2 sts=2 sw=2 expandtab
-            autocmd bufenter *.js,*.html set makeprg=jslint\ %
-            setlocal efm=%f:%l:%c:%m
-        augroup END
+        augroup js " {
+          autocmd!
+          autocmd FileType html,javascript setlocal ts=2 sts=2 sw=2 expandtab
+          autocmd FileType html,javascript setlocal makeprg=jslint\ % | setlocal efm=%f:%l:%c:%m
+        augroup END " }
     " }
     " lua {
-        augroup lua
+        augroup lua " {
           autocmd!
-          setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
-          autocmd bufenter *.lua noremap <F5> :call OpenWithLua()<CR><CR>
-        augroup END
+          autocmd FileType lua setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
+          autocmd FileType lua noremap <F5> :call OpenWithLua()<CR><CR>
+        augroup END " }
     " }
     " c++ {
-        augroup cpp
+        augroup cpp " {
           autocmd!
           autocmd bufenter *.cpp,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
           autocmd bufenter *.cpp nnoremap <F5> :update<CR>:call MakeCpp()<CR>
           autocmd QuickFixCmdPost [^l]* nested cwindow
           autocmd QuickFixCmdPost    l* nested lwindow
-        augroup END
+        augroup END " }
         " Save and make current file.o
         function! MakeCpp()
           let curr_dir = expand('%:h')
@@ -376,7 +375,7 @@ filetype plugin indent on           " required!
     inoremap <expr><C-y>  neocomplcache#close_popup()
     inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
-    augroup neocompl
+    augroup neocompl " {
       autocmd!
     " Enable omni completion.
       autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -384,7 +383,7 @@ filetype plugin indent on           " required!
       autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
       autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
       autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    augroup END
+    augroup END " }
 
     " Enable heavy omni completion.
     if !exists('g:neocomplcache_omni_patterns')
@@ -405,11 +404,6 @@ filetype plugin indent on           " required!
     " SuperTab like snippets behavior.
     imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
     smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-    " For snippet_complete marker.
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
 " }
 " Session List {
     set sessionoptions=blank,buffers,curdir,folds,options,tabpages,winsize
@@ -485,28 +479,23 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
       \ | wincmd p | diffthis
 endif
-augroup mkd
+augroup FTCheck " {
   autocmd!
-  autocmd BufRead *.mkd,*.md,*.markdown  set ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
-augroup END
-autocmd BufRead *.proto set filetype=proto
-autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType c,cpp setlocal iskeyword-=?,!
-augroup html
-  autocmd!
-  autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType html set makeprg=jslint\ %
-  setlocal efm=%f:%l:%c:%m
-augroup END
-augroup newbuf
-  autocmd!
+  autocmd BufRead *.mkd,*.md,*.markdown  set autoindent formatoptions=tcroqn2 comments=n:&gt; ft=markdown
+  autocmd BufRead *.proto set ft=proto
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
   autocmd BufRead,BufNewFile *.rss setfiletype xml
-augroup END
+augroup END " }
+augroup FTOptions " {
+  autocmd!
+  autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+  autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
+  autocmd FileType c,cpp setlocal iskeyword-=?,!
+  autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+augroup END " }
 " move through camelcase words {
     "" Use one of the following to define the camel characters.
     " Stop on capital letters.
