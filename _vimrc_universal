@@ -7,7 +7,7 @@ else
   let s:vimconfig='.vim'
 endif
 let &rtp=&rtp.',~/'.s:vimconfig.'/bundle/vundle/'
-set shell=bash\ --login
+set shellcmdflag=-ic
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
