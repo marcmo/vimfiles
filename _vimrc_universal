@@ -57,6 +57,7 @@ filetype plugin indent on           " required!
       set guitablabel=%t            " only display the filename not the path
       set guioptions-=m             " remove [m]enubar
       set guioptions-=T             " remove [T]oolbar
+      set guioptions-=rL            " remove all verical scrollbars
       set cursorline                " highlight the screen line of the cursor
       if filereadable(expand("~/.vim/bundle/vim-aldmeris/colors/aldmeris.vim"))
         let g:aldmeris_termcolors = "tango"
@@ -451,6 +452,7 @@ filetype plugin indent on           " required!
     noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W>b
     noremap ,f :execute 'NERDTreeFind'<CR>
     let NERDTreeShowHidden=1  " display hidden files by default
+    let g:NERDTreeWinPos = "right"
 " }
 " bufkill {
     nnoremap ,w :BD<CR>
@@ -497,6 +499,7 @@ augroup FTOptions " {
   autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
   autocmd FileType c,cpp setlocal iskeyword-=?,!
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType qf wincmd J
 augroup END " }
 " move through camelcase words {
     "" Use one of the following to define the camel characters.
