@@ -452,7 +452,6 @@ filetype plugin indent on           " required!
     noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W>b
     noremap ,f :execute 'NERDTreeFind'<CR>
     let NERDTreeShowHidden=1  " display hidden files by default
-    let g:NERDTreeWinPos = "right"
 " }
 " bufkill {
     nnoremap ,w :BD<CR>
@@ -498,6 +497,7 @@ augroup FTOptions " {
   autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
   autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
   autocmd FileType c,cpp setlocal iskeyword-=?,!
+  autocmd FileType hs setlocal iskeyword-=.
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType qf wincmd J
 augroup END " }
