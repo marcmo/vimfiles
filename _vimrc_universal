@@ -10,39 +10,39 @@ let &rtp=&rtp.',~/'.s:vimconfig.'/bundle/vundle/'
 set shellcmdflag=-ic
 call vundle#rc()
 
+" essential plugins
 Bundle 'gmarik/vundle'
 Bundle 'L9'
-Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'godlygeek/tabular'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'thinca/vim-quickrun'
-Bundle 'sjl/gundo.vim'
-Bundle 'chrisbra/NrrwRgn.git'
+Bundle 'mru.vim'
 Bundle 'kien/ctrlp.vim'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neosnippet.git'
 Bundle 'Raimondi/delimitMate'
-Bundle 'derekwyatt/vim-fswitch'
-" Make gvim-only colorschemes work transparently in terminal vim
-Bundle 'godlygeek/csapprox'
-Bundle 'sessionman.vim'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'veloce/vim-aldmeris'
-Bundle 'Wombat'
 Bundle 'bufkill.vim'
 Bundle 'BufOnly.vim'
-Bundle 'taglist.vim'
 Bundle 'matchit.zip'
-Bundle 'mru.vim'
-Bundle 'eagletmt/ghcmod-vim'
-Bundle 'dag/vim2hs'
 Bundle 'Shougo/vimproc'
+Bundle 'veloce/vim-aldmeris'
+" frequently used plugins
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-fugitive'
+Bundle 'thinca/vim-quickrun'
+Bundle 'godlygeek/csapprox'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'Wombat'
+Bundle 'chrisbra/NrrwRgn.git'
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/neosnippet.git'
+Bundle 'derekwyatt/vim-fswitch'
+Bundle 'taglist.vim'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'marcmo/haskellmode-vim'
+Bundle 'eagletmt/ghcmod-vim'
+" seldom used plugins
+Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-foreplay'
@@ -249,12 +249,11 @@ filetype plugin indent on           " required!
         let b:fswitchlocs = 'reg:/include/src/'
         augroup mycppfiles " {
           autocmd!
-          autocmd BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
-          autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,..'
-          autocmd BufEnter *.c  let b:fswitchdst  = 'h'
-          autocmd BufEnter *.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
-          autocmd BufEnter *.cpp,*.cc  let b:fswitchdst  = 'h'
-          autocmd BufEnter *.cpp,*.cc  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
+          autocmd BufEnter *.h let b:fswitchdst  = 'cpp,CPP,cc,CC,c,C'
+          autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,../src,src'
+          autocmd BufEnter *.c  let b:fswitchdst  = 'h,H'
+          autocmd BufEnter *.cpp,*.cc  let b:fswitchdst  = 'h,H'
+          autocmd BufEnter *.cpp,*.cc,*.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
         augroup END " }
         nnoremap <silent>,, :FSHere<cr>
         vnoremap <silent>,, :FSHere<cr>
@@ -271,15 +270,12 @@ filetype plugin indent on           " required!
         nnoremap <silent> ,rr :QuickRun -mode n<CR>
         vnoremap <silent> ,rr :QuickRun -mode v<CR>
     " }
-    " vim2hs {
-        let g:haskell_conceal = 0
-    " }
     " ghcmod-vim {
-        let g:ghcmod_hlint_options = ['--ignore=Use camelCase', '--ignore=Top-level binding $']
-        let g:ghcmod_ghc_options = ['-fno-warn-missing-signatures','-fno-warn-type-defaults']
+        let g:ghcmod_hlint_options = ['--ignore=Use camelCase']
+        let g:ghcmod_ghc_options = ['-fno-warn-missing-signatures','-fno-warn-type-defaults','-fno-warn-unused-binds']
         augroup ghcmod " {
           autocmd!
-          autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+          " autocmd BufWritePost *.hs GhcModCheckAndLintAsync
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gh :GhcModType<CR>
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gc :GhcModTypeClear<CR>
         augroup END " }
@@ -436,7 +432,7 @@ filetype plugin indent on           " required!
     let g:ctrlp_match_window_reversed = 0
     let g:ctrlp_mruf_max = 200
     let g:ctrlp_mruf_default_order = 0
-    let g:ctrlp_working_path_mode = 'a'
+    let g:ctrlp_working_path_mode = 0
     nnoremap ,u :CtrlPMRU<CR>
     noremap <F1> :CtrlPBuffer<CR>
     inoremap <F1> <esc>:CtrlPBuffer<CR>
@@ -499,7 +495,7 @@ augroup FTOptions " {
   autocmd FileType c,cpp setlocal iskeyword-=?,!
   autocmd FileType hs setlocal iskeyword-=.
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType qf wincmd J
+  autocmd FileType qf wincmd J | setlocal wrap linebreak
 augroup END " }
 " move through camelcase words {
     "" Use one of the following to define the camel characters.
