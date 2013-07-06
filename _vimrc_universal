@@ -83,7 +83,7 @@ filetype plugin indent on           " required!
     endif
 " }
 " basic settings {
-    set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.s,tags
+    set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.s
     set nofoldenable                " disable folding
     set showmode                    " always show what mode we're currently editing in
     set nowrap                      " don't wrap lines
@@ -559,6 +559,26 @@ augroup END " }
       if has("unix") " remove DOS style line endings
         :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\r\\+$","","")'))
       endif
+    endfunction
+
+    " replace german Umlauts
+    function ReplaceUmlauts()
+      let s:line = line(".")
+      let s:column = col(".")
+        let s:save_report = &report
+        set report=99999
+        %s/ä/ae/eIg
+        %s/ö/oe/eIg
+        %s/ü/ue/eIg
+        %s/Ä/Ae/eIg
+        %s/Ö/Oe/eIg
+        %s/Ü/Ue/eIg
+        %s/ß/ss/eIg
+        let &report=s:save_report
+        unlet s:save_report
+        call cursor(s:line,s:column)
+        unlet s:line
+        unlet s:column
     endfunction
 " }
 
