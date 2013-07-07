@@ -47,6 +47,7 @@ Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-foreplay'
 Bundle 'guns/vim-clojure-static'
+Bundle 'bling/vim-airline'
 
 filetype plugin indent on           " required!
 
@@ -71,10 +72,6 @@ filetype plugin indent on           " required!
     endif
     if has('statusline')
       set laststatus=2                         " always show statusline
-      set statusline=%<%f\                     " Filename
-      set statusline+=%w%h%m%r                 " Options
-      set statusline+=\ [%{&ff}/%Y]            " filetype
-      set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
     endif
     if has('cmdline_info')
       set ruler                     " show the cursor position all the time
@@ -98,7 +95,7 @@ filetype plugin indent on           " required!
     set ignorecase                  " ignore case when searching
     set smartcase                   " ignore case if all lowercase, otherwise case-sensitive
     set smarttab                    " insert tabs on the start of a line according to shiftwidth
-    set scrolloff=3                 " keep off the edges of the screen when scrolling
+    set scrolloff=9                 " keep off the edges of the screen when scrolling
     set virtualedit=block           " allow virtual editing in Visual block mode.
     set winminheight=0              " windows can be 0 line high
     set hlsearch                    " highlight search terms
@@ -143,6 +140,10 @@ filetype plugin indent on           " required!
     inoremap <M-Up> <Esc>:m-2<CR>==gi
     vnoremap <M-Down> :m'>+<CR>gv=`<my`>mzgv`yo`z
     vnoremap <M-Up> :m'<-2<CR>gv=`>my`<mzgv`yo`z
+    " profiling
+    nnoremap <silent> <leader>DD :exe ":profile start profile.log"<cr>:exe ":profile func *"<cr>:exe ":profile file *"<cr>
+    nnoremap <silent> <leader>DQ :exe ":profile pause"<cr>:noautocmd qall!<cr>
+
     " trailing whitespaces {
         " highlight end of line whitespace as Error
         hi link ExtraWhitespace Error
@@ -404,10 +405,8 @@ filetype plugin indent on           " required!
     imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
     smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 " }
-" Session List {
-    set sessionoptions=blank,buffers,curdir,folds,options,tabpages,winsize
-    nnoremap ,sl :SessionList<CR>
-    nnoremap ,ss :SessionSave<CR>
+" airline {
+    let g:airline_powerline_fonts=1   " make sure powerline font is installed
 " }
 " fugitiv {
     function! CloseFugitiveDiffAfterUsage()

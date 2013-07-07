@@ -6,7 +6,7 @@ let macvim_hig_shift_movement = 1
 map <leader>b :!open -a Google\ Chrome %<CR><CR>
 command! -bar -nargs=1 OpenURL :!open <args>
 if has('gui_running')
-  set guifont=Monaco:h14
+  set guifont=Monaco\ for\ Powerline:h14
   set lines=60
   set columns=200
 endif
