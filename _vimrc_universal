@@ -45,9 +45,8 @@ Bundle 'eagletmt/ghcmod-vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'tpope/vim-foreplay'
-Bundle 'guns/vim-clojure-static'
 Bundle 'bling/vim-airline'
+Bundle 'IndentConsistencyCop'
 
 filetype plugin indent on           " required!
 
