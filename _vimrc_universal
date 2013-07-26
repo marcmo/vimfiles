@@ -47,6 +47,10 @@ Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'bling/vim-airline'
 Bundle 'IndentConsistencyCop'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-notes'
+
+let g:notes_directories = ['$DROPBOX/notes']
 
 filetype plugin indent on           " required!
 
@@ -127,6 +131,9 @@ filetype plugin indent on           " required!
     " Go to newer/older text state
     nnoremap <S-F11> g-
     nnoremap <S-F12> g+
+    " insert current date
+    nnoremap <S-F10> "=strftime("%Y%b%d_%H%M")<CR>P
+    inoremap <S-F10> <C-R>=strftime("%Y%b%d_%H%M")<CR>
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
@@ -139,6 +146,9 @@ filetype plugin indent on           " required!
     inoremap <M-Up> <Esc>:m-2<CR>==gi
     vnoremap <M-Down> :m'>+<CR>gv=`<my`>mzgv`yo`z
     vnoremap <M-Up> :m'<-2<CR>gv=`>my`<mzgv`yo`z
+    " scroll up and down
+    nnoremap <C-e> 3<C-e>
+    nnoremap <C-y> 3<C-y>
     " profiling
     nnoremap <silent> <leader>DD :exe ":profile start profile.log"<cr>:exe ":profile func *"<cr>:exe ":profile file *"<cr>
     nnoremap <silent> <leader>DQ :exe ":profile pause"<cr>:noautocmd qall!<cr>
@@ -237,10 +247,29 @@ filetype plugin indent on           " required!
         " lookup symbol in tags file
         inoremap <F3> <Esc><c-]><CR>
         noremap <F3> <c-]><CR>
-        " jump to next tag
-        nnoremap <S-F3> :tn<CR>
-        inoremap <S-F3> <Esc>:tn<CR>a
-        noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html --exclude=*.s .<CR>
+        noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html --exclude=*.s --exclude=docs .<CR>
+    " }
+    " cscope {
+        "   'c'   calls:  find all calls to the function name under cursor
+        "   'g'   global: find global definition(s) of the token under cursor
+        "   's'   symbol: find all references to the token under cursor
+        "   'f'   file:   open the filename under cursor
+        "   'i'   includes: find files that include the filename under cursor
+        set cscopequickfix=s-,c-,d-,i-,t-,e-
+        nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+        nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+        nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+        nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+        nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+        nnoremap <S-F3> :cs find g <C-R>=expand("<cword>")<CR><CR>
+        function! CscopeAdd()
+          if filereadable("cscope.out")
+            cs add cscope.out
+            set cscopetag
+          endif
+        endfunction
+        command! LoadCscope :call CscopeAdd()
+        nnoremap <C-\>a :LoadCscope<CR>
     " }
     " fswitch {
         let g:fsnonewfiles=1
@@ -560,7 +589,8 @@ augroup END " }
     endfunction
 
     " replace german Umlauts
-    function ReplaceUmlauts()
+    command! ReplaceUmlauts :call ReplaceUmlauts()
+    function! ReplaceUmlauts()
       let s:line = line(".")
       let s:column = col(".")
         let s:save_report = &report
