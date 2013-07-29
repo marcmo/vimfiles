@@ -255,7 +255,7 @@ filetype plugin indent on           " required!
         "   's'   symbol: find all references to the token under cursor
         "   'f'   file:   open the filename under cursor
         "   'i'   includes: find files that include the filename under cursor
-        set cscopequickfix=s-,c-,d-,i-,t-,e-
+        set cscopequickfix=s-,c-,g-,i-
         nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
         nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
         nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
@@ -496,7 +496,7 @@ filetype plugin indent on           " required!
       cw " show quickfix window already
     endfunction
     command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
-    noremap <leader>a :Ack<space>-G ".*\.(c\|cpp\|h\|hs\|lua\|py\|rb)$"<space>
+    noremap <leader>a :Ack<space>
 " }
 
 " Convenient command to see the difference between the current buffer and the
