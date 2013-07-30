@@ -475,6 +475,7 @@ filetype plugin indent on           " required!
     noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W>b
     noremap ,f :execute 'NERDTreeFind'<CR>
     let NERDTreeShowHidden=1  " display hidden files by default
+    let NERDTreeQuitOnOpen = 1 " close NERDTree window when opening a file
 " }
 " bufkill {
     nnoremap ,w :BD<CR>
