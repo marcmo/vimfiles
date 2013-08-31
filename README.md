@@ -13,19 +13,180 @@ this repository contains configurations for linux,mac and windows
 
 ## Recently added
 
-### replace in visual selection
+### count occurrences of pattern
+
+    :%s/pattern//gn
+
+### delete all lines with 2 consecutive repeated words
+
+    g/\v(^[a-zA-Z_\/0-9]+),\1/d
+
+# From vimgolf
+
+## challenge 51459ef6b94aa50002000002
+
+### registers
+
+    ":	Contains the most recent executed command-line.  Example: Use
+      "@:" to repeat the previous command-line command.
+
+    "= (Expression register)
+    It inserts the result from an expression
+    e.g. evaluate math expression:
+      * in insert mode: <C-R>=pow(4,2)/3<enter>
+      * in normal mode: "=pow(4,2)/3<Enter>p
+
+
+### add comma to end of each line
+
+    :'<,'>norm A,
+
+### copy last command to clipboard
+
+    let @*=@:
+
+### copy last search to clipboard
+
+    let @*=@/
+
+### copy all lines + the 2 following that match a pattern
+
+this will first clear the register a, append every line containing
+the pattern + the folling 2 lines into register a
+
+    :let @a=""
+    :g/pattern/y A 3
+
+## Window Commands
+
+    Ctrl-W t     -- makes the first (topleft) window current
+    Ctrl-W K     -- moves the current window to full-width at the very top
+    Ctrl-W H     -- moves the current window to full-height at far left
+
+### switch from vertical split to horizontal split fast
+
+    Ctrl-W t Ctrl-W H   -- horizonal split -> vertical split
+    Ctrl-W t Ctrl-W K   -- vertical split -> horizonal split
+
+### movement
+
+    g_                  -- move to the last non-blank character of the current line
+
+### hex value
+
+    ga                  -- display hex,ascii value of char under cursor
+
+### Normal
+
+* The :normal command takes a set of characters and performs whatever action they would do if they were typed in normal mode
+* normal! doesn't recognize "special characters" like <cr>
+
+    :normal >>          -- Vim will indent the current line.
+
+### Execute
+
+The execute takes a string and performs it as a command. Run this:
+
+    :execute "write"    -- Vim will write your file, just as if you had typed :write
+
+## making list of numbers
+
+### insert a list of ascending numbers
+
+    :put =range(11,13)      -- inserts 3 lines after the current line:
+
+will result in:
+
+    11
+    12
+    13
+
+### with a for loop
+
+    :for i in range(1,3) | put ='192.168.0.'.i | endfor
+    192.168.0.1
+    192.168.0.2
+    192.168.0.3
+
+### Substitute with ascending numbers
+
+    :let i=1 | g/abc/s//\='xyz_'.i/ | let i=i+1
+    -- replaces abc's with xyz_1,xyz_2,...
+
+## Vim Regex (regular expressions)
+
+\v or very magic (usually) reduces backslashing
+
+### span newlines in regex: use \_. instead of .
+
+    :\vstart\_.+end     -- will select multiple lines from [start] to [end]
+
+### use ruby regex for string replacement
+
+    :rubydo gsub /pattern/,'replacement'  -- Equivalent to s/pattern/replacement/g (also works on visual selections):
+
+### convert decimal numbers to hex
+
+    :%s/\d\+/\=printf("0x%04x", submatch(0))/gc
+
+### repeat command-line
+
+    @:      -- repeat last : command (then @@)
+
+### When replacing:
+
+    & is the text that matches the search pattern
+    \& is ampersand
+    \r is newline
+    \n is a null byte (0x00).
+    \1 inserts the text of the 1. backreference a.s.o.
+
+### delete all whitespaces up to next word
+
+    dw
+
+### paste in visual mode
+
+block has to be selected visually
+
+    I               -- put cursor at the start of the first row of the block
+    A               -- put cursor at the end of the first row of the block
+    Ctrl-R + [Reg]  -- puts the content of [Register] at cursor position
+    Esc             -- propagates the paste to all lines of visual selection
+
+### Copy content of registers
+
+    :let @+=@"  -- will copy the content of the '"'-register to the global '+'-register
+
+### Using normal-mode motions in command-line mode
+
+    Ctrl-F  -- open command-line window when in Vim command-line
+    <Enter> -- will run the command
+    Ctrl-C  -- return to standard command-line
+
+###  append to a named register use it's corresponding upper case character
+
+    "ayy  -- yank line to register a
+    "Ayy  -- yank line and append to reg a
+    "ap
+
+### replace/substitute in visual selection
 
     :s/\%Vred/blue/g
 
+### replace/substitute using magic regular expression extension
+
+    :%s/\v"(\S*)"/*|\1|*/g      --  replace all strings in quotes
+
 ### GOTO Column
 
-    80| -- go to the 80th column   
+    80| -- go to the 80th column
 
 ### move cursor beyond end of line
 
     set virtualedit=all
 
-### Save a file you edited in vim without the needed permissions
+### Save a file you edited in vim without the needed permissions (e.g. readonly file) (force write)
 
     :w !sudo tee %
 
@@ -62,19 +223,19 @@ in vimrc:
 add config file for jslint: ~/.jslint
 
     {
-      "predef":   [ 
+      "predef":   [
           "exports",
           "global",
           "process",
           "require",
           "__filename",
           "__dirname",
-          "module"       
+          "module"
       ],
       "browser" : false,
       "devel" : false,
       "rhino" : false,
-      "es5" : false, 
+      "es5" : false,
       "widget": false,
       "windows" : false,
       "onvar" : true
@@ -99,11 +260,6 @@ add config file for jslint: ~/.jslint
 
     CTRL-6 or :e#
 
-### install plugins using pathogen
-
-  * create folder for bundle in .vim/bundle
-  * copy content of zipfile etc. to bundle
-
 #### when the plugin is a git repo:
 
     cd ~/.vim && mkdir ~/.vim/bundle
@@ -111,24 +267,18 @@ add config file for jslint: ~/.jslint
     git add .
     git commit -m "Install Fugitive.vim bundle as a submodule."
 
-#### setting up vim in new environment:
+### setting up vim in new environment:
 
     git clone git://github.com/marcmo/vimfiles.git ~/.vim
     ln -s ~/.vim/_vimrc_universal ~/.vimrc
     ln -s ~/.vim/gvimrc ~/.gvimrc
     cd ~/.vim
-    git submodule init
-    git submodule update
-    
-#### in vim: add helptags for new bundle
 
-    :call pathogen#helptags  -- will create helptags in pathogen bundle folder
+#### install plugins via vundle (in vim)
 
-#### install vimballs
+    :BundleInstall
 
-    :UseVimball ~/.vim/bundle/bundle-dir-name-here
-
-### us vim from irb
+### use vim from irb
 
   * in irb, enter: vi + Enter
   * to store file: :w myfile.rb
@@ -146,17 +296,10 @@ add config file for jslint: ~/.jslint
     :tn           -- next
     :tp           -- previous
 
-### change word till
-
-    ctu  -- change word up to character 'u' (Change To 'u')
-
 ### run vim without plugins
 
     vim -u "NONE" hugefile.log
 
-### use ruby regex for string replacement
-
-    :rubydo gsub /pattern/,'replacement'  -- Equivalent to s/pattern/replacement/g (also works on visual selections):
 
 # Other useful things
 
@@ -170,12 +313,15 @@ add config file for jslint: ~/.jslint
 
 ## external filters
 
+    :%!xargs -L1 cmd -- execute cmd for several lines (from http://stackoverflow.com/questions/6762531/execute-command-for-several-lines-in-vim)
+    :'<,'>w !sh     -- execute visual selection as shell command
     :!rake -T       -- show all rakefile targets
     :%!filter       -- put whole file through filter  (e.g. :%!sort)
     :!filter        -- put (visual) selection through filter   (for reversing lines looks like this: '<,'>!tac )
-    :,!command      -- replace current line with command output  
-    !!sh<cr>        -- execute line (e.g. "date") in shell and replace with result: (equivalent to :r!date) 
-    map <f9> :w<CR>:!python %<CR>   -- run current file with external program 
+    :,!command      -- replace current line with command output
+    :read !command  -- insert command output in next line
+    !!sh<cr>        -- execute line (e.g. "date") in shell and replace with result: (equivalent to :r!date)
+    map <f9> :w<CR>:!python %<CR>   -- run current file with external program
     :%!nl
 
 ## capture output in register (e.g. :history)
@@ -209,13 +355,13 @@ add config file for jslint: ~/.jslint
     :g/pattern            -- is equivalent.
     :v/pattern/d          -- filter text: delete all lines that do not contain a pattern, e.g. use with regex mode \v: :v/\v\s(cpp|h)/d
     :%s/foo/<c-r>a/g      -- Replace each occurrence of 'foo' with the contents of register 'a'. (useful if the register contains many lines of text)
-    :%s/foo/\=@a/g        -- Replace each occurrence of 'foo' with the contents of register 'a'. (useful if the register contains many lines of text) 
-    :%s//bar/g            -- Replace each match of the last search pattern with 'bar'. 
+    :%s/foo/\=@a/g        -- Replace each occurrence of 'foo' with the contents of register 'a'. (useful if the register contains many lines of text)
+    :%s//bar/g            -- Replace each match of the last search pattern with 'bar'.
     /\(yes\|no\)          -- regex OR operator, finds yes or no
     :g/gladiolli/#        -- display with line numbers (YOU WANT THIS!)
     :vmap // y/<C-R>"<CR> -- search for visually highlighted text
     /fred\_s*joe/         -- multiline search (any whitespace including newline)
-    :%s/search/replace/gc -- When you run this search, Vim will give you a prompt that looks something like this: replace with foo (y/n/a/q/l/^E/^Y)? 
+    :%s/search/replace/gc -- When you run this search, Vim will give you a prompt that looks something like this: replace with foo (y/n/a/q/l/^E/^Y)?
     '*'                   -- searches forward for the next occurrence of the word under the cursor ('#' does the same backwards
     n                     -- search again with the last search string
     N                     -- search backwards with the last search string
@@ -237,6 +383,7 @@ add config file for jslint: ~/.jslint
     <C-t> and <C-d>   -- change indent level (increment/decrement)
     <C-N><C-P>        -- word completion in insert mode
     <C-R>q            -- display contents of register q (insert mode)
+    <C-W>             -- delete previous word
 
 ## works only on command line:
 
@@ -245,6 +392,11 @@ add config file for jslint: ~/.jslint
     <C-R> -         -- pull small register
     <C-R> [0-9a-z]  -- pull named registers
     <C-R> %         -- pull file name (also #)
+
+## entering/leaving ex-mode:
+
+    Q       -- enter 'ex'
+    visual  -- leave 'ex'
 
 ## ex commands:
 
@@ -269,10 +421,21 @@ add config file for jslint: ~/.jslint
 
 ## vimdiff
 
-    vert diffsplit other.txt  -- view diff to other file
+    vim -d file1 file2        : vimdiff (compare differences)
+    :vert diffsplit other.txt  -- view diff to other file
     :diffthis                 -- use diff on current buffer
     :diffoff                  -- turn diff off on current buffer
     :diffoff!                 -- turn diff off on all buffers
+    dp                        -- "put" difference under cursor to other file
+    do                        -- "get" difference under cursor from other file
+    ]c                        -- jump to next difference
+    [c                        -- jump to prev. difference
+    :windo diffthis           -- diff for all open windows
+
+### complex diff parts of same file *N*
+
+    :1,2yank a | 7,8yank b
+    :tabedit | put a | vnew | put b
 
 ## Recording macros
 
@@ -306,11 +469,15 @@ add config file for jslint: ~/.jslint
     Ctrl-D  -- scroll window down
     Ctrl-U  -- scroll window up
     Ctrl-B  -- move one screen 'b'ackward
-    Ctrl-F  -- move one screen 'f'orward 
+    Ctrl-F  -- move one screen 'f'orward
     %       -- Goto matching #if #else,{},(),[],/* */
     'f' + any character -- find its next occurrence in the line
     'H', 'M' and 'L'    -- take the cursor directly to the 'H'ighest, 'M'iddle, or 'L'ower line on the screen
     'zt', 'zz' and 'zb' -- keep the cursor at the current position, but scroll the view so that it falls at the 't'op, 'z' center, or 'b'ottom of the screen
+
+### change word till
+
+    ctu  -- change word up to character 'u' (Change To 'u')
 
 ## completion
 
@@ -338,7 +505,7 @@ add config file for jslint: ~/.jslint
 ### haskellmode
 
     :make                 -- load into GHCi, show errors (|quickfix| |:copen|)
-    _ct                   -- create |tags| file 
+    _ct                   -- create |tags| file
     CTRL-]                -- jump to definition
     CTRL-W_CTRL_]         -- open definition in split window
     :copen                -- open error browser
@@ -364,7 +531,7 @@ add config file for jslint: ~/.jslint
     'o'         -- to create a new line below, 'O' to enter one above
     '>>' '<<'   -- shift line right/left
     >           -- indent section  useful with Shift+v%
-    <           -- unindent section  remember . to repeat and u to undo 
+    <           -- unindent section  remember . to repeat and u to undo
     di>         -- to extract everything within <hello> or di" for "hello"
                 'i'         -- to any of them for the 'inside' contents, or
                 'a'         -- to include the delimiting characters too.
@@ -383,7 +550,7 @@ add config file for jslint: ~/.jslint
     [s          -- " jump backwards
     z=          -- " over a misspelled word you'll be presented with a list of suggested spellings
     zg          -- " add it to your personal dictionary
-    zw          -- " add it to the bad word list with 
+    zw          -- " add it to the bad word list with
 
 ## Replacing Charcter
 
@@ -392,8 +559,9 @@ add config file for jslint: ~/.jslint
 
 ## marks
 
-    ma    -- to set mark 'a' 
+    ma    -- to set mark 'a'
     'a    -- to jump to this mark
+    `a	  -- jump to position (line and column) of mark a
 
 ## folding
 
@@ -411,8 +579,3 @@ add config file for jslint: ~/.jslint
     zE          -- deletes all folds.
     [z          -- move to start of open fold.
     ]z          -- move to end of open fold.
-
-## Rectangular selection
-
-When we are editing tabular data, sometimes we would want to copy only a few columns from the text as opposed to a few lines. For this, we can use the rectangular block selection mode in Vim by pressing ctrl-v. 
-
