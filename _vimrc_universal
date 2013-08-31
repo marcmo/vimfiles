@@ -26,27 +26,27 @@ Bundle 'BufOnly.vim'
 Bundle 'matchit.zip'
 Bundle 'Shougo/vimproc'
 Bundle 'veloce/vim-aldmeris'
+Bundle 'bling/vim-airline'
+Bundle 'godlygeek/csapprox'
+Bundle 'Wombat'
 " frequently used plugins
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-fugitive'
 Bundle 'thinca/vim-quickrun'
-Bundle 'godlygeek/csapprox'
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'Wombat'
-Bundle 'chrisbra/NrrwRgn.git'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet.git'
 Bundle 'derekwyatt/vim-fswitch'
-Bundle 'taglist.vim'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'marcmo/haskellmode-vim'
 Bundle 'eagletmt/ghcmod-vim'
+Bundle 'scrooloose/syntastic'
 " seldom used plugins
+Bundle 'taglist.vim'
+Bundle 'chrisbra/NrrwRgn.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'bling/vim-airline'
-Bundle 'IndentConsistencyCop'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
 
@@ -123,6 +123,7 @@ filetype plugin indent on           " required!
     " use :w!! to write to a file using sudo
     cnoremap w!! %!sudo tee > /dev/null %
     nnoremap<leader>l :set list!<CR>
+    nnoremap<leader>w :set wrap!<CR>
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
     " leave the cursor at the point where it was before editing started
@@ -249,28 +250,6 @@ filetype plugin indent on           " required!
         noremap <F3> <c-]><CR>
         noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html --exclude=*.s --exclude=docs .<CR>
     " }
-    " cscope {
-        "   'c'   calls:  find all calls to the function name under cursor
-        "   'g'   global: find global definition(s) of the token under cursor
-        "   's'   symbol: find all references to the token under cursor
-        "   'f'   file:   open the filename under cursor
-        "   'i'   includes: find files that include the filename under cursor
-        set cscopequickfix=s-,c-,g-,i-
-        nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-        nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-        nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-        nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-        nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-        nnoremap <S-F3> :cs find g <C-R>=expand("<cword>")<CR><CR>
-        function! CscopeAdd()
-          if filereadable("cscope.out")
-            cs add cscope.out
-            set cscopetag
-          endif
-        endfunction
-        command! LoadCscope :call CscopeAdd()
-        nnoremap <C-\>a :LoadCscope<CR>
-    " }
     " fswitch {
         let g:fsnonewfiles=1
         let g:fswitchnonewfiles=1
@@ -290,12 +269,20 @@ filetype plugin indent on           " required!
     " switch.vim {
         nnoremap - :Switch<cr>
     " }
+    " syntastic {
+        let g:syntastic_cpp_compiler = 'clang++'
+        let g:syntastic_cpp_compiler_options = ' -std=c++11'
+    " }
     " quickrun {
         let g:quickrun_config = {}
         let g:quickrun_config.haskell = {'eval' : 1 }
         let g:quickrun_config.c = {'type' :
         \     executable('clang')          ? 'c/clang' :
         \     executable('gcc')            ? 'c/gcc' : ''}
+        let g:quickrun_config.cpp = {
+        \   'command': 'clang++',
+        \   'cmdopt': '-std=c++11'
+        \ }
         nnoremap <silent> ,rr :QuickRun -mode n<CR>
         vnoremap <silent> ,rr :QuickRun -mode v<CR>
     " }
@@ -328,6 +315,7 @@ filetype plugin indent on           " required!
           call setline(".", result)
         endfunction
         vnoremap <leader>e :call EvaluateInGhc()<CR>$x<esc>0
+
         augroup hs " {
           autocmd!
           autocmd bufenter *.hs,*.lhs noremap <F5> :call OpenInGhci()<CR><CR>
