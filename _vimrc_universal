@@ -47,10 +47,6 @@ Bundle 'chrisbra/NrrwRgn.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-notes'
-
-let g:notes_directories = ['$DROPBOX/notes']
 
 filetype plugin indent on           " required!
 
@@ -249,6 +245,7 @@ filetype plugin indent on           " required!
         inoremap <F3> <Esc><c-]><CR>
         noremap <F3> <c-]><CR>
         noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html --exclude=*.s --exclude=docs .<CR>
+        nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
     " }
     " fswitch {
         let g:fsnonewfiles=1
