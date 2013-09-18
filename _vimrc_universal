@@ -42,7 +42,7 @@ Bundle 'marcmo/haskellmode-vim'
 Bundle 'eagletmt/ghcmod-vim'
 Bundle 'scrooloose/syntastic'
 " seldom used plugins
-Bundle 'taglist.vim'
+Bundle 'majutsushi/tagbar'
 Bundle 'chrisbra/NrrwRgn.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
@@ -129,6 +129,7 @@ filetype plugin indent on           " required!
     nnoremap <S-F11> g-
     nnoremap <S-F12> g+
     " insert current date
+    cnoremap <S-F10> <C-R>=strftime("%Y%b%d_%H%M")<CR>
     nnoremap <S-F10> "=strftime("%Y%b%d_%H%M")<CR>P
     inoremap <S-F10> <C-R>=strftime("%Y%b%d_%H%M")<CR>
     " Wrapped lines goes down/up to next row, rather than next line in file.
@@ -234,8 +235,9 @@ filetype plugin indent on           " required!
     " tcomment {
         let g:tcommentOptions = {'mixedindent':1}
     " }
-    " taglist {
-        nnoremap <silent> <S-F9> :TlistToggle<CR>
+    " tagbar {
+        nnoremap <silent> <S-F9> :TagbarOpen<CR>
+        let g:tagbar_autoclose=1
     " }
     " ctags {
         set tags=tags;$HOME
@@ -269,6 +271,10 @@ filetype plugin indent on           " required!
     " syntastic {
         let g:syntastic_cpp_compiler = 'clang++'
         let g:syntastic_cpp_compiler_options = ' -std=c++11'
+        let g:syntastic_error_symbol = '✗'
+        let g:syntastic_warning_symbol = '>'
+        let g:syntastic_check_on_wq = 0
+        let g:syntastic_always_populate_loc_list = 1
     " }
     " quickrun {
         let g:quickrun_config = {}
