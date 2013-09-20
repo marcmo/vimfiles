@@ -11,9 +11,9 @@ def linux?
   unix? and not mac?
 end
 
-
 task :vundle do
-  sh "git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle"
+  userDir = File.expand_path('~')
+  sh "git clone https://github.com/gmarik/vundle.git #{File.join(userDir,".vim","bundle","vundle")}"
 end
 
 desc "install plugins"
@@ -30,9 +30,11 @@ task :link do
   vimrc = "#{userDir}/.vimrc"
   raise "#{vimrc} already exists!" if File.exists?(vimrc)
   targetRc = mac? ? "mac" : linux? ? "linux" : "windows"
+  universal = File.join(userDir,'.vim','_vimrc_universal')
+  osSpecific = File.join(userDir,'.vim',"_vimrc_#{targetRc}")
   File.open(vimrc, 'w') do |f|
-    f.puts("source #{userDir}/.vim/_vimrc_universal")
-    f.puts("source #{userDir}/.vim/_vimrc_#{targetRc}")
+    f.puts("source #{universal}")
+    f.puts("source #{osSpecific}")
   end
 end
 

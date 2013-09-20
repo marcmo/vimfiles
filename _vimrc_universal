@@ -1,13 +1,8 @@
 set nocompatible                " make Vim behave in a more useful way, less vi compatible
 filetype off                    " required!
 
-if has('win32') || has('win64')
-  let s:vimconfig='vimfiles'
-else
-  let s:vimconfig='.vim'
-endif
-let &rtp=&rtp.',~/'.s:vimconfig.'/bundle/vundle/'
-set shellcmdflag=-ic
+let s:vimconfig='.vim'
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " essential plugins
@@ -135,7 +130,7 @@ filetype plugin indent on           " required!
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
-    execute 'nnoremap ,rc :vsplit ~/'.s:vimconfig.'/_vimrc_universal<CR>'
+    execute 'nnoremap ,rc :vsplit ~/.vim/_vimrc_universal<CR>'
     nnoremap ,bc :e ~/.bashrc <CR>
     " move lines up and down
     nnoremap <M-Down> mz:m+<CR>`z==
