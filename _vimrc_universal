@@ -7,7 +7,6 @@ call vundle#rc()
 
 " essential plugins
 Bundle 'gmarik/vundle'
-Bundle 'L9'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'godlygeek/tabular'
@@ -30,7 +29,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neosnippet.git'
+Bundle 'Shougo/neosnippet'
 Bundle 'derekwyatt/vim-fswitch'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'marcmo/haskellmode-vim'
@@ -124,9 +123,9 @@ filetype plugin indent on           " required!
     nnoremap <S-F11> g-
     nnoremap <S-F12> g+
     " insert current date
-    cnoremap <S-F10> <C-R>=strftime("%Y%b%d_%H%M")<CR>
-    nnoremap <S-F10> "=strftime("%Y%b%d_%H%M")<CR>P
-    inoremap <S-F10> <C-R>=strftime("%Y%b%d_%H%M")<CR>
+    cnoremap <S-F10> <C-R>=strftime("%Y%m%d_%H%M")<CR>
+    nnoremap <S-F10> "=strftime("%Y%m%d_%H%M")<CR>P
+    inoremap <S-F10> <C-R>=strftime("%Y%m%d_%H%M")<CR>
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
@@ -576,7 +575,7 @@ augroup END " }
     endfunction
 
     " replace german Umlauts
-    command! ReplaceUmlauts :call ReplaceUmlauts()
+    command! UmlautCleanup :call ReplaceUmlauts()
     function! ReplaceUmlauts()
       let s:line = line(".")
       let s:column = col(".")
