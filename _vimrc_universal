@@ -40,7 +40,6 @@ Bundle 'majutsushi/tagbar'
 Bundle 'chrisbra/NrrwRgn.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
-Bundle 'Lokaltog/vim-easymotion'
 
 filetype plugin indent on           " required!
 
@@ -114,6 +113,7 @@ filetype plugin indent on           " required!
     cnoremap w!! %!sudo tee > /dev/null %
     nnoremap<leader>l :set list!<CR>
     nnoremap<leader>w :set wrap!<CR>
+
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
     " leave the cursor at the point where it was before editing started
@@ -579,20 +579,17 @@ augroup END " }
     function! ReplaceUmlauts()
       let s:line = line(".")
       let s:column = col(".")
-        let s:save_report = &report
-        set report=99999
-        %s/ä/ae/eIg
-        %s/ö/oe/eIg
-        %s/ü/ue/eIg
-        %s/Ä/Ae/eIg
-        %s/Ö/Oe/eIg
-        %s/Ü/Ue/eIg
-        %s/ß/ss/eIg
-        let &report=s:save_report
-        unlet s:save_report
-        call cursor(s:line,s:column)
-        unlet s:line
-        unlet s:column
+      let s:save_report = &report
+      set report=99999
+      let s:mapping = {"ä":"ae","ö":"oe","ü":"ue","Ä":"Ae","Ö":"Oe","Ü":"Ue","ß":"ss"}
+      for i in items(s:mapping)
+        execute "%s/".i[0]."/".i[1]."/eIg"
+      endfor
+      let &report=s:save_report
+      unlet s:save_report
+      call cursor(s:line,s:column)
+      unlet s:line
+      unlet s:column
     endfunction
 " }
 
