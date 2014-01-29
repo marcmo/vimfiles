@@ -30,6 +30,7 @@ Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet'
+Bundle 'Shougo/neosnippet-snippets'
 Bundle 'derekwyatt/vim-fswitch'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'marcmo/haskellmode-vim'
@@ -37,6 +38,7 @@ Bundle 'eagletmt/ghcmod-vim'
 Bundle 'scrooloose/syntastic'
 " seldom used plugins
 Bundle 'majutsushi/tagbar'
+Bundle "sk1418/QFGrep.git"
 Bundle 'chrisbra/NrrwRgn.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
@@ -338,6 +340,7 @@ filetype plugin indent on           " required!
           autocmd!
           autocmd bufenter *.cpp,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
           autocmd bufenter *.cpp nnoremap <F5> :update<CR>:call MakeCpp()<CR>
+          autocmd bufenter *.cpp nnoremap <S-F5> :call UseTabsNotSpaces()<CR>
           autocmd QuickFixCmdPost [^l]* nested cwindow
           autocmd QuickFixCmdPost    l* nested lwindow
         augroup END " }
@@ -351,6 +354,10 @@ filetype plugin indent on           " required!
           execute 'lcd ' . curr_dir
           execute 'make'
           execute 'lcd -'
+        endfunction
+        function! UseTabsNotSpaces()
+          set noexpandtab
+          retab!
         endfunction
     " }
 " }
@@ -437,14 +444,15 @@ filetype plugin indent on           " required!
 " }
 " ctrlp {
     let g:ctrlp_max_height = 25
-    let g:ctrlp_custom_ignore = '^\.git$\|\.hg$\|\.svn$\|\.metadata$|tags$'
+    let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|d|metadata)$|^tags$'
     let g:ctrlp_by_filename = 1
-    let g:ctrlp_max_files = 30000
+    let g:ctrlp_max_files = 50000
     let g:ctrlp_match_window_bottom = 0
     let g:ctrlp_match_window_reversed = 0
     let g:ctrlp_mruf_max = 200
     let g:ctrlp_mruf_default_order = 0
     let g:ctrlp_working_path_mode = 0
+    let g:ctrlp_follow_symlinks = 1
     nnoremap ,u :CtrlPMRU<CR>
     noremap <F1> :CtrlPBuffer<CR>
     inoremap <F1> <esc>:CtrlPBuffer<CR>
@@ -482,7 +490,7 @@ filetype plugin indent on           " required!
       cw " show quickfix window already
     endfunction
     command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
-    noremap <leader>a :Ack<space>
+    noremap <leader>a :Ack --type=
 " }
 
 " Convenient command to see the difference between the current buffer and the
@@ -513,9 +521,9 @@ augroup END " }
 " move through camelcase words {
     "" Use one of the following to define the camel characters.
     " Stop on capital letters.
-    let g:camelchar = "A-Z"
+    " let g:camelchar = "A-Z"
     " Also stop on numbers.
-    let g:camelchar = "A-Z0-9"
+    " let g:camelchar = "A-Z0-9"
     " Include '.' for class member, ',' for separator, ';' end-statement,
     " and <[< bracket starts and "'` quotes.
     let g:camelchar = "A-Z0-9.,;:{([`'\""
