@@ -271,6 +271,11 @@ filetype plugin indent on           " required!
         let g:syntastic_warning_symbol = '>'
         let g:syntastic_check_on_wq = 0
         let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 1
+        let g:syntastic_auto_jump = 2
+        let g:syntastic_quiet_messages = { "level": "warnings",
+                                        \ "type":  "style",
+                                        \ "regex": 'Top-level binding with no type signature' }
     " }
     " quickrun {
         let g:quickrun_config = {}
