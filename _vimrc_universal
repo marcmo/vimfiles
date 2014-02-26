@@ -151,7 +151,8 @@ filetype plugin indent on           " required!
 
     " trailing whitespaces {
         " highlight end of line whitespace as Error
-        hi link ExtraWhitespace Error
+        " hi link ExtraWhitespace Error
+        hi ExtraWhitespace ctermbg=darkgrey guibg=brown
         augroup whitespaces " {
           autocmd!
           autocmd BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
