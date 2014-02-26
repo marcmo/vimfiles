@@ -42,6 +42,8 @@ Bundle "sk1418/QFGrep.git"
 Bundle 'chrisbra/NrrwRgn.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
+Bundle 'leafo/moonscript-vim'
+Bundle 'tommcdo/vim-exchange'
 
 filetype plugin indent on           " required!
 
