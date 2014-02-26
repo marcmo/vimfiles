@@ -336,6 +336,14 @@ filetype plugin indent on           " required!
           autocmd FileType html,javascript setlocal makeprg=jslint\ % | setlocal efm=%f:%l:%c:%m
         augroup END " }
     " }
+    " html {
+        augroup html " {
+          autocmd!
+          let pandoc_pipeline  = "pandoc --from=html --to=markdown"
+          let pandoc_pipeline .= " | pandoc --from=markdown --to=html"
+          autocmd FileType html let &formatprg=pandoc_pipeline
+        augroup END " }
+    " }
     " lua {
         augroup lua " {
           autocmd!
@@ -509,7 +517,7 @@ if !exists(":DiffOrig")
 endif
 augroup FTCheck " {
   autocmd!
-  autocmd BufRead *.mkd,*.md,*.markdown  set autoindent formatoptions=tcroqn2 comments=n:&gt; ft=markdown
+  autocmd BufRead,BufNewFile *.mkd,*.md,*.markdown  set ai tw=100 fo=tcroqn2 comments=n:&gt; ft=markdown
   autocmd BufRead *.proto set ft=proto
   autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
   autocmd BufRead,BufNewFile *.rss setfiletype xml
