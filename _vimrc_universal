@@ -109,6 +109,7 @@ filetype plugin indent on           " required!
     set autowrite                   " write file to disk on :make, :!, :first, :next
     set gcr=n:blinkon0              " turn of blinking cursor in normal mode
     set synmaxcol=800               " Don't try to highlight lines longer than 800 characters.
+    set lazyredraw                  " screen will not be redrawn while executing macros
 " }
 " general utilities {
     " quick way to escape from insert mode
