@@ -131,9 +131,9 @@ filetype plugin indent on           " required!
     nnoremap <S-F11> g-
     nnoremap <S-F12> g+
     " insert current date
-    cnoremap <S-F10> <C-R>=strftime("%Y%m%d_%H%M")<CR>
-    nnoremap <S-F10> "=strftime("%Y%m%d_%H%M")<CR>P
-    inoremap <S-F10> <C-R>=strftime("%Y%m%d_%H%M")<CR>
+    cnoremap <S-F10> <C-R>=strftime("%Y%m%d-%H%M")<CR>
+    nnoremap <S-F10> "=strftime("%Y%m%d-%H%M")<CR>P
+    inoremap <S-F10> <C-R>=strftime("%Y%m-%H%M")<CR>
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
