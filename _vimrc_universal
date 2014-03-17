@@ -112,6 +112,8 @@ filetype plugin indent on           " required!
     set lazyredraw                  " screen will not be redrawn while executing macros
 " }
 " general utilities {
+    " paste in visual mode without updating the default register
+    vnoremap p p:let @"=@0<CR>
     " quick way to escape from insert mode
     inoremap jj <ESC>
     inoremap kj <ESC>
