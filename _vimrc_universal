@@ -33,7 +33,6 @@ Bundle 'thinca/vim-quickrun'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'derekwyatt/vim-fswitch'
 Bundle 'ujihisa/neco-ghc'
-Bundle 'marcmo/haskellmode-vim'
 Bundle 'eagletmt/ghcmod-vim'
 Bundle 'scrooloose/syntastic'
 " seldom used plugins
@@ -284,6 +283,7 @@ filetype plugin indent on           " required!
         let g:syntastic_quiet_messages = { "level": "warnings",
                                         \ "type":  "style",
                                         \ "regex": 'Top-level binding with no type signature' }
+        let g:syntastic_mode_map = { 'passive_filetypes': ['haskell'] }
     " }
     " quickrun {
         let g:quickrun_config = {}
@@ -307,17 +307,10 @@ filetype plugin indent on           " required!
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gh :GhcModType<CR>
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gc :GhcModTypeClear<CR>
         augroup END " }
-    " }
-    " haskellmode-vim {
-        let hs_highlight_delimiters = 1 " Highlight delimiter characters
-        let hs_highlight_boolean = 1 " Treat True and False as keywords.
-        let hs_highlight_types = 1 " Treat names of primitive types as keywords.
-        let hs_highlight_more_types = 1 " Treat names of other common types as keywords.
-        augroup haskellmode " {
-          autocmd!
-          autocmd BufWritePost *.hs GHCReload
-          autocmd BufEnter *.hs compiler ghc
-        augroup END " }
+        nnoremap <silent> _T :GhcModTypeInsert<CR>:w<CR>
+        nnoremap <silent> _I :GhcModType<CR>
+        nnoremap <silent> _C :GhcModTypeClear<CR>
+        nnoremap <silent> _X :GhcModCheckAndLintAsync<CR>
     " }
     " haskell {
         " use ghc functionality for haskell files
