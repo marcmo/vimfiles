@@ -134,6 +134,7 @@ filetype plugin indent on           " required!
     cnoremap <S-F10> <C-R>=strftime("%Y%m%d-%H%M")<CR>
     nnoremap <S-F10> "=strftime("%Y%m%d-%H%M")<CR>P
     inoremap <S-F10> <C-R>=strftime("%Y%m-%H%M")<CR>
+    vnoremap <S-F10> c<C-R>=strftime("%Y%m-%H%M")<CR><Esc>gv
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
