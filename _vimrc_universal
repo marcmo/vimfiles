@@ -433,6 +433,7 @@ filetype plugin indent on           " required!
     endif
 " }
 " neosnippet {
+    autocmd InsertLeave * NeoSnippetClearMarkers
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
