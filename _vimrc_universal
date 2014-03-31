@@ -307,11 +307,12 @@ filetype plugin indent on           " required!
           " autocmd BufWritePost *.hs GhcModCheckAndLintAsync
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gh :GhcModType<CR>
           autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gc :GhcModTypeClear<CR>
+          autocmd bufenter *.hs,*.lhs nnoremap <silent> _T :GhcModTypeInsert<CR>:w<CR>
+          autocmd bufenter *.hs,*.lhs nnoremap <silent> _I :GhcModType<CR>
+          autocmd bufenter *.hs,*.lhs nnoremap <silent> _C :GhcModTypeClear<CR>
+          autocmd bufenter *.hs,*.lhs nnoremap <silent> _X :GhcModCheckAndLintAsync<CR>
+          autocmd bufenter *.hs,*.lhs nnoremap <silent> ,m :w<CR>:GhcModCheck<CR>
         augroup END " }
-        nnoremap <silent> _T :GhcModTypeInsert<CR>:w<CR>
-        nnoremap <silent> _I :GhcModType<CR>
-        nnoremap <silent> _C :GhcModTypeClear<CR>
-        nnoremap <silent> _X :GhcModCheckAndLintAsync<CR>
     " }
     " haskell {
         " use ghc functionality for haskell files
