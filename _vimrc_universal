@@ -51,21 +51,20 @@ filetype plugin indent on           " required!
 " UI Stuff {
     syntax on
     set background=dark
+    if filereadable(expand("~/.vim/bundle/vim-aldmeris/colors/aldmeris.vim"))
+      colorscheme aldmeris
+    elseif filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+      colorscheme solarized
+    endif
     if has('gui_running')
       set guitablabel=%t            " only display the filename not the path
       set guioptions-=m             " remove [m]enubar
       set guioptions-=T             " remove [T]oolbar
       set guioptions-=rL            " remove all verical scrollbars
       set cursorline                " highlight the screen line of the cursor
-      if filereadable(expand("~/.vim/bundle/vim-aldmeris/colors/aldmeris.vim"))
-        let g:aldmeris_termcolors = "tango"
-        colorscheme aldmeris
-      elseif filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-        colorscheme solarized
-      endif
     else
       set t_Co=256                  " we want full colors in terminal
-      colorscheme wombat
+      set mouse=a                   " enable mouse in all modes
     endif
     if has('statusline')
       set laststatus=2                         " always show statusline
@@ -157,7 +156,7 @@ filetype plugin indent on           " required!
     " trailing whitespaces {
         " highlight end of line whitespace as Error
         " hi link ExtraWhitespace Error
-        hi ExtraWhitespace ctermbg=darkgrey guibg=brown
+        hi ExtraWhitespace ctermbg=darkgrey guibg=#707070
         augroup whitespaces " {
           autocmd!
           autocmd BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
