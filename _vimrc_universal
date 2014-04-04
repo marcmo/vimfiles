@@ -56,15 +56,15 @@ filetype plugin indent on           " required!
     elseif filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
       colorscheme solarized
     endif
+    set cursorline                " highlight the screen line of the cursor
+    if has('mouse') | set mouse=a | endif " enable mouse in all modes
     if has('gui_running')
       set guitablabel=%t            " only display the filename not the path
       set guioptions-=m             " remove [m]enubar
       set guioptions-=T             " remove [T]oolbar
       set guioptions-=rL            " remove all verical scrollbars
-      set cursorline                " highlight the screen line of the cursor
     else
       set t_Co=256                  " we want full colors in terminal
-      set mouse=a                   " enable mouse in all modes
     endif
     if has('statusline')
       set laststatus=2                         " always show statusline
