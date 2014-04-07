@@ -197,8 +197,8 @@ filetype plugin indent on           " required!
     " }
     " movement {
         " jump back and forth between the last 2 files
-        inoremap <C-Tab> <Esc>:e#<CR>
-        noremap <C-Tab> :e#<CR>
+        inoremap ,a <Esc>:e#<CR>
+        noremap ,a :e#<CR>
         inoremap <C-S-Tab> <Esc> :bp<CR>
         noremap <C-S-Tab> :bp<CR>
         " jump to next/previous quickfix
