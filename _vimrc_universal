@@ -275,17 +275,19 @@ filetype plugin indent on           " required!
     " syntastic {
         let g:syntastic_cpp_compiler = 'clang++'
         let g:syntastic_cpp_compiler_options = ' -std=c++11'
+        let g:syntastic_check_on_wq = 0
         let g:syntastic_error_symbol = '✗'
         let g:syntastic_warning_symbol = '>'
-        let g:syntastic_check_on_wq = 0
         let g:syntastic_always_populate_loc_list = 1
         let g:syntastic_auto_loc_list = 1
         let g:syntastic_auto_jump = 2
         let g:syntastic_quiet_messages = { "level": "warnings",
                                         \ "type":  "style",
                                         \ "regex": 'Top-level binding with no type signature' }
-        let g:syntastic_mode_map = { 'passive_filetypes': ['haskell'] }
         let g:syntastic_ruby_checkers = ['mri', 'ruby_lint']
+        let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haskell','cpp'] }
+        inoremap <leader>s <Esc>:SyntasticCheck<CR>
+        nnoremap <leader>s :SyntasticCheck<CR>
     " }
     " quickrun {
         let g:quickrun_config = {}
