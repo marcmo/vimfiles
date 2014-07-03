@@ -447,6 +447,7 @@ filetype plugin indent on           " required!
 " }
 " airline {
     let g:airline_powerline_fonts=1   " make sure powerline font is installed
+    let g:airline#extensions#whitespace#mixed_indent_algo = 1
 " }
 " fugitiv {
     function! CloseFugitiveDiffAfterUsage()
