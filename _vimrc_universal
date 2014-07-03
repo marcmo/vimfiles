@@ -260,11 +260,11 @@ filetype plugin indent on           " required!
         let b:fswitchlocs = 'reg:/include/src/'
         augroup mycppfiles " {
           autocmd!
-          autocmd BufEnter *.h let b:fswitchdst  = 'cpp,CPP,cc,CC,c,C'
+          autocmd BufEnter *.h let b:fswitchdst  = 'cpp,CPP,cc,CC,c,C,hpp,HPP'
           autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,../src,src'
           autocmd BufEnter *.c  let b:fswitchdst  = 'h,H'
-          autocmd BufEnter *.cpp,*.cc  let b:fswitchdst  = 'h,H'
-          autocmd BufEnter *.cpp,*.cc,*.c  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
+          autocmd BufEnter *.cpp,*.cc,*.hpp  let b:fswitchdst  = 'h,H'
+          autocmd BufEnter *.cpp,*.cc,*.c,*.hpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
         augroup END " }
         nnoremap <silent>,, :FSHere<cr>
         vnoremap <silent>,, :FSHere<cr>
