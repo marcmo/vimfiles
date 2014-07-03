@@ -387,8 +387,9 @@ filetype plugin indent on           " required!
     let g:neocomplete#sources#syntax#min_keyword_length = 3
     let g:neocomplete#enable_auto_delimiter = 1
     let g:neocomplete#enable_auto_select = 1
-    " <ctrl-space>: completion.
-    inoremap <expr><c-space> neocomplete#start_manual_complete()
+    " <ctrl-space>: completion...and since it is interpretet as Ctrl-@ in terminal vim, remap this as well
+    inoremap <expr><C-space> neocomplete#start_manual_complete()
+    inoremap <expr><C-@> neocomplete#start_manual_complete()
     " SuperTab like snippets behavior.
     " inoremap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
