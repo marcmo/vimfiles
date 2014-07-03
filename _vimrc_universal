@@ -512,6 +512,7 @@ filetype plugin indent on           " required!
     endfunction
     command! -nargs=+ -complete=file Ack call AckGrep(<q-args>)
     noremap <leader>a :Ack --type=
+    noremap <leader>q :Ack --type=cpp <C-r><C-w><CR>
 " }
 
 " Convenient command to see the difference between the current buffer and the
