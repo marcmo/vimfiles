@@ -109,6 +109,8 @@ filetype plugin indent on           " required!
     set gcr=n:blinkon0              " turn of blinking cursor in normal mode
     set synmaxcol=800               " Don't try to highlight lines longer than 800 characters.
     set lazyredraw                  " screen will not be redrawn while executing macros
+    set diffopt=vertical,context:4  " Start diff mode with vertical splits,context of 4 lines
+    set diffopt+=iwhite
 " }
 " general utilities {
     " paste in visual mode without updating the default register
