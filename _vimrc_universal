@@ -287,7 +287,6 @@ filetype plugin indent on           " required!
                                         \ "regex": 'Top-level binding with no type signature' }
         let g:syntastic_ruby_checkers = ['mri', 'ruby_lint']
         let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haskell','cpp'] }
-        inoremap <leader>s <Esc>:SyntasticCheck<CR>
         nnoremap <leader>s :SyntasticCheck<CR>
     " }
     " quickrun {
