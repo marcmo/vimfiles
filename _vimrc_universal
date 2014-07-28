@@ -250,7 +250,7 @@ filetype plugin indent on           " required!
         noremap <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
         " lookup symbol in tags file
         inoremap <F3> <Esc><c-]><CR>
-        noremap <F3> <c-]><CR>
+        noremap <F3> <c-]>
         noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html --exclude=*.s --exclude=docs .<CR>
         nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
     " }
