@@ -462,7 +462,9 @@ filetype plugin indent on           " required!
 " }
 " ctrlp {
     let g:ctrlp_max_height = 25
-    let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|d|metadata)$|^tags$'
+    let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/]\.(git|hg|svn|metadata)$',
+      \ 'file': '\v\.(exe|so|dll|d)$|^tags$' }
     let g:ctrlp_by_filename = 1
     let g:ctrlp_max_files = 50000
     let g:ctrlp_match_window_bottom = 0
