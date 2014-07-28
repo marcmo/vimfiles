@@ -14,23 +14,23 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'mru.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Raimondi/delimitMate'
-Bundle 'bufkill.vim'
-Bundle 'BufOnly.vim'
 Bundle 'matchit.zip'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/neocomplete'
 Bundle 'Shougo/neosnippet'
 Bundle 'Shougo/neosnippet-snippets'
 Bundle 'bling/vim-airline'
-Bundle 'eagletmt/ghcmod-vim'
 " frequently used plugins
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-fugitive'
 Bundle 'thinca/vim-quickrun'
 Bundle 'derekwyatt/vim-fswitch'
+Bundle 'eagletmt/ghcmod-vim'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'scrooloose/syntastic'
 Bundle 'godlygeek/tabular'
+Bundle 'xolox/vim-lua-ftplugin'
+Bundle 'xolox/vim-misc'
 " seldom used plugins
 Bundle "sk1418/QFGrep.git"
 Bundle 'chrisbra/NrrwRgn.git'
@@ -38,6 +38,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'tommcdo/vim-exchange'
 Bundle 'thinca/vim-localrc'
+Bundle 'severin-lemaignan/vim-minimap'
 " colors & syntax highlighting
 Bundle 'godlygeek/csapprox'
 Bundle 'altercation/vim-colors-solarized'
@@ -489,7 +490,7 @@ filetype plugin indent on           " required!
     let NERDTreeQuitOnOpen = 1 " close NERDTree window when opening a file
 " }
 " bufkill {
-    nnoremap ,w :BD<CR>
+    nnoremap ,w :bd<CR>
 " }
 " gundo {
     nnoremap <F10> :GundoToggle<CR>
