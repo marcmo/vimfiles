@@ -12,13 +12,15 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mru.vim'
-Bundle 'kien/ctrlp.vim'
+" Bundle 'kien/ctrlp.vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'matchit.zip'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/neocomplete'
 Bundle 'Shougo/neosnippet'
 Bundle 'Shougo/neosnippet-snippets'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/neomru.vim'
 Bundle 'bling/vim-airline'
 " frequently used plugins
 Bundle 'tpope/vim-repeat'
@@ -157,14 +159,15 @@ filetype plugin indent on           " required!
     nnoremap <silent> <leader>DQ :exe ":profile pause"<cr>:noautocmd qall!<cr>
 
     " trailing whitespaces {
-        " highlight end of line whitespace as Error
+        " highlight end of line whitespace as Error (not for unite windows)
         " hi link ExtraWhitespace Error
         hi ExtraWhitespace ctermbg=darkgrey guibg=#707070
         augroup whitespaces " {
           autocmd!
-          autocmd BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
-          " except the line I am typing on
-          autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+          autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+          autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+          autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+          autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
           nnoremap <Leader>c :call ClearWhitespaces()<CR>
         augroup END " }
     " }
@@ -460,25 +463,34 @@ filetype plugin indent on           " required!
     let MRU_Window_Height = 25
     " nnoremap ,u :MRU<CR>
 " }
+" Unite {
+    let g:unite_source_history_yank_enable = 1
+    call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+    nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+    nnoremap ,u :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+    nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+" }
 " ctrlp {
-    let g:ctrlp_max_height = 25
-    let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]\.(git|hg|svn|metadata)$',
-      \ 'file': '\v\.(exe|so|dll|d)$|^tags$' }
-    let g:ctrlp_by_filename = 1
-    let g:ctrlp_max_files = 50000
-    let g:ctrlp_match_window_bottom = 0
-    let g:ctrlp_match_window_reversed = 0
-    let g:ctrlp_mruf_max = 200
-    let g:ctrlp_mruf_default_order = 0
-    let g:ctrlp_working_path_mode = 0
-    let g:ctrlp_follow_symlinks = 1
-    nnoremap ,u :CtrlPMRU<CR>
-    noremap <F1> :CtrlPBuffer<CR>
-    inoremap <F1> <esc>:CtrlPBuffer<CR>
-    noremap <S-F1> :CtrlPBufTagAll<CR>
-    inoremap <S-F1> <esc>:CtrlPBufTagAll<CR>
-    noremap <leader>t :CtrlP<CR>
+    " let g:ctrlp_max_height = 25
+    " let g:ctrlp_custom_ignore = {
+    "   \ 'dir':  '\v[\/]\.(git|hg|svn|metadata)$',
+    "   \ 'file': '\v\.(exe|so|dll|d)$|^tags$' }
+    " let g:ctrlp_by_filename = 1
+    " let g:ctrlp_max_files = 50000
+    " let g:ctrlp_match_window_bottom = 0
+    " let g:ctrlp_match_window_reversed = 0
+    " let g:ctrlp_mruf_max = 200
+    " let g:ctrlp_mruf_default_order = 0
+    " let g:ctrlp_working_path_mode = 0
+    " let g:ctrlp_follow_symlinks = 1
+    " nnoremap ,u :CtrlPMRU<CR>
+    " noremap <F1> :CtrlPBuffer<CR>
+    " inoremap <F1> <esc>:CtrlPBuffer<CR>
+    " noremap <S-F1> :CtrlPBufTagAll<CR>
+    " inoremap <S-F1> <esc>:CtrlPBufTagAll<CR>
+    " noremap <leader>t :CtrlP<CR>
 " }
 " Spell check {
     nnoremap <F9> :call ToggleSpell()<CR>
