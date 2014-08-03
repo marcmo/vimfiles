@@ -116,6 +116,12 @@ filetype plugin indent on           " required!
     set diffopt+=iwhite
 " }
 " general utilities {
+    " Save when losing focus
+    au FocusLost * :silent! wall
+    " uppercase word just typed
+    inoremap <C-u> <esc>mzgUiw`za
+    " Resize splits when the window is resized
+    au VimResized * :wincmd =
     " paste in visual mode without updating the default register
     vnoremap p p:let @"=@0<CR>
     " quick way to escape from insert mode
@@ -194,6 +200,7 @@ filetype plugin indent on           " required!
         noremap ,e :e <C-R>=expand("%:p:h") . g:os_specific_delimiter <CR>
     " }
     " search and substitution {
+        noremap <silent> <leader><space> :noh<cr>:call clearmatches()<cr>
         " use normal regexes in search
         nnoremap / /\v
         vnoremap / /\v
@@ -511,33 +518,13 @@ filetype plugin indent on           " required!
       imap <silent><buffer> <C-c> <Plug>(unite_exit)
     endfunction
 " }
-" ctrlp {
-    " let g:ctrlp_max_height = 25
-    " let g:ctrlp_custom_ignore = {
-    "   \ 'dir':  '\v[\/]\.(git|hg|svn|metadata)$',
-    "   \ 'file': '\v\.(exe|so|dll|d)$|^tags$' }
-    " let g:ctrlp_by_filename = 1
-    " let g:ctrlp_max_files = 50000
-    " let g:ctrlp_match_window_bottom = 0
-    " let g:ctrlp_match_window_reversed = 0
-    " let g:ctrlp_mruf_max = 200
-    " let g:ctrlp_mruf_default_order = 0
-    " let g:ctrlp_working_path_mode = 0
-    " let g:ctrlp_follow_symlinks = 1
-    " nnoremap ,u :CtrlPMRU<CR>
-    " noremap <F1> :CtrlPBuffer<CR>
-    " inoremap <F1> <esc>:CtrlPBuffer<CR>
-    " noremap <S-F1> :CtrlPBufTagAll<CR>
-    " inoremap <S-F1> <esc>:CtrlPBufTagAll<CR>
-    " noremap <leader>t :CtrlP<CR>
-" }
 " Spell check {
     nnoremap <F9> :call ToggleSpell()<CR>
     inoremap <F9> <Esc>:call ToggleSpell()<CR>a
 " }
 " nerdtree {
     noremap ,d :execute 'NERDTreeToggle ' . getcwd()<CR><C-W>b
-    noremap ,f :execute 'NERDTreeFind'<CR>
+    noremap <silent>,f :execute 'NERDTreeFind'<CR>
     let NERDTreeShowHidden=1  " display hidden files by default
     let NERDTreeQuitOnOpen = 1 " close NERDTree window when opening a file
 " }
@@ -663,4 +650,39 @@ augroup END " }
       unlet s:column
     endfunction
 " }
+" Highlight Word {
+    " thanks Steve Losh
+    function! HiInterestingWord(n) " {
+        " Save our location.
+        normal! mz
+        " Yank the current word into the z register.
+        normal! "zyiw
+        " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+        let mid = 86750 + a:n
+        " Clear existing matches, but don't worry if they don't exist.
+        silent! call matchdelete(mid)
+        " Construct a literal pattern that has to match at boundaries.
+        let pat = '\V\<' . escape(@z, '\') . '\>'
+        " Actually match the words.
+        call matchadd("InterestingWord" . a:n, pat, 1, mid)
+        " Move back to our original location.
+        normal! `z
+    endfunction " }
 
+    " Mappings {
+    nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+    nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+    nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+    nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+    nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+    nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+    " }
+    " Default Highlights {
+    hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+    hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+    hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
+    hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+    hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+    hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+    " }
+" }

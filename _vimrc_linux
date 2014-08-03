@@ -1,5 +1,5 @@
 " linux
-set listchars=tab:▸\ ,eol:¬ " Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 if has('gui_running')
   set guifont=Monospace\ 10
   set lines=60
