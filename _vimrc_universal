@@ -172,6 +172,10 @@ filetype plugin indent on           " required!
         augroup END " }
     " }
     " directories and files {
+        augroup VimrcAutocmds
+          autocmd!
+          autocmd VimEnter * cd %:p:h
+        augroup END
         noremap ,cd :call SetWorkingDirToCurrentDir()<CR>
         " climb up one directory level
         noremap <leader>u :cd ..<CR>:pwd<CR>
