@@ -40,6 +40,7 @@ Bundle 'tommcdo/vim-exchange'
 Bundle 'thinca/vim-localrc'
 Bundle 'severin-lemaignan/vim-minimap'
 " colors & syntax highlighting
+Bundle 'ujihisa/unite-colorscheme'
 Bundle 'godlygeek/csapprox'
 Bundle 'altercation/vim-colors-solarized'
 Bundle "tomasr/molokai"
@@ -112,12 +113,19 @@ filetype plugin indent on           " required!
     set lazyredraw                  " screen will not be redrawn while executing macros
     set diffopt=vertical,context:4  " Start diff mode with vertical splits,context of 4 lines
     set diffopt+=iwhite
+    " Time out on key codes but not mappings.
+    set notimeout
+    set ttimeout
+    set ttimeoutlen=10
 " }
 " general utilities {
     " Save when losing focus
     au FocusLost * :silent! wall
     " uppercase word just typed
     inoremap <C-u> <esc>mzgUiw`za
+    " Source
+    vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
+    nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
     " Resize splits when the window is resized
     au VimResized * :wincmd =
     " paste in visual mode without updating the default register
@@ -126,9 +134,12 @@ filetype plugin indent on           " required!
     inoremap jj <ESC>
     inoremap kj <ESC>
     " use :w!! to write to a file using sudo
-    cnoremap w!! %!sudo tee > /dev/null %
+    cnoremap w!! w !sudo tee % >/dev/null
     nnoremap<leader>l :set list!<CR>
     nnoremap<leader>w :set wrap!<CR>
+
+    " Select (charwise) the contents of the current line, excluding indentation.
+    nnoremap vv ^vg_
 
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
@@ -161,7 +172,20 @@ filetype plugin indent on           " required!
     " profiling
     nnoremap <silent> <leader>DD :exe ":profile start profile.log"<cr>:exe ":profile func *"<cr>:exe ":profile file *"<cr>
     nnoremap <silent> <leader>DQ :exe ":profile pause"<cr>:noautocmd qall!<cr>
-
+    " Indent Guides {
+        let g:indentguides_state = 0
+        function! IndentGuides() " {{{
+            if g:indentguides_state
+                let g:indentguides_state = 0
+                2match None
+            else
+                let g:indentguides_state = 1
+                execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
+            endif
+        endfunction " }}}
+        hi def IndentGuides guibg=#303030 ctermbg=234
+        nnoremap <leader>I :call IndentGuides()<cr>
+    " }
     " trailing whitespaces {
         " highlight end of line whitespace as Error (not for unite windows)
         " hi link ExtraWhitespace Error
@@ -331,17 +355,18 @@ filetype plugin indent on           " required!
     " }
     " haskell {
         " use ghc functionality for haskell files
-        function! EvaluateInGhc() range
+        function! EvaluateInGhc() range " {{{
           let current = GetVisualSelection()
           let result = system('ghc -e '.shellescape(current))
           call setline(".", result)
-        endfunction
+        endfunction " }}}
         vnoremap <leader>e :call EvaluateInGhc()<CR>$x<esc>0
 
         augroup hs " {
           autocmd!
           autocmd bufenter *.hs,*.lhs noremap <F5> :call OpenInGhci()<CR><CR>
           autocmd bufenter *.hs,*.lhs setlocal ts=2 sts=2 sw=2 expandtab
+          autocmd bufenter *.hs,*.lhs nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
         augroup END " }
     " }
     " javascript {
@@ -378,7 +403,7 @@ filetype plugin indent on           " required!
           autocmd QuickFixCmdPost    l* nested lwindow
         augroup END " }
         " Save and make current file.o
-        function! MakeCpp()
+        function! MakeCpp() " {{{
           let curr_dir = expand('%:h')
           if curr_dir == ''
             let curr_dir = '.'
@@ -387,11 +412,11 @@ filetype plugin indent on           " required!
           execute 'lcd ' . curr_dir
           execute 'make'
           execute 'lcd -'
-        endfunction
-        function! UseTabsNotSpaces()
+        endfunction " }}}
+        function! UseTabsNotSpaces() " {{{
           set noexpandtab
           retab!
-        endfunction
+        endfunction " }}}
     " }
 " }
 " neocomplete {
@@ -459,11 +484,11 @@ filetype plugin indent on           " required!
     let g:airline#extensions#whitespace#mixed_indent_algo = 1
 " }
 " fugitiv {
-    function! CloseFugitiveDiffAfterUsage()
+    function! CloseFugitiveDiffAfterUsage() " {{{
       diffoff!
       close
       wincmd k
-    endfunction
+    endfunction " }}}
     autocmd BufReadPost fugitive://* set bufhidden=delete
     noremap ,k :call CloseFugitiveDiffAfterUsage()<CR>
 " }
@@ -506,7 +531,7 @@ filetype plugin indent on           " required!
     endif
 
     autocmd FileType unite call s:unite_settings()
-    function! s:unite_settings()
+    function! s:unite_settings() " {{{
       imap <silent><buffer> <C-j>   <Plug>(unite_select_next_line)
       imap <silent><buffer> <C-k>   <Plug>(unite_select_previous_line)
       imap <silent><buffer><expr> <C-x> unite#do_action('split')
@@ -514,7 +539,7 @@ filetype plugin indent on           " required!
       imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
       nmap <silent><buffer> <ESC> <Plug>(unite_exit)
       imap <silent><buffer> <C-c> <Plug>(unite_exit)
-    endfunction
+    endfunction " }}}
 " }
 " Spell check {
     nnoremap <F9> :call ToggleSpell()<CR>
@@ -533,10 +558,10 @@ filetype plugin indent on           " required!
     nnoremap <F10> :GundoToggle<CR>
 " }
 " Rake {
-    function! RakeCommand(command)
+    function! RakeCommand(command) " {{{
       cexpr system("rake " . a:command)
       cw " show quickfix window already
-    endfunction
+    endfunction " }}}
     command! -nargs=+ -complete=file Rake call RakeCommand(<q-args>)
     noremap <leader>r :Rake<space>
 " }
@@ -567,7 +592,7 @@ augroup FTOptions " {
   autocmd FileType qf wincmd J | setlocal wrap linebreak
 augroup END " }
 " helper functions {
-    function! GetVisualSelection()
+    function! GetVisualSelection() " {{{
       try
         let a_save = @a
         normal! gv"ay
@@ -576,9 +601,9 @@ augroup END " }
       finally
         let @a = a_save
       endtry
-    endfunction
+    endfunction " }}}
 
-    function! ToggleSpell()
+    function! ToggleSpell() " {{{
       if !exists("b:spell")
         setlocal spell spelllang=en_us
         let b:spell = 1
@@ -586,37 +611,37 @@ augroup END " }
         setlocal nospell
         unlet b:spell
       endif
-    endfunction
+    endfunction " }}}
 
-    function! SwitchWindowKeepCurrentDir()
+    function! SwitchWindowKeepCurrentDir() " {{{
       let current = getcwd()
       wincmd W
       cd `=current`
-    endfunction
+    endfunction " }}}
 
-    function! SetWorkingDirToCurrentDir()
+    function! SetWorkingDirToCurrentDir() " {{{
       cd %:p:h
       :pwd
-    endfunction
+    endfunction " }}}
 
     " create html from text
     command! Txt2html :call Text2html()
-    function! Text2html()
+    function! Text2html() " {{{
       runtime! syntax/2html.vim :convert txt to html
-    endfunction
+    endfunction " }}}
 
     " Remove trailing whitespaces and ^M chars on write
     command! ClearWhitespaces :call ClearWhitespaces()
-    function! ClearWhitespaces()
+    function! ClearWhitespaces() " {{{
       :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
       if has("unix") " remove DOS style line endings
         :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\r\\+$","","")'))
       endif
-    endfunction
+    endfunction " }}}
 
     " replace german Umlauts
     command! UmlautCleanup :call ReplaceUmlauts()
-    function! ReplaceUmlauts()
+    function! ReplaceUmlauts() " {{{
       let s:line = line(".")
       let s:column = col(".")
       let s:save_report = &report
@@ -630,11 +655,11 @@ augroup END " }
       call cursor(s:line,s:column)
       unlet s:line
       unlet s:column
-    endfunction
+    endfunction " }}}
 " }
 " Highlight Word {
     " thanks Steve Losh
-    function! HiInterestingWord(n) " {
+    function! HiInterestingWord(n) " {{{
         " Save our location.
         normal! mz
         " Yank the current word into the z register.
@@ -649,9 +674,10 @@ augroup END " }
         call matchadd("InterestingWord" . a:n, pat, 1, mid)
         " Move back to our original location.
         normal! `z
-    endfunction " }
+    endfunction " }}}
 
     " Mappings {
+    nnoremap <leader>h :call matchadd("InterestingWord1", "", 1, 4242)<C-F>F"<C-C>i
     nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
     nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
     nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
