@@ -32,11 +32,11 @@ Bundle 'scrooloose/syntastic'
 Bundle 'godlygeek/tabular'
 Bundle 'xolox/vim-lua-ftplugin'
 Bundle 'xolox/vim-misc'
+Bundle 't9md/vim-ruby-xmpfilter'
 " seldom used plugins
-Bundle "sk1418/QFGrep.git"
+Bundle 'sk1418/QFGrep.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
-Bundle 'tommcdo/vim-exchange'
 Bundle 'thinca/vim-localrc'
 Bundle 'severin-lemaignan/vim-minimap'
 " colors & syntax highlighting
@@ -419,6 +419,19 @@ filetype plugin indent on           " required!
         endfunction " }}}
     " }}}
 " }}}
+" vim-ruby-xmpfilter {{{
+    let g:xmpfilter_cmd = "seeing_is_believing"
+
+    " xmpfilter compatible
+    autocmd FileType ruby nmap <buffer> <leader>m <Plug>(seeing_is_believing-run_-x)
+    autocmd FileType ruby xmap <buffer> <leader>m <Plug>(seeing_is_believing-run_-x)
+    autocmd FileType ruby imap <buffer> <leader>m <Plug>(seeing_is_believing-run_-x)
+
+    " auto insert mark at appropriate spot.
+    autocmd FileType ruby nmap <buffer> <F5> <Plug>(seeing_is_believing-run)
+    autocmd FileType ruby xmap <buffer> <F5> <Plug>(seeing_is_believing-run)
+    autocmd FileType ruby imap <buffer> <F5> <Plug>(seeing_is_believing-run)
+" }}}
 " neocomplete {{{
     let g:acp_enableAtStartup = 0
     let g:neocomplete#enable_at_startup = 1
@@ -504,7 +517,7 @@ filetype plugin indent on           " required!
     call unite#custom#source('buffer,file,file_rec/async,file_mru','converters', ['converter_file_directory'])
     call unite#filters#matcher_default#use(['matcher_fuzzy'])
     nnoremap <silent><leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-    nnoremap <silent><leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+    nnoremap <silent><leader>T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
     nnoremap <silent>,u :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
     nnoremap <silent><leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
     nnoremap <silent><leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
