@@ -511,11 +511,14 @@ filetype plugin indent on           " required!
 " }}}
 " Unite {{{
     let g:unite_source_history_yank_enable = 1
-		call unite#custom#source('file_rec/async', 'ignore_pattern', join(['/\.repo','/\.metadata','\.d','\.a','\.o','\.s','tags$'], '\|'))
-		call unite#custom#source('buffer,file,file_rec/async', 'sorters', 'sorter_rank')
-    call unite#custom#source('buffer,file,file_rec/async,file_mru','matchers', ['converter_tail','matcher_default'])
-    call unite#custom#source('buffer,file,file_rec/async,file_mru','converters', ['converter_file_directory'])
     call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    call unite#filters#converter_default#use(['converter_tail'])
+
+    call unite#custom#source('file_rec/async', 'ignore_pattern', join(['/\.repo','/\.metadata','\.d','\.a','\.o','\.s','tags$'], '\|'))
+    call unite#custom#source('buffer,file,file_rec/async', 'sorters', 'sorter_rank')
+    call unite#custom#source('buffer,file,file_rec/async,file_mru', 'matchers', ['converter_tail', 'matcher_default'])
+    call unite#custom#source('buffer,file,file_rec/async,file_mru', 'converters', ['converter_file_directory'])
+
     nnoremap <silent><leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
     nnoremap <silent><leader>T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
     nnoremap <silent>,u :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
