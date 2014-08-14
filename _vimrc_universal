@@ -207,12 +207,6 @@ filetype plugin indent on           " required!
         noremap ,cd :call SetWorkingDirToCurrentDir()<CR>
         " climb up one directory level
         noremap <leader>u :cd ..<CR>:pwd<CR>
-        " Some helpers to edit mode (http://vimcasts.org/e/14)
-        cnoremap %% <C-R>=expand('%:h').'/'<cr>
-        noremap <leader>ew :e %%
-        noremap <leader>es :sp %%
-        noremap <leader>ev :vsp %%
-        noremap <leader>et :tabe %%
         " prompt for opening files in the same dir as the current buffer's file.
         if has("unix")
           let g:os_specific_delimiter="/"
