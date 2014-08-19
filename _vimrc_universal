@@ -157,7 +157,7 @@ filetype plugin indent on           " required!
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
-    execute 'nnoremap ,rc :vsplit ~/.vim/_vimrc_universal<CR>'
+    nnoremap ,rc :e ~/.vim/_vimrc_universal<CR>
     nnoremap ,bc :e ~/.bashrc <CR>
     " move lines up and down
     nnoremap <M-Down> mz:m+<CR>`z==
@@ -262,7 +262,7 @@ filetype plugin indent on           " required!
     " formatting {{{
         augroup astyle " {{{
           autocmd!
-          autocmd BufNewFile,BufRead *.cpp,*.c,*.h set formatprg=astyle\ -A1sYHjk1
+          autocmd BufNewFile,BufRead *.cpp,*.c,*.h set formatprg=astyle\ -A1sYHjk1S
         augroup END " }}}
         " format complete file and return to starting position using mark 'b'
         nnoremap <Leader>f mbgggqG`b
@@ -281,7 +281,8 @@ filetype plugin indent on           " required!
         " lookup symbol in tags file
         inoremap <F3> <Esc><c-]><CR>
         noremap <F3> <c-]>
-        noremap <S-F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.html --exclude=*.s --exclude=docs .<CR>
+        " use tpope's awesome ctags git hooks (see http://bit.ly/gitctags)
+        noremap <S-F8> :!git ctags<CR>
         nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
     " }}}
     " fswitch {{{
@@ -391,7 +392,8 @@ filetype plugin indent on           " required!
           autocmd bufenter *.cpp,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
           autocmd bufenter *.cpp nnoremap <F5> :update<CR>:call MakeCpp()<CR>
           autocmd bufenter *.cpp nnoremap <silent> ,m :update<CR>:call MakeCpp()<CR>
-          autocmd bufenter *.cpp nnoremap <S-F5> :call UseTabsNotSpaces()<CR>
+          autocmd bufenter *.cpp nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
+          autocmd bufenter *.cpp nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
           autocmd BufRead,BufNewFile *.cpp set tw=100 fo=tcroql
           autocmd QuickFixCmdPost [^l]* nested cwindow
           autocmd QuickFixCmdPost    l* nested lwindow
@@ -409,6 +411,10 @@ filetype plugin indent on           " required!
         endfunction " }}}
         function! UseTabsNotSpaces() " {{{
           set noexpandtab
+          retab!
+        endfunction " }}}
+        function! UseSpacesNotTabs() " {{{
+          set expandtab
           retab!
         endfunction " }}}
     " }}}
@@ -527,10 +533,11 @@ filetype plugin indent on           " required!
     call unite#custom#source('buffer,file,file_rec/async,file_mru', 'converters', ['converter_file_directory'])
 
     noremap [unite] <Nop>
+    noremap ,u <Nop>
     map <Space> [unite]
     nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
     nnoremap <silent> [unite]T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-    nnoremap <silent> ,u :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    nnoremap <silent> [unite]u :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
     nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
     nnoremap <silent> [unite]e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
     nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
