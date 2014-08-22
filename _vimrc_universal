@@ -225,8 +225,8 @@ filetype plugin indent on           " required!
         " search for visually highlighted text
         vnoremap // y/<C-R>"<CR>
         " Prepare a :substitute command using the current word or the selected text:
-        vnoremap <F6> y:%s/\<<C-r>"\>//gc<Left><Left><Left>
-        nnoremap <F6> y:%s/\<<C-r>=expand("<cword>")<CR>\>//gc<Left><Left><Left>
+        vnoremap <F6> y:%s/\v<<C-r>">//gc<Left><Left><Left>
+        nnoremap <F6> y:%s/\v<<C-r>=expand("<cword>")<CR>>//gc<Left><Left><Left>
     " }}}
     " movement {{{
         " jump back and forth between the last 2 files
@@ -533,11 +533,10 @@ filetype plugin indent on           " required!
     call unite#custom#source('buffer,file,file_rec/async,file_mru', 'converters', ['converter_file_directory'])
 
     noremap [unite] <Nop>
-    noremap ,u <Nop>
     map <Space> [unite]
     nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
     nnoremap <silent> [unite]T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-    nnoremap <silent> [unite]u :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    nnoremap <silent> ,u			 :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
     nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
     nnoremap <silent> [unite]e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
     nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
