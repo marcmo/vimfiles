@@ -515,7 +515,7 @@ filetype plugin indent on           " required!
         \ '--ignore ".hg" --ignore ".svn" --ignore ".git" --ignore ".bzr" -g ""'
       let g:unite_source_grep_command = 'ag'
       let g:unite_source_grep_default_opts = '-i --line-numbers --nocolor --nogroup --hidden -U ' .
-        \  '--ignore "hg" --ignore ".svn" --ignore ".git" --ignore ".bzr"'
+        \  '--ignore "hg" --ignore ".svn" --ignore ".git" --ignore ".bzr" --ignore ".repo"'
       let g:unite_source_grep_recursive_opt = ''
     elseif executable('ack-grep')
       let g:unite_source_grep_command = 'ack-grep'
@@ -542,7 +542,7 @@ filetype plugin indent on           " required!
     nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 
     nnoremap [unite]a :Unite grep:. -input=
-    nnoremap [unite]q :Unite grep:.:"-G\.\(h\|cpp\)$" -input=<C-r><C-w><CR>
+    nnoremap [unite]q :Unite grep:.:"-sG\.\(h\|cpp\)$" -input=<C-r><C-w><CR>
 
     autocmd FileType unite call s:unite_settings()
     function! s:unite_settings() " {{{
