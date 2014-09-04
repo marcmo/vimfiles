@@ -262,7 +262,7 @@ filetype plugin indent on           " required!
     " formatting {{{
         augroup astyle " {{{
           autocmd!
-          autocmd BufNewFile,BufRead *.cpp,*.c,*.h set formatprg=astyle\ -A1sYHjk1S
+          autocmd BufNewFile,BufRead *.cpp,*.c,*.h setlocal formatprg=astyle\ -A1sYHjk1S
         augroup END " }}}
         " format complete file and return to starting position using mark 'b'
         nnoremap <Leader>f mbgggqG`b
@@ -376,7 +376,7 @@ filetype plugin indent on           " required!
           autocmd!
           let pandoc_pipeline  = "pandoc --from=html --to=markdown"
           let pandoc_pipeline .= " | pandoc --from=markdown --to=html"
-          autocmd FileType html let &formatprg=pandoc_pipeline
+          autocmd FileType html setlocal formatprg=pandoc_pipeline
         augroup END " }}}
     " }}}
     " lua {{{
@@ -548,6 +548,9 @@ filetype plugin indent on           " required!
     function! s:unite_settings() " {{{
       call clearmatches()
       imap <silent><buffer>       <C-j> <Plug>(unite_select_next_line)
+      " map arrow Up and Down in normal mode
+      nmap <silent><buffer><ESC>oA k
+      nmap <silent><buffer><ESC>oB j
       imap <silent><buffer>       <C-k> <Plug>(unite_select_previous_line)
       imap <silent><buffer><expr> <C-x> unite#do_action('split')
       imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
@@ -685,7 +688,7 @@ augroup END " }}}
       " Clear existing matches, but don't worry if they don't exist.
       silent! call matchdelete(mid)
       " Construct a literal pattern that has to match at boundaries.
-      let pat = '\V\<' . escape(@z, '\') . '\>'
+      let pat = '\V' . escape(@z, '\')
       " Actually match the words.
       call matchadd("InterestingWord" . a:n, pat, 1, mid)
       " Move back to our original location.
