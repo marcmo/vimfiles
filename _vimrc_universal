@@ -262,7 +262,7 @@ filetype plugin indent on           " required!
     " formatting {{{
         augroup astyle " {{{
           autocmd!
-          autocmd BufNewFile,BufRead *.cpp,*.c,*.h setlocal formatprg=astyle\ -A1sYHjk1S
+          autocmd BufNewFile,BufRead *.cpp,*.c,*.h setlocal formatprg=astyle\ -A1sYHjk1STxC100
         augroup END " }}}
         " format complete file and return to starting position using mark 'b'
         nnoremap <Leader>f mbgggqG`b
