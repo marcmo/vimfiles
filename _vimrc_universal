@@ -34,6 +34,7 @@ Bundle 'xolox/vim-lua-ftplugin'
 Bundle 'xolox/vim-misc'
 Bundle 't9md/vim-ruby-xmpfilter'
 " seldom used plugins
+Bundle 'junegunn/vim-easy-align'
 Bundle 'sk1418/QFGrep.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
@@ -508,6 +509,12 @@ filetype plugin indent on           " required!
 " mru {{{
     let MRU_Max_Entries = 200
     let MRU_Window_Height = 25
+" }}}
+" vim-easy-align {{{
+    " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+    vmap <Enter> <Plug>(EasyAlign)
+    " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+    nmap <Leader>a <Plug>(EasyAlign)
 " }}}
 " Unite {{{
     if executable('ag')
