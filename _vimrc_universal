@@ -554,6 +554,7 @@ filetype plugin indent on           " required!
 
     nnoremap [unite]a :Unite grep:. -input=
     nnoremap [unite]q :Unite grep:.:"-sG\.\(h\|cpp\)$" -input=<C-r><C-w><CR>
+    nnoremap [unite]w :UniteResume<CR>
 
     autocmd FileType unite call s:unite_settings()
     function! s:unite_settings() " {{{
