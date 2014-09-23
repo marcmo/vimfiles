@@ -35,6 +35,7 @@ Bundle 'xolox/vim-misc'
 Bundle 't9md/vim-ruby-xmpfilter'
 " seldom used plugins
 Bundle 'junegunn/vim-easy-align'
+Bundle 'embear/vim-localvimrc'
 Bundle 'sk1418/QFGrep.git'
 Bundle 'sjl/gundo.vim'
 Bundle 'AndrewRadev/switch.vim'
@@ -257,6 +258,9 @@ filetype plugin indent on           " required!
         "Make current window the only one
         nnoremap ,o :only<CR>
     " }}}
+" localvimrc {{{
+		let g:localvimrc_whitelist=expand("~") . "/dev/git/.*"
+" }}}
 " }}}
 " programming {{{
       nnoremap <silent>,m :execute 'make'<CR>
