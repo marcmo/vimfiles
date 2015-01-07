@@ -34,6 +34,7 @@ Bundle 'xolox/vim-lua-ftplugin'
 Bundle 'xolox/vim-misc'
 Bundle 't9md/vim-ruby-xmpfilter'
 " seldom used plugins
+Bundle 'elixir-lang/vim-elixir'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'embear/vim-localvimrc'
 Bundle 'sk1418/QFGrep.git'
@@ -121,6 +122,8 @@ filetype plugin indent on           " required!
     set ttimeoutlen=10
 " }}}
 " general utilities {{{
+    " select the last changed text (or the text that was just pasted)
+    nnoremap gp `[v`]
     " Save when losing focus
     au FocusLost * :silent! wall
     " uppercase word just typed
@@ -154,8 +157,8 @@ filetype plugin indent on           " required!
     " insert current date
     cnoremap <S-F10> <C-R>=strftime("%Y%m%d-%H%M")<CR>
     nnoremap <S-F10> "=strftime("%Y%m%d-%H%M")<CR>P
-    inoremap <S-F10> <C-R>=strftime("%Y%m-%H%M")<CR>
-    vnoremap <S-F10> c<C-R>=strftime("%Y%m-%H%M")<CR><Esc>gv
+    inoremap <S-F10> <C-R>=strftime("%Y%m%d-%H%M")<CR>
+    vnoremap <S-F10> c<C-R>=strftime("%Y%m%d-%H%M")<CR><Esc>gv
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
@@ -323,6 +326,7 @@ filetype plugin indent on           " required!
                                         \ "regex": 'Top-level binding with no type signature' }
         let g:syntastic_ruby_checkers = ['mri', 'ruby_lint']
         let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haskell','cpp'] }
+        let g:syntastic_enable_elixir_checker = 1
         nnoremap <leader>s :SyntasticCheck<CR>
     " }}}
     " quickrun {{{
@@ -374,14 +378,6 @@ filetype plugin indent on           " required!
           autocmd!
           autocmd FileType html,javascript setlocal ts=2 sts=2 sw=2 expandtab
           autocmd FileType html,javascript setlocal makeprg=jslint\ % | setlocal efm=%f:%l:%c:%m
-        augroup END " }}}
-    " }}}
-    " html {{{
-        augroup html " {{{
-          autocmd!
-          let pandoc_pipeline  = "pandoc --from=html --to=markdown"
-          let pandoc_pipeline .= " | pandoc --from=markdown --to=html"
-          autocmd FileType html setlocal formatprg=pandoc_pipeline
         augroup END " }}}
     " }}}
     " lua {{{
