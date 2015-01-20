@@ -13,8 +13,8 @@ The drawback is that it requires +ruby (Neovim works out-of-the-box).
 
     git clone git@github.com:marcmo/vimfiles.git ~/.vim
     cd ~/.vim
-    rake install
     rake link
+    rake install
 
 # VIM cheatsheet
 
