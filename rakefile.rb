@@ -23,7 +23,7 @@ end
 desc "install plugins"
 task :install => :plugged do
   begin
-    sh "vim +PlugInstall +qall"
+    sh "vim +PlugInstall"
   rescue
   end
 end
