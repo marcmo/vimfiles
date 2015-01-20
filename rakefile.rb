@@ -14,15 +14,16 @@ end
 UserDir = File.expand_path('~')
 VimDir = File.join(UserDir,".vim")
 
-task :vundle do
-  vundleDir = File.join(VimDir,"bundle","vundle")
-  sh "git clone https://github.com/gmarik/vundle.git #{vundleDir}"
+task :plugged do
+  mkdir_p "#{UserDir}/.vim/autoload"
+  plug_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  sh "curl -fLo ~/.vim/autoload/plug.vim #{plug_url}"
 end
 
 desc "install plugins"
-task :install => :vundle do
+task :install => :plugged do
   begin
-    sh "vim +BundleInstall +qall"
+    sh "vim +PlugInstall +qall"
   rescue
   end
 end
