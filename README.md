@@ -2,6 +2,13 @@
 
 this repository contains configurations for linux,mac and windows
 
+## Plugin Management
+
+I use [vim-plug](https://github.com/junegunn/vim-plug) to install plugins and keep them up to date.
+Before I used Vundle but found that I could bring down my startup time 25% by loading some plugins
+lazy. Merely switching to vim-plug without any lazy loading already gave a 10% boost.  
+The drawback is that it requires +ruby (Neovim works out-of-the-box).
+
 ## setting up vim in new environment:
 
     git clone git@github.com:marcmo/vimfiles.git ~/.vim
