@@ -2,6 +2,6 @@
 .VimballRecord
 doc/tags
 tags
-bundle
+plugged
 sessions
 .netrwhist
