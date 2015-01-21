@@ -11,10 +11,24 @@ The drawback is that it requires +ruby (Neovim works out-of-the-box).
 
 ## setting up vim in new environment:
 
+first clone the git repo:
+
+    git clone https://github.com/marcmo/vimfiles.git
+
+or over ssh:
+
     git clone git@github.com:marcmo/vimfiles.git ~/.vim
+
+then setup vim with all plugins:
+
     cd ~/.vim
     rake link
     rake install
+
+after that compile the vimproc native plugin extension:
+
+    cd ~/.vim/plugged/vimproc
+    make
 
 # VIM cheatsheet
 
