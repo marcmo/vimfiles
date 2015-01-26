@@ -535,7 +535,7 @@ filetype plugin indent on           " required!
     call unite#filters#matcher_default#use(['matcher_fuzzy'])
     call unite#filters#converter_default#use(['converter_tail'])
 
-    call unite#custom#source('file_rec/async', 'ignore_pattern', join(['/\.repo','/\.metadata','\.d','\.a','\.o','\.s','tags$'], '\|'))
+    call unite#custom#source('file_rec/async', 'ignore_pattern', join(['/\.repo$','/\.metadata$','\.d$','\.a$','\.o$','\.s$','tags$'], '\|'))
     call unite#custom#source('buffer,file,file_rec/async', 'sorters', 'sorter_rank')
     call unite#custom#source('buffer,file,file_rec/async,file_mru', 'matchers', ['converter_tail', 'matcher_default'])
     call unite#custom#source('buffer,file,file_rec/async,file_mru', 'converters', ['converter_file_directory'])
