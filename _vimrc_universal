@@ -33,6 +33,7 @@ Plug 'xolox/vim-misc'
 Plug 't9md/vim-ruby-xmpfilter', { 'for': 'ruby' }
 " seldom used plugins
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'zah/nimrod.vim', { 'for': 'nim' }
 Plug 'junegunn/vim-easy-align'
 Plug 'embear/vim-localvimrc'
 Plug 'sk1418/QFGrep'
