@@ -11,11 +11,39 @@ The drawback is that it requires +ruby (Neovim works out-of-the-box).
 
 ## setting up vim in new environment:
 
+make sure ruby is installed (here I'm using rbenv and ruby-build):
+
+### rbenv
+
+    git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+    echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+    . ~/.bashrc
+
+If you've installed rbenv manually using git, you can upgrade your installation to the cutting-edge version at any time.
+
+    $ cd ~/.rbenv
+    $ git pull
+
+## ruby-build
+
+On Ubuntu ruby has some prerequisites:
+
+    sudo apt-get install libc6-dev libssl-dev libmysql++-dev libsqlite3-dev make build-essential
+    sudo apt-get install libffi-dev libreadline6-dev zlib1g-dev libyaml-dev
+
+    git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+    rbenv install 2.2.0
+    rbenv rehash
+    rbenv global 2.2.0
+
+## Now clone the vim config
+
 first clone the git repo:
 
-    git clone https://github.com/marcmo/vimfiles.git
+    git clone https://github.com/marcmo/vimfiles.git ~/.vim
 
-or over ssh:
+alternatively over ssh:
 
     git clone git@github.com:marcmo/vimfiles.git ~/.vim
 
