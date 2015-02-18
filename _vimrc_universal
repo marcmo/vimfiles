@@ -122,16 +122,16 @@ filetype plugin indent on           " required!
     set ttimeoutlen=10
 " }}}
 " general utilities {{{
-		inoremap <F1> <Esc>
-		noremap <F1> :call MapF1()<CR>
+    inoremap <F1> <Esc>
+    noremap <F1> :call MapF1()<CR>
 
-		function! MapF1()
-			if &buftype == "help"
-				exec 'quit'
-			else
-				exec 'help'
-			endif
-		endfunction
+    function! MapF1()
+      if &buftype == "help"
+        exec 'quit'
+      else
+        exec 'help'
+      endif
+    endfunction
     " select the last changed text (or the text that was just pasted)
     nnoremap gp `[v`]
     " Save when losing focus
@@ -272,7 +272,7 @@ filetype plugin indent on           " required!
         nnoremap ,o :only<CR>
     " }}}
 " localvimrc {{{
-		let g:localvimrc_whitelist=expand("~") . "/dev/git/.*"
+    let g:localvimrc_whitelist=expand("~") . "/dev/git/.*"
 " }}}
 " }}}
 " programming {{{
@@ -323,6 +323,18 @@ filetype plugin indent on           " required!
         nnoremap - :Switch<cr>
     " }}}
     " syntastic {{{
+        function! DebugSyntastic() " {{{
+          if g:syntastic_debug == 1
+            let g:syntastic_debug = 0
+            echo "turn off syntastic debugging"
+          else
+            let g:syntastic_debug = 1
+            let g:syntastic_debug_file = '~/syntastic.log'
+            exe ':e ' . g:syntastic_debug_file
+            echo "turn on syntastic debugging"
+          endif
+        endfunction " }}}
+        noremap <silent> <leader>DS :call DebugSyntastic()<CR>
         let g:syntastic_cpp_compiler = 'clang++'
         let g:syntastic_cpp_compiler_options = ' -std=c++11'
         let g:syntastic_check_on_wq = 0
@@ -555,7 +567,7 @@ filetype plugin indent on           " required!
     map <Space> [unite]
     nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
     nnoremap <silent> [unite]T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-    nnoremap <silent> ,u			 :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    nnoremap <silent> ,u       :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
     nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
     nnoremap <silent> [unite]e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
     nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
