@@ -122,6 +122,16 @@ filetype plugin indent on           " required!
     set ttimeoutlen=10
 " }}}
 " general utilities {{{
+		inoremap <F1> <Esc>
+		noremap <F1> :call MapF1()<CR>
+
+		function! MapF1()
+			if &buftype == "help"
+				exec 'quit'
+			else
+				exec 'help'
+			endif
+		endfunction
     " select the last changed text (or the text that was just pasted)
     nnoremap gp `[v`]
     " Save when losing focus
