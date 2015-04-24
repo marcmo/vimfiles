@@ -272,6 +272,8 @@ filetype plugin indent on           " required!
         vnoremap <silent> ;; :call SwitchWindowKeepCurrentDir()<CR>
         "Make current window the only one
         nnoremap ,o :only<CR>
+        "auto close the preview window when exiting insert mode
+        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
     " }}}
 " localvimrc {{{
     let g:localvimrc_whitelist=expand("~") . "/dev/git/.*"
