@@ -33,6 +33,7 @@ Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'xolox/vim-misc'
 Plug 't9md/vim-ruby-xmpfilter', { 'for': 'ruby' }
 " seldom used plugins
+Plug 'fatih/vim-go'
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'zah/nimrod.vim', { 'for': 'nim' }
 Plug 'junegunn/vim-easy-align'
@@ -381,6 +382,9 @@ filetype plugin indent on           " required!
           autocmd bufenter *.hs,*.lhs nnoremap <silent> _X :GhcModCheckAndLintAsync<CR>
           autocmd bufenter *.hs,*.lhs nnoremap <silent> ,m :update<CR>:GhcModCheck<CR>
         augroup END " }}}
+    " }}}
+    " go {{{
+        let g:go_snippet_engine = "neosnippet"
     " }}}
     " haskell {{{
         " use ghc functionality for haskell files
