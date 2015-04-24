@@ -31,13 +31,11 @@ Plug 'scrooloose/syntastic'
 Plug 'godlygeek/tabular'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'xolox/vim-misc'
-Plug 't9md/vim-ruby-xmpfilter', { 'for': 'ruby' }
+Plug 'embear/vim-localvimrc'
 " seldom used plugins
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
-Plug 'zah/nimrod.vim', { 'for': 'nim' }
 Plug 'junegunn/vim-easy-align'
-Plug 'embear/vim-localvimrc'
 Plug 'sk1418/QFGrep'
 Plug 'sjl/gundo.vim'
 Plug 'AndrewRadev/switch.vim'
@@ -450,19 +448,6 @@ filetype plugin indent on           " required!
           retab!
         endfunction " }}}
     " }}}
-" }}}
-" vim-ruby-xmpfilter {{{
-    let g:xmpfilter_cmd = "seeing_is_believing"
-
-    " xmpfilter compatible
-    autocmd FileType ruby nmap <buffer> <leader>m <Plug>(seeing_is_believing-run_-x)
-    autocmd FileType ruby xmap <buffer> <leader>m <Plug>(seeing_is_believing-run_-x)
-    autocmd FileType ruby imap <buffer> <leader>m <Plug>(seeing_is_believing-run_-x)
-
-    " auto insert mark at appropriate spot.
-    autocmd FileType ruby nmap <buffer> <F5> <Plug>(seeing_is_believing-run)
-    autocmd FileType ruby xmap <buffer> <F5> <Plug>(seeing_is_believing-run)
-    autocmd FileType ruby imap <buffer> <F5> <Plug>(seeing_is_believing-run)
 " }}}
 " neocomplete {{{
     let g:acp_enableAtStartup = 0
