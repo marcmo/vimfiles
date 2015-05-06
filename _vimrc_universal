@@ -559,7 +559,7 @@ filetype plugin indent on           " required!
     noremap [unite] <Nop>
     map <Space> [unite]
     " nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-    nnoremap <silent> [unite]t :FZF<cr>
+    " nnoremap <silent> [unite]t  ==> see FZF section
     nnoremap <silent> [unite]T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
     nnoremap <silent> ,u       :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
     nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
@@ -586,6 +586,27 @@ filetype plugin indent on           " required!
       nmap <silent><buffer>       <F5>  <Plug>(unite_redraw)
       imap <silent><buffer>       <F5>  <Plug>(unite_redraw)
     endfunction " }}}
+" }}}
+" FZF {{{
+      nnoremap <silent> [unite]t :call fzf#run({
+      \   'source':'find . \( \( -name .repo -a -type d \) ' .
+      \   '-o \( -name "Debug_*" -a -type d \) \) -prune ' .
+      \   '-o \( -name "*.d" -o -name "*.o" -o -name "*.a" \) -prune -o -type f -print',
+      \   'sink':  'e ',
+      \   'options':  '-m'
+      \ })<CR>
+
+
+      " Choose a color scheme with fzf
+      nnoremap <silent> <Leader>C :call fzf#run({
+      \   'source':
+      \     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
+      \         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
+      \   'sink':     'colo',
+      \   'options':  '+m',
+      \   'left':     20,
+      \   'launcher': 'xterm -geometry 20x30 -e bash -ic %s'
+      \ })<CR>
 " }}}
 " Spell check {{{
     nnoremap <F9> :call ToggleSpell()<CR>
