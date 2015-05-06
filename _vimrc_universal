@@ -37,7 +37,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'junegunn/vim-easy-align'
 Plug 'sk1418/QFGrep'
-Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
 Plug 'AndrewRadev/switch.vim'
 Plug 'thinca/vim-localrc'
 Plug 'severin-lemaignan/vim-minimap'
@@ -599,8 +599,8 @@ filetype plugin indent on           " required!
 " bufkill {{{
     nnoremap ,w :bd<CR>
 " }}}
-" gundo {{{
-    nnoremap <F10> :GundoToggle<CR>
+" undotree {{{
+    nnoremap <F10> :UndotreeToggle<CR>
 " }}}
 " Rake {{{
     function! RakeCommand(command) " {{{
