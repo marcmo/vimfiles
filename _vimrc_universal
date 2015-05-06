@@ -221,6 +221,7 @@ filetype plugin indent on           " required!
         augroup END
         noremap ,cd :call SetWorkingDirToCurrentDir()<CR>
         " climb up one directory level
+        noremap <silent> <space>p :pwd<cr>
         noremap <leader>u :cd ..<CR>:pwd<CR>
         " prompt for opening files in the same dir as the current buffer's file.
         if has("unix")
