@@ -420,11 +420,11 @@ filetype plugin indent on           " required!
     " c++ {{{
         augroup cpp " {{{
           autocmd!
-          autocmd bufenter *.cpp,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
-          autocmd bufenter *.cpp nnoremap <F5> :update<CR>:call MakeCpp()<CR>
-          autocmd bufenter *.cpp nnoremap <silent> ,m :update<CR>:call MakeCpp()<CR>
-          autocmd bufenter *.cpp nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
-          autocmd bufenter *.cpp nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
+          autocmd bufenter *.cpp,*.c,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
+          autocmd bufenter *.cpp,*.c nnoremap <F5> :update<CR>:call MakeCpp()<CR>
+          autocmd bufenter *.cpp,*.c nnoremap <silent> ,m :update<CR>:call MakeCpp()<CR>
+          autocmd bufenter *.cpp,*.c,*.h nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
+          autocmd bufenter *.cpp,*.c,*.h nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
           autocmd BufRead,BufNewFile *.cpp set tw=100 fo=tcroql
           autocmd QuickFixCmdPost [^l]* nested cwindow
           autocmd QuickFixCmdPost    l* nested lwindow
