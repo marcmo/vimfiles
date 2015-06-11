@@ -34,6 +34,7 @@ Plug 'xolox/vim-misc'
 Plug 'embear/vim-localvimrc'
 " seldom used plugins
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'wting/rust.vim', { 'for': 'rust' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'junegunn/vim-easy-align'
 Plug 'sk1418/QFGrep'
@@ -287,6 +288,8 @@ filetype plugin indent on           " required!
         augroup END " }}}
         " format complete file and return to starting position using mark 'b'
         nnoremap <Leader>f mbgggqG`b
+        nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
+        nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
     " }}}
     " tcomment {{{
         let g:tcommentOptions = {'mixedindent':1}
@@ -363,7 +366,7 @@ filetype plugin indent on           " required!
         \     executable('gcc')            ? 'c/gcc' : ''}
         let g:quickrun_config.cpp = {
         \   'command': 'clang++',
-        \   'cmdopt': '-std=c++11 -Iinclude'
+        \   'cmdopt': '-Iinclude -std=c++11'
         \ }
         nnoremap <silent> ,rr :QuickRun -mode n<CR>
         vnoremap <silent> ,rr :QuickRun -mode v<CR>
@@ -419,11 +422,9 @@ filetype plugin indent on           " required!
     " c++ {{{
         augroup cpp " {{{
           autocmd!
-          autocmd bufenter *.cpp,*.c,*.h setlocal mp=clang++\ -std=c++11\ -I/Volumes/macbox_cs/dev/git/boost.git/\ -o\ %<\ %
+          autocmd bufenter *.cpp,*.c,*.h setlocal mp=clang++\ -std=c++11\ -Iinclude\ -I$HOME/dev/git/boost.git/\ -o\ %<\ %
           autocmd bufenter *.cpp,*.c nnoremap <F5> :update<CR>:call MakeCpp()<CR>
           autocmd bufenter *.cpp,*.c nnoremap <silent> ,m :update<CR>:call MakeCpp()<CR>
-          autocmd bufenter *.cpp,*.c,*.h nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
-          autocmd bufenter *.cpp,*.c,*.h nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
           autocmd BufRead,BufNewFile *.cpp set tw=100 fo=tcroql
           autocmd QuickFixCmdPost [^l]* nested cwindow
           autocmd QuickFixCmdPost    l* nested lwindow
