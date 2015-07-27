@@ -43,7 +43,9 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'thinca/vim-localrc'
 Plug 'severin-lemaignan/vim-minimap'
 " colors & syntax highlighting
+Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'ujihisa/unite-colorscheme'
+Plug 'marcmo/essentialColors'
 Plug 'godlygeek/csapprox'
 Plug 'altercation/vim-colors-solarized'
 Plug 'tomasr/molokai'
@@ -57,7 +59,9 @@ filetype plugin indent on           " required!
 " UI Stuff {{{
     syntax on
     set background=dark
-    if filereadable(expand("~/.vim/plugged/vim-aldmeris/colors/aldmeris.vim"))
+    if filereadable(expand("~/.vim/plugged/molokai/colors/molokai.vim"))
+      colorscheme molokai
+    elseif filereadable(expand("~/.vim/plugged/vim-aldmeris/colors/aldmeris.vim"))
       colorscheme aldmeris
     elseif filereadable(expand("~/.vim/plugged/vim-colors-solarized/colors/solarized.vim"))
       colorscheme solarized
