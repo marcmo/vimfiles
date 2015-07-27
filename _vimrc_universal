@@ -54,11 +54,9 @@ filetype plugin indent on           " required!
 " UI Stuff {{{
     syntax on
     set background=dark
-    if filereadable(expand("~/.vim/plugged/molokai/colors/molokai.vim"))
-      colorscheme molokai
-    elseif filereadable(expand("~/.vim/plugged/vim-aldmeris/colors/aldmeris.vim"))
+    if filereadable(expand("~/.vim/plugged/essentialColors/colors/aldmeris.vim"))
       colorscheme aldmeris
-    elseif filereadable(expand("~/.vim/plugged/vim-colors-solarized/colors/solarized.vim"))
+    elseif filereadable(expand("~/.vim/plugged/essentialColors/colors/solarized.vim"))
       colorscheme solarized
     endif
     set cursorline                " highlight the screen line of the cursor
