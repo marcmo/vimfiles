@@ -43,14 +43,9 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'thinca/vim-localrc'
 Plug 'severin-lemaignan/vim-minimap'
 " colors & syntax highlighting
-Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'ujihisa/unite-colorscheme'
 Plug 'marcmo/essentialColors'
 Plug 'godlygeek/csapprox'
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomasr/molokai'
-Plug 'marcmo/vim-aldmeris'
-Plug 'Wombat'
 Plug 'leafo/moonscript-vim'
 call plug#end()
 
