@@ -315,8 +315,7 @@ filetype plugin indent on           " required!
           autocmd!
           autocmd BufEnter *.h let b:fswitchdst  = 'cpp,CPP,cc,CC,c,C,hpp,HPP'
           autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,../src,src'
-          autocmd BufEnter *.c  let b:fswitchdst  = 'h,H'
-          autocmd BufEnter *.cpp,*.cc,*.hpp  let b:fswitchdst  = 'h,H'
+          autocmd BufEnter *.c,*.cpp,*.cc,*.hpp  let b:fswitchdst  = 'h,H'
           autocmd BufEnter *.cpp,*.cc,*.c,*.hpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
         augroup END " }}}
         nnoremap <silent>,, :FSHere<cr>
@@ -364,7 +363,7 @@ filetype plugin indent on           " required!
         \     executable('gcc')            ? 'c/gcc' : ''}
         let g:quickrun_config.cpp = {
         \   'command': 'clang++',
-        \   'cmdopt': '-std=c++11'
+        \   'cmdopt': '-std=c++11 -Iinclude'
         \ }
         nnoremap <silent> ,rr :QuickRun -mode n<CR>
         vnoremap <silent> ,rr :QuickRun -mode v<CR>
