@@ -330,7 +330,7 @@ filetype plugin indent on           " required!
         augroup mycppfiles " {{{
           autocmd!
           autocmd BufEnter *.h let b:fswitchdst  = 'cpp,CPP,cc,CC,c,C,hpp,HPP'
-          autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,../src,src'
+          autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/'
           autocmd BufEnter *.c,*.cpp,*.cc,*.hpp  let b:fswitchdst  = 'h,H'
           autocmd BufEnter *.cpp,*.cc,*.c,*.hpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
         augroup END " }}}
