@@ -643,7 +643,7 @@ filetype plugin indent on           " required!
       \ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --no-multi --reverse',
       \ 'down':    '50%'
       \ })
-      nnoremap [unite]a :Ag 
+      nnoremap [unite]a :Ag<Space>
 " }}}
 " Spell check {{{
     nnoremap <F9> :call ToggleSpell()<CR>
