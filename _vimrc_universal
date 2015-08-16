@@ -32,6 +32,7 @@ Plug 'godlygeek/tabular'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'xolox/vim-misc'
 Plug 'embear/vim-localvimrc'
+Plug 'rhysd/vim-clang-format'
 " seldom used plugins
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'wting/rust.vim', { 'for': 'rust' }
@@ -283,8 +284,23 @@ filetype plugin indent on           " required!
           autocmd!
           autocmd BufNewFile,BufRead *.cpp,*.c,*.h setlocal formatprg=astyle\ -A1sYHjk1STxC100
         augroup END " }}}
+        augroup clangFormat " {{{
+          let g:clang_format#code_style = 'LLVM'
+          let g:clang_format#detect_style_file = 1
+          let g:clang_format#style_options = { "IndentWidth" : 8,
+                                            \ "UseTab" : "Never",
+                                            \ "BreakBeforeBraces" : "Allman",
+                                            \ "BreakConstructorInitializersBeforeComma": "true",
+                                            \ "AllowShortIfStatementsOnASingleLine": "false",
+                                            \}
+          autocmd!
+          " map to <Leader>cf in C++ code
+          autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :<C-u>ClangFormat<CR>
+          autocmd FileType c,cpp,objc vnoremap <buffer><Leader>f :ClangFormat<CR>
+        augroup END " }}}
         " format complete file and return to starting position using mark 'b'
-        nnoremap <Leader>f mbgggqG`b
+        " nnoremap <Leader>f mbgggqG`b
+        vnoremap <Leader>f gq
         nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
         nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
     " }}}
