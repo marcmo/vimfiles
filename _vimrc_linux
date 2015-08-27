@@ -21,3 +21,9 @@ let g:haddock_browser = "/usr/bin/firefox"
 let g:haddock_browser_callformat = "%s --new-tab %s &"
 let g:haddock_docdir="/home/muellero/.cabal/share/doc/ghc-paths-0.1.0.8/html/"
 " let g:haddock_browser_callformat = "%s --new-tab file://%s &"
+
+" movement {{{
+    " jump to previous/next location (jump list)
+    nnoremap <M-Left> <C-o>
+    nnoremap <M-Right> <C-i>
+" }}}
