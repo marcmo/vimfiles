@@ -311,7 +311,7 @@ filetype plugin indent on           " required!
     " ctags {{{
         set tags=tags;$HOME
         " Open the definition in a vertical split
-        noremap <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+        noremap <F1> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
         " lookup symbol in tags file
         inoremap <F3> <Esc><c-]><CR>
         noremap <F3> <c-]>
