@@ -577,7 +577,7 @@ filetype plugin indent on           " required!
     nnoremap <silent> [unite]e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
     nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 
-    nnoremap [unite]q :Unite grep:.:"-sG\.\(h\|c\|cpp\)$" -input=<C-r><C-w><CR>
+    " nnoremap [unite]q :Unite grep:.:"-sG\.\(h\|c\|cpp\)$" -input=<C-r><C-w><CR>
     nnoremap [unite]w :UniteResume<CR>
 
     autocmd FileType unite call s:unite_settings()
@@ -642,6 +642,7 @@ filetype plugin indent on           " required!
       \ 'down':    '50%'
       \ })
       nnoremap [unite]a :Ag<Space>
+      nnoremap [unite]q :Ag <C-r><C-w><CR>
 " }}}
 " Spell check {{{
     nnoremap <F9> :call ToggleSpell()<CR>
