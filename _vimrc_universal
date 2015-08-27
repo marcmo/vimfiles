@@ -287,7 +287,8 @@ filetype plugin indent on           " required!
         augroup clangFormat " {{{
           let g:clang_format#code_style = 'LLVM'
           let g:clang_format#detect_style_file = 1
-          let g:clang_format#style_options = { "IndentWidth" : 8,
+          let g:clang_format#style_options = { "IndentWidth" : 4,
+                                            \ "AccessModifierOffset": -4,
                                             \ "UseTab" : "Never",
                                             \ "BreakBeforeBraces" : "Allman",
                                             \ "BreakConstructorInitializersBeforeComma": "true",
