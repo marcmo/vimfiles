@@ -293,10 +293,7 @@ filetype plugin indent on           " required!
                                             \ "BreakConstructorInitializersBeforeComma": "true",
                                             \ "AllowShortIfStatementsOnASingleLine": "false",
                                             \}
-          autocmd!
-          " map to <Leader>cf in C++ code
-          autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :<C-u>ClangFormat<CR>
-          autocmd FileType c,cpp,objc vnoremap <buffer><Leader>f :ClangFormat<CR>
+          autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :call Preserve(':ClangFormat')<CR>
         augroup END " }}}
         " format complete file and return to starting position using mark 'b'
         " nnoremap <Leader>f mbgggqG`b
@@ -695,7 +692,7 @@ augroup FTOptions " {{{
   autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType qf wincmd J | setlocal wrap linebreak
 augroup END " }}}
-" helper functions {{{
+" helper-functions {{{
     function! GetVisualSelection() " {{{
       try
         let a_save = @a
@@ -760,8 +757,30 @@ augroup END " }}}
       unlet s:line
       unlet s:column
     endfunction " }}}
-" }}}
-" Highlight Word {{{
+
+    " Restore cursor & window position and last search after running a command
+    function! Preserve(command) " {{{
+      " Save the last search.
+      let search = @/
+      " Save the current cursor position.
+      let cursor_position = getpos('.')
+      " Save the current window position.
+      normal! H
+      let window_position = getpos('.')
+      call setpos('.', cursor_position)
+      " Execute the command.
+      execute a:command
+      " Restore the last search.
+      let @/ = search
+      " Restore the previous window position.
+      call setpos('.', window_position)
+      normal! zt
+      " Restore the previous cursor position.
+      call setpos('.', cursor_position)
+    endfunction " }}}
+
+" }}} helper-functions
+" Highlight-Word {{{
     " thanks Steve Losh
     function! HiInterestingWord(n) " {{{
       " Save our location.
