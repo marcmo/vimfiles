@@ -27,7 +27,7 @@ Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
-Plug 'scrooloose/syntastic'
+Plug 'esrlabs/syntastic'
 Plug 'godlygeek/tabular'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'xolox/vim-misc'
@@ -350,13 +350,13 @@ filetype plugin indent on           " required!
           endif
         endfunction " }}}
         noremap <silent> <leader>DS :call DebugSyntastic()<CR>
+        let g:syntastic_auto_loc_list = 1
         let g:syntastic_cpp_compiler = 'clang++'
         let g:syntastic_cpp_compiler_options = ' -std=c++11'
         let g:syntastic_check_on_wq = 0
         let g:syntastic_error_symbol = '✗'
         let g:syntastic_warning_symbol = '>'
         let g:syntastic_always_populate_loc_list = 1
-        let g:syntastic_auto_loc_list = 2
         let g:syntastic_auto_jump = 2
         let g:syntastic_quiet_messages = { "level": "warnings",
                                         \ "type":  "style",
@@ -523,6 +523,7 @@ filetype plugin indent on           " required!
 " airline {{{
     let g:airline_powerline_fonts=1   " make sure powerline font is installed
     let g:airline#extensions#whitespace#mixed_indent_algo = 1
+    let g:airline#extensions#syntastic#enabled = 1
 " }}}
 " fugitiv {{{
     function! CloseFugitiveDiffAfterUsage() " {{{
