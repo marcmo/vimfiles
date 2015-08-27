@@ -613,9 +613,9 @@ filetype plugin indent on           " required!
       inoremap <c-x><c-l> <plug>(fzf-complete-line)
   " }}}
 
-  " {{{ MRU search using v:oldfiles
+  " {{{ MRU search using mru.vim history file
       command! FZFMru call fzf#run({
-        \   'source': v:oldfiles,
+        \   'source': 'tail -n +2 ~/.vim_mru_files',
         \   'sink' : 'e ',
         \   'options' : '--multi --reverse',
         \ })
