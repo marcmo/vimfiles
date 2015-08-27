@@ -20,6 +20,7 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf.vim'
 " frequently used plugins
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
@@ -573,7 +574,7 @@ filetype plugin indent on           " required!
     " nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
     " nnoremap <silent> [unite]t  ==> see FZF section
     nnoremap <silent> [unite]T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-    nnoremap <silent> ,u       :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    " nnoremap <silent> ,u       :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
     nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
     nnoremap <silent> [unite]e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
     nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
@@ -598,11 +599,24 @@ filetype plugin indent on           " required!
     endfunction " }}}
 " }}}
 " FZF {{{
+      " This is the default extra key bindings
+      let g:fzf_action = {
+        \ 'ctrl-t': 'tab split',
+        \ 'ctrl-x': 'split',
+        \ 'ctrl-v': 'vsplit' }
+
+      " Default fzf layout
+      let g:fzf_layout = { 'down': '40%' }
+      inoremap <c-x><c-k> <plug>(fzf-complete-word)
+      inoremap <c-x><c-f> <plug>(fzf-complete-path)
+      inoremap <c-x><c-j> <Esc><plug>(fzf-complete-file-ag)
+      inoremap <c-x><c-l> <plug>(fzf-complete-line)
       command! FZFMru call fzf#run({
             \'source': v:oldfiles,
             \'sink' : 'e ',
-            \'options' : '-m',
+            \'options' : '--multi --reverse',
             \})
+      nnoremap <silent> ,u       :FZFMru<cr>
       " command-T like listing of all files in current directory
       nnoremap <silent> [unite]t :call fzf#run({
       \   'source':'find . \( \( -name .repo -a -type d \) ' .
