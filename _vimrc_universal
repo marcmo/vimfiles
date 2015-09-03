@@ -605,7 +605,7 @@ filetype plugin indent on           " required!
       command! FZFMru call fzf#run({
         \   'source': 'tail -n +2 ~/.vim_mru_files',
         \   'sink' : 'e ',
-        \   'options' : '--multi --reverse',
+        \   'options' : '--multi --reverse --tiebreak=end',
         \ })
       nnoremap <silent> ,u :FZFMru<CR>
   " }}}
