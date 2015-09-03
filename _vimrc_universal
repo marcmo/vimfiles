@@ -10,7 +10,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
 Plug 'mru.vim'
-Plug 'Raimondi/delimitMate'
+Plug 'Townk/vim-autoclose'
 Plug 'matchit.zip'
 Plug 'Shougo/vimproc'
 Plug 'Shougo/neocomplete'
