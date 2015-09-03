@@ -330,7 +330,7 @@ filetype plugin indent on           " required!
           autocmd BufEnter *.h let b:fswitchdst  = 'cpp,CPP,cc,CC,c,C,hpp,HPP'
           autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/'
           autocmd BufEnter *.c,*.cpp,*.cc,*.hpp  let b:fswitchdst  = 'h,H'
-          autocmd BufEnter *.cpp,*.cc,*.c,*.hpp  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
+          autocmd BufEnter *.cpp,*.cc,*.c,*.hpp,*.h++  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
         augroup END " }}}
         nnoremap <silent>,, :FSHere<cr>
         vnoremap <silent>,, :FSHere<cr>
@@ -434,7 +434,8 @@ filetype plugin indent on           " required!
     " c++ {{{
         augroup cpp " {{{
           autocmd!
-          autocmd bufenter *.cpp,*.c,*.h setlocal mp=clang++\ -std=c++11\ -Iinclude\ -I$HOME/dev/git/boost.git/\ -o\ %<\ %
+          autocmd bufenter *.h++ set ft=cpp
+          autocmd bufenter *.cpp,*.c,*.h,*.h++,*.hpp setlocal mp=clang++\ -std=c++11\ -Iinclude\ -I$HOME/dev/git/boost.git/\ -o\ %<\ %
           autocmd bufenter *.cpp,*.c nnoremap <F5> :update<CR>:call MakeCpp()<CR>
           autocmd bufenter *.cpp,*.c nnoremap <silent> ,m :update<CR>:call MakeCpp()<CR>
           autocmd BufRead,BufNewFile *.cpp set tw=100 fo=tcroql
