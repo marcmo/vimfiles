@@ -36,6 +36,7 @@ Plug 'rhysd/vim-clang-format'
 " seldom used plugins
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'phildawes/racer', { 'for': 'rust', 'do' : 'cargo build --release' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'junegunn/vim-easy-align'
 Plug 'sk1418/QFGrep'
@@ -401,6 +402,11 @@ filetype plugin indent on           " required!
     " go {{{
         let g:go_bin_path = ""
     " }}}
+    " rust {{{
+        let g:rust_recommended_style = 1
+        let g:racer_cmd ='racer'
+        let $RUST_SRC_PATH=$HOME.'/rust/src/'
+    " }}}
     " haskell {{{
         " use ghc functionality for haskell files
         function! EvaluateInGhc() range " {{{
@@ -505,9 +511,13 @@ filetype plugin indent on           " required!
     augroup END " }}}
 
     " Enable heavy omni completion.
+		let g:neocomplete#fallback_mappings =
+        \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
     if !exists('g:neocomplete#sources#omni#input_patterns')
       let g:neocomplete#sources#omni#input_patterns = {}
     endif
+    let g:neocomplete#sources#omni#input_patterns.rust =
+        \ '[^.[:digit:] *\t]\%(\.\|\::\)\%(\h\w*\)\?'
 
     " For snippet_complete marker.
     if has('conceal')
