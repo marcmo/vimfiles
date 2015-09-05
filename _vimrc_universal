@@ -43,7 +43,6 @@ Plug 'sk1418/QFGrep'
 Plug 'mbbill/undotree'
 Plug 'AndrewRadev/switch.vim'
 Plug 'thinca/vim-localrc'
-Plug 'severin-lemaignan/vim-minimap'
 " colors & syntax highlighting
 Plug 'ujihisa/unite-colorscheme'
 Plug 'marcmo/essentialColors'
