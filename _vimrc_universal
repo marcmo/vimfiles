@@ -564,6 +564,16 @@ filetype plugin indent on           " required!
 " mru {{{
     let MRU_Max_Entries = 200
     let MRU_Window_Height = 25
+    if !exists("g:clean_mru_file")
+        let g:clean_mru_file = "clean_vim_mru_file"
+    endif
+
+    function! CleanVimMruFile()
+        silent !clear
+        execute "!" . g:clean_mru_file
+    endfunction
+
+    nnoremap <S-F5> :call CleanVimMruFile()<CR>
 " }}}
 " vim-easy-align {{{
     " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
