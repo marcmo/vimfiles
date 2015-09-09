@@ -44,9 +44,10 @@ Plug 'mbbill/undotree'
 Plug 'AndrewRadev/switch.vim'
 Plug 'thinca/vim-localrc'
 " colors & syntax highlighting
-Plug 'ujihisa/unite-colorscheme'
-Plug 'marcmo/essentialColors'
 Plug 'godlygeek/csapprox'
+Plug 'ujihisa/unite-colorscheme'
+Plug 'jonathanfilip/vim-lucius'
+Plug 'marcmo/essentialColors'
 Plug 'leafo/moonscript-vim'
 call plug#end()
 
