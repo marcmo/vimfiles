@@ -211,7 +211,7 @@ filetype plugin indent on           " required!
           autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
           autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
           autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
-          nnoremap <Leader>c :call ClearWhitespaces()<CR>
+          nnoremap <Leader>c :call ClearWhitespaces()<CR>:w<CR>
         augroup END " }}}
     " }}}
     " directories and files {{{
