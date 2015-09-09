@@ -12,7 +12,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
 Plug 'mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'matchit.zip'
-Plug 'Shougo/vimproc'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neocomplete'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
