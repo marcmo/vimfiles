@@ -20,29 +20,28 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-" frequently used plugins
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
+Plug 'esrlabs/syntastic'
+" frequently used plugins
+Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
-Plug 'esrlabs/syntastic'
 Plug 'godlygeek/tabular'
-Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-Plug 'xolox/vim-misc'
 Plug 'embear/vim-localvimrc'
-Plug 'rhysd/vim-clang-format'
-" seldom used plugins
-Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'phildawes/racer', { 'for': 'rust', 'do' : 'cargo build --release' }
+" seldom used plugins
+Plug 'rhysd/vim-clang-format'
+Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
+Plug 'xolox/vim-misc'
+Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'junegunn/vim-easy-align'
 Plug 'sk1418/QFGrep'
 Plug 'mbbill/undotree'
 Plug 'AndrewRadev/switch.vim'
-Plug 'thinca/vim-localrc'
 " colors & syntax highlighting
 Plug 'godlygeek/csapprox'
 Plug 'ujihisa/unite-colorscheme'
