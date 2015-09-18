@@ -647,8 +647,8 @@ filetype plugin indent on           " required!
 
   " command-T like listing of all files in current directory {{{
       command! FZFCommandT call fzf#run({
-        \   'source':'find . \( \( -name .repo -a -type d \) ' .
-        \   '-o \( -name "Debug_*" -a -type d \) \) -prune ' .
+        \   'source':'find . ' .
+        \   '\( \( \( -name .git -o -name .rim -o -name "build_*" \) -a -type d \) \) -prune ' .
         \   '-o \( -name "*.d" -o -name "*.o" -o -name "*.a" \) -prune -o -type f -print',
         \   'sink':  'e ',
         \   'options':  '-m --reverse'
