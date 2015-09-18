@@ -283,7 +283,7 @@ filetype plugin indent on           " required!
     " formatting {{{
         augroup astyle " {{{
           autocmd!
-          autocmd BufNewFile,BufRead *.cpp,*.c,*.h setlocal formatprg=astyle\ -A1xns4YHjk1ScxC100
+          autocmd BufNewFile,BufRead *.cpp,*.c,*.h setlocal formatprg=astyle\ -A1xns4YHjk1ScwpxC100
           " --style=allman / -A1 Allman style uses broken brackets.
           " --attach-namespaces / -xn Attach brackets to a namespace statement.
           " --indent=spaces / -s# Indent using # spaces per indent (e.g. -s3 --indent=spaces=4).
@@ -294,6 +294,7 @@ filetype plugin indent on           " required!
           " --indent-switches / -S Indent 'switch' blocks
           " --convert-tabs / -c Converts tabs into spaces in the non-indentation part of the line
           " --indent-preproc-define / -w
+          " --pad-oper / -p  Insert space padding around operators
           " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
         augroup END " }}}
         augroup clangFormat " {{{
