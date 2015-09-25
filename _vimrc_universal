@@ -31,7 +31,7 @@ Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
 Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'phildawes/racer', { 'for': 'rust', 'do' : 'cargo build --release' }
+Plug 'racer-rust/vim-racer'
 " seldom used plugins
 Plug 'rhysd/vim-clang-format'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
@@ -365,7 +365,7 @@ filetype plugin indent on           " required!
         noremap <silent> <leader>DS :call DebugSyntastic()<CR>
         let g:syntastic_auto_loc_list = 1
         let g:syntastic_cpp_compiler = 'clang++'
-        let g:syntastic_rust_rustc_args = '-Z no-trans'
+        " let g:syntastic_rust_rustc_args = '-Z no-trans'
         let g:syntastic_cpp_compiler_options = ' -std=c++11'
         let g:syntastic_check_on_wq = 0
         let g:syntastic_error_symbol = '✗'
