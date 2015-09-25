@@ -55,11 +55,8 @@ filetype plugin indent on           " required!
 " UI Stuff {{{
     syntax on
     set background=dark
-    if filereadable(expand("~/.vim/plugged/essentialColors/colors/aldmeris.vim"))
-      colorscheme aldmeris
-    elseif filereadable(expand("~/.vim/plugged/essentialColors/colors/solarized.vim"))
-      colorscheme solarized
-    endif
+    colorscheme lucius
+    LuciusDark
     set cursorline                " highlight the screen line of the cursor
     if has('mouse') | set mouse=a | endif " enable mouse in all modes
     if has('gui_running')
