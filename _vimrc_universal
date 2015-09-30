@@ -31,7 +31,7 @@ Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
 Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'racer-rust/vim-racer'
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 " seldom used plugins
 Plug 'rhysd/vim-clang-format'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
@@ -414,6 +414,27 @@ filetype plugin indent on           " required!
         let g:rust_recommended_style = 1
         let g:racer_cmd ='racer'
         let $RUST_SRC_PATH=$HOME.'/rust/src/'
+
+        if !exists('g:cargo_command')
+          let g:cargo_command = "make {cmd}"
+        endif
+
+        com! CargoBuild call CargoRunCmd('build')
+        com! CargoRun call CargoRunCmd('run')
+        com! CargoTest call CargoRunCmd('test')
+        com! CargoBench call CargoRunCmd('bench')
+        com! CargoCheck call CargoRunCmd('rustc -- -Z no-trans')
+
+        func! CargoRunCmd(cmd)
+          let s:cargo_command = substitute(g:cargo_command, "{cmd}", a:cmd, 'g')
+          execute s:cargo_command
+        endf
+        augroup rust " {{{
+          autocmd!
+          autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
+          autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs setlocal makeprg=cargo
+          autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,m :update<CR>:CargoCheck<CR><CR><CR>
+        augroup END " }}}
     " }}}
     " haskell {{{
         " use ghc functionality for haskell files
