@@ -348,6 +348,7 @@ filetype plugin indent on           " required!
         nnoremap - :Switch<cr>
     " }}}
     " syntastic {{{
+        noremap <silent> ,SC :SyntasticReset<CR>
         function! DebugSyntastic() " {{{
           if g:syntastic_debug == 1
             let g:syntastic_debug = 0
