@@ -681,8 +681,6 @@ filetype plugin indent on           " required!
         \         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
         \   'sink':     'colo',
         \   'options':  '+m --reverse',
-        \   'left':     20,
-        \   'launcher': 'xterm -geometry 20x30 -e bash -ic %s'
         \ })
       nnoremap <silent> <Leader>C :FZFColors<CR>
   " }}}
@@ -726,7 +724,28 @@ filetype plugin indent on           " required!
       nnoremap [unite]a :FzfAg<Space>
       nnoremap [unite]q :FzfAg <C-r><C-w><CR>
   " }}}
-" }}}
+  " search buffers {{{
+    function! s:buflist()
+      redir => ls
+      silent ls
+      redir END
+      return split(ls, '\n')
+    endfunction
+
+    function! s:bufopen(e)
+      execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+    endfunction
+
+  " Choose a color scheme with fzf {{{
+    command! FZFBuffers call fzf#run({
+    \   'source':  reverse(<sid>buflist()),
+    \   'sink':    function('<sid>bufopen'),
+    \   'options':  '-m --reverse',
+    \   'down':    len(<sid>buflist()) + 2
+    \ })<CR>
+    nnoremap <silent> [unite]n :FZFBuffers<CR>
+  " }}}
+" }}} FZF
 " Spell check {{{
     nnoremap <F9> :call ToggleSpell()<CR>
     inoremap <F9> <Esc>:call ToggleSpell()<CR>a
