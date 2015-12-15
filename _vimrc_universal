@@ -32,6 +32,7 @@ Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'ekalinin/Dockerfile.vim'
 " seldom used plugins
 Plug 'rhysd/vim-clang-format'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
@@ -77,6 +78,7 @@ filetype plugin indent on           " required!
     endif
 " }}}
 " basic settings {{{
+    set encoding=utf-8
     set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.s
     set nofoldenable                " disable folding
     set showmode                    " always show what mode we're currently editing in
@@ -169,7 +171,7 @@ filetype plugin indent on           " required!
     nnoremap j gj
     nnoremap k gk
     nnoremap ,rc :e ~/.vim/_vimrc_universal<CR>
-    nnoremap ,bc :e ~/.bashrc <CR>
+    nnoremap <leader>bc :e ~/.bashrc <CR>
     " move lines up and down
     nnoremap <M-Down> mz:m+<CR>`z==
     nnoremap <M-Up> mz:m-2<CR>`z==
@@ -425,6 +427,7 @@ filetype plugin indent on           " required!
         com! CargoTest call CargoRunCmd('test')
         com! CargoBench call CargoRunCmd('bench')
         com! CargoCheck call CargoRunCmd('rustc -- -Z no-trans')
+        com! CargoLibCheck call CargoRunCmd('rustc --lib -- -Z no-trans')
 
         func! CargoRunCmd(cmd)
           let s:cargo_command = substitute(g:cargo_command, "{cmd}", a:cmd, 'g')
@@ -435,6 +438,7 @@ filetype plugin indent on           " required!
           autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
           autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs setlocal makeprg=cargo
           autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,m :update<CR>:CargoCheck<CR><CR><CR>
+          autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,b :update<CR>:CargoBuild<CR><CR><CR>
         augroup END " }}}
     " }}}
     " haskell {{{
@@ -465,6 +469,12 @@ filetype plugin indent on           " required!
           autocmd!
           autocmd FileType lua setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
           autocmd FileType lua noremap <F5> :call OpenWithLua()<CR><CR>
+        augroup END " }}}
+    " }}}
+    " ruby {{{
+        augroup ruby " {{{
+          autocmd!
+          autocmd bufenter Project.meta set ft=ruby
         augroup END " }}}
     " }}}
     " c++ {{{
