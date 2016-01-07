@@ -512,7 +512,7 @@ filetype plugin indent on           " required!
 " vim-autoclose {{{
     let g:AutoClosePreserveDotReg = 0
 " }}}
-if !has('nvim') " deoplete {{{
+if has('nvim') " deoplete {{{
     let g:deoplete#enable_at_startup = 1
 " }}}
 else " neocomplete {{{
