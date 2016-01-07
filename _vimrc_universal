@@ -1,8 +1,7 @@
 set nocompatible                " make Vim behave in a more useful way, less vi compatible
 filetype off                    " required!
 
-let s:vimconfig='.vim'
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " essential plugins
 Plug 'tpope/vim-surround'
@@ -13,6 +12,7 @@ Plug 'mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'matchit.zip'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neocomplete'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -170,7 +170,7 @@ filetype plugin indent on           " required!
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
-    nnoremap ,rc :e ~/.vim/_vimrc_universal<CR>
+    nnoremap ,rc :e ~/.config/nvim/_vimrc_universal<CR>
     nnoremap <leader>bc :e ~/.bashrc <CR>
     " move lines up and down
     nnoremap <M-Down> mz:m+<CR>`z==
@@ -512,7 +512,10 @@ filetype plugin indent on           " required!
 " vim-autoclose {{{
     let g:AutoClosePreserveDotReg = 0
 " }}}
-" neocomplete {{{
+if !has('nvim') " deoplete {{{
+    let g:deoplete#enable_at_startup = 1
+" }}}
+else " neocomplete {{{
     let g:acp_enableAtStartup = 0
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#force_overwrite_completefunc = 1
@@ -567,6 +570,7 @@ filetype plugin indent on           " required!
       set conceallevel=2 concealcursor=i
     endif
 " }}}
+endif
 " neosnippet {{{
     autocmd InsertLeave * NeoSnippetClearMarkers
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
