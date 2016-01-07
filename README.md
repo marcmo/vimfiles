@@ -48,6 +48,11 @@ alternatively over ssh:
 
     git clone git@github.com:marcmo/vimfiles.git ~/.config/nvim
 
+the `init.vim` file will work per default for linux systems, for MacOS change it to:
+
+    source $HOME/.config/nvim/_vimrc_universal
+    source $HOME/.config/nvim/_vimrc_mac
+
 Install the awesome plug plugin-manager:
 
     curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
