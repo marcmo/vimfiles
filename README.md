@@ -62,6 +62,15 @@ to setup vim with all plugins: start vim and install plugins using
 
     :PlugInstall
 
+
+enable Python3 interface with pip
+
+    sudo pip3 install neovim
+
+enable remote plugins for neovim
+
+    :UpdateRemotePlugins
+
 # VIM cheatsheet
 
 ## Recently added
