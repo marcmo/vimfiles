@@ -1,8 +1,8 @@
 set nocompatible                " make Vim behave in a more useful way, less vi compatible
-filetype off                    " required!
+
+let g:python_host_prog='/usr/bin/python2'
 
 call plug#begin('~/.config/nvim/plugged')
-
 " essential plugins
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -11,11 +11,9 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
 Plug 'mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'matchit.zip'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/neocomplete'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
@@ -24,6 +22,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'esrlabs/syntastic'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
 " frequently used plugins
 Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
@@ -32,26 +31,24 @@ Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-Plug 'ekalinin/Dockerfile.vim'
+Plug 'AndrewRadev/switch.vim'
 " seldom used plugins
+Plug 'benekastah/neomake'
 Plug 'rhysd/vim-clang-format'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'xolox/vim-misc'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'junegunn/vim-easy-align'
-Plug 'sk1418/QFGrep'
 Plug 'mbbill/undotree'
-Plug 'AndrewRadev/switch.vim'
 " colors & syntax highlighting
 Plug 'godlygeek/csapprox'
 Plug 'ujihisa/unite-colorscheme'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'marcmo/essentialColors'
 Plug 'leafo/moonscript-vim'
+Plug 'ekalinin/Dockerfile.vim'
 call plug#end()
-
-filetype plugin indent on           " required!
 
 " UI Stuff {{{
     syntax on
@@ -78,7 +75,9 @@ filetype plugin indent on           " required!
     endif
 " }}}
 " basic settings {{{
-    set encoding=utf-8
+    if !has('nvim')
+        set encoding=utf-8
+    endif
     set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.s
     set nofoldenable                " disable folding
     set showmode                    " always show what mode we're currently editing in
@@ -512,73 +511,11 @@ filetype plugin indent on           " required!
 " vim-autoclose {{{
     let g:AutoClosePreserveDotReg = 0
 " }}}
-if has('nvim') " deoplete {{{
-    let g:deoplete#enable_at_startup = 1
-" }}}
-else " neocomplete {{{
-    let g:acp_enableAtStartup = 0
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#force_overwrite_completefunc = 1
-    let g:neocomplete#enable_camel_case = 1
-    let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-    let g:neocomplete#enable_auto_delimiter = 1
-    let g:neocomplete#enable_auto_select = 1
-    " <ctrl-space>: completion...and since it is interpretet as Ctrl-@ in terminal vim, remap this as well
-    inoremap <expr><C-space> neocomplete#start_manual_complete()
-    imap <C-@> <C-Space>
-    " Plugin key-mappings.
-    " inoremap <C-k>     <Plug>(neocomplcache_snippets_expand)
-    " snoremap <C-k>     <Plug>(neocomplcache_snippets_expand)
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-    " <CR>: close popup
-    " <s-CR>: close popup and save indent.
-    inoremap <expr><CR>  pumvisible() ? neocomplete#close_popup() : "\<CR>"
-    inoremap <expr><s-CR> pumvisible() ? neocomplete#close_popup() "\<CR>" : "\<CR>"
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y> neocomplete#close_popup()
-    inoremap <expr><C-e> neocomplete#cancel_popup()
-
-    augroup neocompl " {{{
-      autocmd!
-    " Enable omni completion.
-      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    augroup END " }}}
-
-    " Enable heavy omni completion.
-		let g:neocomplete#fallback_mappings =
-        \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-    let g:neocomplete#sources#omni#input_patterns.rust =
-        \ '[^.[:digit:] *\t]\%(\.\|\::\)\%(\h\w*\)\?'
-
-    " For snippet_complete marker.
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
-" }}}
-endif
-" neosnippet {{{
-    autocmd InsertLeave * NeoSnippetClearMarkers
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-
-    " SuperTab like snippets behavior.
-    imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" ultisnips {{{
+    " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " }}}
 " airline {{{
     let g:airline_powerline_fonts=1   " make sure powerline font is installed
@@ -667,7 +604,6 @@ endif
     endfunction " }}}
 " }}}
 " FZF {{{
-
   " {{{ MRU search using mru.vim history file
       command! FZFMru call fzf#run({
         \   'source': 'tail -n +2 ~/.vim_mru_files',
@@ -686,6 +622,7 @@ endif
         \   'options':  '-m --reverse'
         \ })
       nnoremap <silent> [unite]t :FZFCommandT<CR>
+      nnoremap <silent><leader><leader> :FZF<CR>
   " }}}
 
   " Choose a color scheme with fzf {{{
