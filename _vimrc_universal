@@ -1,7 +1,5 @@
 set nocompatible                " make Vim behave in a more useful way, less vi compatible
 
-let g:python_host_prog='/usr/bin/python2'
-
 call plug#begin('~/.config/nvim/plugged')
 " essential plugins
 Plug 'tpope/vim-surround'
@@ -48,6 +46,7 @@ Plug 'jonathanfilip/vim-lucius'
 Plug 'marcmo/essentialColors'
 Plug 'leafo/moonscript-vim'
 Plug 'ekalinin/Dockerfile.vim'
+Plug 'lambdatoast/elm.vim'
 call plug#end()
 
 " UI Stuff {{{
@@ -515,7 +514,7 @@ call plug#end()
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
     let g:UltiSnipsExpandTrigger = "<nop>"
     let g:ulti_expand_or_jump_res = 0
-    function ExpandSnippetOrCarriageReturn()
+    function! ExpandSnippetOrCarriageReturn()
         let snippet = UltiSnips#ExpandSnippetOrJump()
         if g:ulti_expand_or_jump_res > 0
             return snippet
