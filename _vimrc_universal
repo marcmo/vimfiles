@@ -18,7 +18,7 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'esrlabs/syntastic'
@@ -320,7 +320,7 @@ call plug#end()
         let g:tagbar_autoclose=1
     " }}}
     " ctags {{{
-        set tags=tags;$HOME
+        set tags=.tags,$HOME,.git/tags
         " Open the definition in a vertical split
         noremap <F1> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
         " lookup symbol in tags file
