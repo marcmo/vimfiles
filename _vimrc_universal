@@ -120,15 +120,8 @@ call plug#end()
 " }}}
 " general utilities {{{
     inoremap <F1> <Esc>
-    noremap <F1> :call MapF1()<CR>
+    noremap <F1> <nop>
 
-    function! MapF1()
-      if &buftype == "help"
-        exec 'quit'
-      else
-        exec 'help'
-      endif
-    endfunction
     " select the last changed text (or the text that was just pasted)
     nnoremap gp `[v`]
     " Save when losing focus
