@@ -513,6 +513,15 @@ call plug#end()
 " vim-autoclose {{{
     let g:AutoClosePreserveDotReg = 0
 " }}}
+" YouCompleteMe YCM {{{
+    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    nnoremap <S-F6> :YcmForceCompileAndDiagnostics<CR>
+    "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+    "Do not ask when starting vim
+    let g:ycm_confirm_extra_conf = 0
+    let g:syntastic_always_populate_loc_list = 1
+    let g:ycm_collect_identifiers_from_tags_files = 1
+" }}}
 " ultisnips {{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
     let g:UltiSnipsExpandTrigger = "<nop>"
