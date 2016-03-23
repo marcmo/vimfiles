@@ -170,6 +170,8 @@ call plug#end()
     nnoremap j gj
     nnoremap k gk
     nnoremap ,rc :e ~/.config/nvim/_vimrc_universal<CR>
+    " " use escape in terminal mode
+    " tnoremap <Esc> <C-\><C-n>
     nnoremap <leader>bc :e ~/.bashrc <CR>
     " move lines up and down
     nnoremap <M-Down> mz:m+<CR>`z==
@@ -212,10 +214,10 @@ call plug#end()
         augroup END " }}}
     " }}}
     " directories and files {{{
-        augroup VimrcAutocmds
-          autocmd!
-          autocmd VimEnter * cd %:p:h
-        augroup END
+        " augroup VimrcAutocmds
+        "   autocmd!
+        "   autocmd VimEnter * cd %:p:h
+        " augroup END
         noremap ,cd :call SetWorkingDirToCurrentDir()<CR>
         " climb up one directory level
         noremap <silent> <space>p :pwd<cr>
