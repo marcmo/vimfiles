@@ -32,6 +32,7 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'AndrewRadev/switch.vim'
 " seldom used plugins
 Plug 'benekastah/neomake'
+Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/vim-clang-format'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'xolox/vim-misc'
