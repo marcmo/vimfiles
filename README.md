@@ -71,11 +71,19 @@ enable remote plugins for neovim
 
     :UpdateRemotePlugins
 
-## updating neovim
+# Trouble Shooting
 
-make sure the latest neovim-python is installed
+## neovim python interface
 
-    pip install --upgrade --force-reinstall neovim --user
+make sure the python plugin is up to date for both pip2 and pip3
+
+    pip2 show neovim
+    pip3 show neovim
+
+has to be the same. Upgrade with:
+
+    sudo pip2 install neovim --upgrade
+    sudo pip3 install neovim --upgrade
 
 # VIM cheatsheet
 

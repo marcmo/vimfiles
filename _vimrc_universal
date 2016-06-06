@@ -148,7 +148,6 @@ call plug#end()
     nnoremap Y y$
     " leave the cursor at the point where it was before editing started
     nnoremap . .`[
-    noremap <F7> :call OpenInTerminal()<CR><CR>
     " Go to newer/older text state
     nnoremap <S-F11> g-
     nnoremap <S-F12> g+
@@ -227,7 +226,7 @@ call plug#end()
         nnoremap / /\v
         vnoremap / /\v
         " search for the keyword under the cursor in the current directory using the 'grep' command
-        nnoremap <F8> :grep <C-R><C-W> *<CR>
+        " nnoremap <F8> :grep <C-R><C-W> *<CR>
         " search for visually highlighted text
         vnoremap // y/<C-R>"<CR>
         " Prepare a :substitute command using the current word or the selected text:
@@ -283,12 +282,12 @@ call plug#end()
     " ctags {{{
         set tags=.tags,$HOME,.git/tags
         " Open the definition in a vertical split
-        noremap <F1> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+        noremap <F1> :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
         " lookup symbol in tags file
         inoremap <F3> <Esc><c-]><CR>
         noremap <F3> <c-]>
         " use tpope's awesome ctags git hooks (see http://bit.ly/gitctags)
-        noremap <S-F8> :!git ctags<CR>
+        noremap <F8><F8> :!git ctags<CR>
         nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
     " }}}
     " fswitch {{{
@@ -496,7 +495,7 @@ call plug#end()
 " }}}
 " YouCompleteMe YCM {{{
     nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    nnoremap <S-F6> :YcmForceCompileAndDiagnostics<CR>
+    nnoremap <F7><F7> :YcmForceCompileAndDiagnostics<CR>
     "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
     "Do not ask when starting vim
     let g:ycm_confirm_extra_conf = 0
