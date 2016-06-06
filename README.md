@@ -71,6 +71,12 @@ enable remote plugins for neovim
 
     :UpdateRemotePlugins
 
+## updating neovim
+
+make sure the latest neovim-python is installed
+
+    pip install --upgrade --force-reinstall neovim --user
+
 # VIM cheatsheet
 
 ## Recently added

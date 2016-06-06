@@ -22,6 +22,7 @@ Plug 'derekwyatt/vim-fswitch'
 Plug 'esrlabs/syntastic'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
 " frequently used plugins
+Plug 'Chiel92/vim-autoformat'
 Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
@@ -33,9 +34,6 @@ Plug 'AndrewRadev/switch.vim'
 " seldom used plugins
 Plug 'benekastah/neomake'
 Plug 'airblade/vim-gitgutter'
-Plug 'rhysd/vim-clang-format'
-Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-Plug 'xolox/vim-misc'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'junegunn/vim-easy-align'
@@ -273,38 +271,6 @@ call plug#end()
 " programming {{{
       nnoremap <silent>,m :execute 'make'<CR>
     " formatting {{{
-        augroup astyle " {{{
-          autocmd!
-          autocmd BufNewFile,BufRead *.cpp,*.c,*.h setlocal formatprg=astyle\ -A1xns4YHjk1W1ScwpxC100
-          " --style=allman / -A1 Allman style uses broken brackets.
-          " --attach-namespaces / -xn Attach brackets to a namespace statement.
-          " --indent=spaces / -s# Indent using # spaces per indent (e.g. -s3 --indent=spaces=4).
-          " --indent-col1-comments / -Y Indent C++ comments beginning in column one
-          " --pad-header / -H Insert space padding between a header (e.g. 'if', 'for', 'while'...)
-          " --add-brackets / -j Add brackets to unbracketed one line conditional statements
-          " --align-pointer=type   / -k1
-          " --align-reference=type / -W1
-          " --indent-switches / -S Indent 'switch' blocks
-          " --convert-tabs / -c Converts tabs into spaces in the non-indentation part of the line
-          " --indent-preproc-define / -w
-          " --pad-oper / -p  Insert space padding around operators
-          " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
-        augroup END " }}}
-        augroup clangFormat " {{{
-          let g:clang_format#code_style = 'LLVM'
-          let g:clang_format#detect_style_file = 1
-          let g:clang_format#style_options = { "IndentWidth" : 4,
-                                            \ "AccessModifierOffset": -4,
-                                            \ "UseTab" : "Never",
-                                            \ "BreakBeforeBraces" : "Allman",
-                                            \ "BreakConstructorInitializersBeforeComma": "true",
-                                            \ "AllowShortIfStatementsOnASingleLine": "false",
-                                            \}
-          " autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :call Preserve(':ClangFormat')<CR>
-        augroup END " }}}
-        " format complete file and return to starting position using mark 'b'
-        nnoremap <Leader>f mbgggqG`b:w<CR>
-        vnoremap <Leader>F gq:w<CR>
         nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
         nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
     " }}}
@@ -507,6 +473,26 @@ call plug#end()
 " vim-autoclose {{{
     let g:AutoClosePreserveDotReg = 0
 " }}}
+" vim-autoformat {{{
+    nnoremap <Leader>f :Autoformat<CR>
+    let g:formatdef_rustfmt = '"rustfmt"'
+    let g:formatters_rust = ['rustfmt']
+    let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwpxC100"'
+    let g:formatters_cpp = ['my_custom_cpp']
+    " --style=allman / -A1 Allman style uses broken brackets.
+    " --attach-namespaces / -xn Attach brackets to a namespace statement.
+    " --indent=spaces / -s# Indent using # spaces per indent (e.g. -s3 --indent=spaces=4).
+    " --indent-col1-comments / -Y Indent C++ comments beginning in column one
+    " --pad-header / -H Insert space padding between a header (e.g. 'if', 'for', 'while'...)
+    " --add-brackets / -j Add brackets to unbracketed one line conditional statements
+    " --align-pointer=type   / -k1
+    " --align-reference=type / -W1
+    " --indent-switches / -S Indent 'switch' blocks
+    " --convert-tabs / -c Converts tabs into spaces in the non-indentation part of the line
+    " --indent-preproc-define / -w
+    " --pad-oper / -p  Insert space padding around operators
+    " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
+" }}}
 " YouCompleteMe YCM {{{
     nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     nnoremap <S-F6> :YcmForceCompileAndDiagnostics<CR>
@@ -515,6 +501,7 @@ call plug#end()
     let g:ycm_confirm_extra_conf = 0
     let g:syntastic_always_populate_loc_list = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
+    let g:ycm_rust_src_path = $HOME.'/rust/src/'
 " }}}
 " ultisnips {{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
