@@ -163,6 +163,7 @@ call plug#end()
     " " use escape in terminal mode
     " tnoremap <Esc> <C-\><C-n>
     nnoremap <leader>bc :e ~/.bashrc <CR>
+    nnoremap <leader>zc :e ~/.zshrc <CR>
     " move lines up and down
     nnoremap <M-Down> mz:m+<CR>`z==
     nnoremap <M-Up> mz:m-2<CR>`z==
