@@ -271,7 +271,6 @@ call plug#end()
 " programming {{{
       nnoremap <silent>,m :execute 'make'<CR>
     " formatting {{{
-        nnoremap ,t :call UseTabsNotSpaces()<CR>:w<CR>:set list!<CR>:echo "spaces->tabs"<CR>
         nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
     " }}}
     " tcomment {{{
@@ -385,7 +384,7 @@ call plug#end()
 
         com! CargoBuild call CargoRunCmd('build')
         com! CargoRun call CargoRunCmd('run')
-        com! CargoTest call CargoRunCmd('test')
+        com! CargoTest call CargoRunCmd('test --no-run')
         com! CargoBench call CargoRunCmd('bench')
         com! CargoCheck call CargoRunCmd('rustc -- -Z no-trans')
         com! CargoLibCheck call CargoRunCmd('rustc --lib -- -Z no-trans')
@@ -400,6 +399,8 @@ call plug#end()
           autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs setlocal makeprg=cargo
           autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,m :update<CR>:CargoCheck<CR><CR><CR>
           autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,b :update<CR>:CargoBuild<CR><CR><CR>
+          autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,t :update<CR>:CargoTest<CR><CR><CR>
+          autocmd bufenter *.rs setlocal ts=4 sts=4 sw=4 expandtab
         augroup END " }}}
     " }}}
     " haskell {{{
@@ -874,3 +875,21 @@ augroup END " }}}
     hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
     " }}}
 " }}} Highlight-Word
+" {{{
+    function! MultiplyCursor(x)
+      let p = @/
+      try
+        silent s%-\?\d*\%#\d\+%\=submatch(0) * a:x%
+        exe "normal \<C-O>"
+      catch /^Vim\%((\a\+)\)\=:E486/
+        try
+          silent exe "normal /\\%#.\\{-}\\zs\\d\\+/b\<CR>"
+          s%-\?\d*\%#\d\+%\=submatch(0) * a:x%
+          exe "normal \<C-O>"
+        catch /^Vim\%((\a\+)\)\=:E486/
+        endtry
+      finally
+        let @/ = p
+      endtry
+    endfunction
+" }}}
