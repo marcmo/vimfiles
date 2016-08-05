@@ -747,6 +747,7 @@ augroup END " }}}
       if has("unix") " remove DOS style line endings
         :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\r\\+$","","")'))
       endif
+      execute "silent! %s//\r/g"
     endfunction " }}}
 
     " replace german Umlauts
