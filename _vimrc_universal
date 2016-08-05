@@ -12,7 +12,6 @@ Plug 'matchit.zip'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -40,7 +39,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
 " colors & syntax highlighting
 Plug 'godlygeek/csapprox'
-Plug 'ujihisa/unite-colorscheme'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'marcmo/essentialColors'
 Plug 'leafo/moonscript-vim'
@@ -192,15 +190,15 @@ call plug#end()
         nnoremap <leader>I :call IndentGuides()<cr>
     " }}}
     " trailing whitespaces {{{
-        " highlight end of line whitespace as Error (not for unite windows)
+        " highlight end of line whitespace as Error
         " hi link ExtraWhitespace Error
         hi ExtraWhitespace ctermbg=darkgrey guibg=#707070
         augroup whitespaces " {{{
           autocmd!
-          autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
-          autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
-          autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
-          autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
+          autocmd BufWinEnter * if &modifiable | match ExtraWhitespace /\s\+$/ | endif
+          autocmd InsertEnter * if &modifiable | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+          autocmd InsertLeave * if &modifiable | match ExtraWhitespace /\s\+$/ | endif
+          autocmd BufWinLeave * if &modifiable | call clearmatches() | endif
           nnoremap <Leader>c :call ClearWhitespaces()<CR>:w<CR>
         augroup END " }}}
     " }}}
@@ -554,59 +552,9 @@ call plug#end()
     " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
     nmap <Leader>a <Plug>(EasyAlign)
 " }}}
-" Unite {{{
-    if executable('ag')
-      let g:unite_source_rec_async_command='ag --nocolor --nogroup --hidden -U ' .
-        \ '--ignore ".hg" --ignore ".svn" --ignore ".git" --ignore ".bzr" -g ""'
-      let g:unite_source_grep_command = 'ag'
-      let g:unite_source_grep_default_opts = '-i --line-numbers --nocolor --nogroup --hidden -U ' .
-        \  '--ignore "hg" --ignore ".svn" --ignore ".git" --ignore ".bzr" --ignore ".repo"'
-      let g:unite_source_grep_recursive_opt = ''
-    elseif executable('ack-grep')
-      let g:unite_source_grep_command = 'ack-grep'
-      let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-      let g:unite_source_grep_recursive_opt = ''
-    endif
-
-    let g:unite_source_history_yank_enable = 1
-    call unite#filters#matcher_default#use(['matcher_fuzzy'])
-    call unite#filters#converter_default#use(['converter_tail'])
-
-    call unite#custom#source('file_rec/async', 'ignore_pattern', join(['/\.repo$','/\.metadata$','\.d$','\.a$','\.o$','\.s$','tags$'], '\|'))
-    call unite#custom#source('buffer,file,file_rec/async', 'sorters', 'sorter_rank')
-    call unite#custom#source('buffer,file,file_rec/async,file_mru', 'matchers', ['converter_tail', 'matcher_default'])
-    call unite#custom#source('buffer,file,file_rec/async,file_mru', 'converters', ['converter_file_directory'])
-
-    noremap [unite] <Nop>
-    map <Space> [unite]
-    " nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-    " nnoremap <silent> [unite]t  ==> see FZF section
-    nnoremap <silent> [unite]T :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-    " nnoremap <silent> ,u       :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-    nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-    nnoremap <silent> [unite]e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-    nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
-
-    nnoremap [unite]w :UniteResume<CR>
-
-    autocmd FileType unite call s:unite_settings()
-    function! s:unite_settings() " {{{
-      call clearmatches()
-      imap <silent><buffer>       <C-j> <Plug>(unite_select_next_line)
-      " map arrow Up and Down in normal mode
-      nmap <silent><buffer><ESC>oA k
-      nmap <silent><buffer><ESC>oB j
-      imap <silent><buffer>       <C-k> <Plug>(unite_select_previous_line)
-      imap <silent><buffer><expr> <C-x> unite#do_action('split')
-      imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-      imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-      nmap <silent><buffer>       <ESC> <Plug>(unite_exit)
-      imap <silent><buffer>       <C-c> <Plug>(unite_exit)
-      nmap <silent><buffer>       <F5>  <Plug>(unite_redraw)
-      imap <silent><buffer>       <F5>  <Plug>(unite_redraw)
-    endfunction " }}}
-" }}}
 " FZF {{{
+    noremap [fzf] <Nop>
+    map <Space> [fzf]
   " {{{ MRU search using mru.vim history file
       command! FZFMru call fzf#run({
         \   'source': 'tail -n +2 ~/.vim_mru_files',
@@ -624,7 +572,7 @@ call plug#end()
         \   'sink':  'e ',
         \   'options':  '-m --reverse'
         \ })
-      nnoremap <silent> [unite]t :FZFCommandT<CR>
+      nnoremap <silent> [fzf]t :FZFCommandT<CR>
       nnoremap <silent><leader><leader> :FZF<CR>
   " }}}
 
@@ -675,8 +623,8 @@ call plug#end()
       \            '--color hl:68,hl+:110',
       \ 'down':    '50%'
       \ })
-      nnoremap [unite]a :FzfAg<Space>
-      nnoremap [unite]q :FzfAg <C-r><C-w><CR>
+      nnoremap [fzf]a :FzfAg<Space>
+      nnoremap [fzf]q :FzfAg <C-r><C-w><CR>
   " }}}
   " search buffers {{{
     function! s:buflist()
@@ -695,9 +643,8 @@ call plug#end()
     \   'source':  reverse(<sid>buflist()),
     \   'sink':    function('<sid>bufopen'),
     \   'options':  '-m --reverse',
-    \   'down':    len(<sid>buflist()) + 2
-    \ })<CR>
-    nnoremap <silent> [unite]n :FZFBuffers<CR>
+    \ })
+    nnoremap <silent> [fzf]n :FZFBuffers<CR>
   " }}}
 " }}} FZF
 " Spell check {{{
