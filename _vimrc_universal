@@ -494,7 +494,7 @@ call plug#end()
 " }}}
 " YouCompleteMe YCM {{{
     nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    nnoremap <F7><F7> :YcmForceCompileAndDiagnostics<CR>
+    nnoremap <F7><F7> :YcmDiags<CR>
     "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
     "Do not ask when starting vim
     let g:ycm_confirm_extra_conf = 0
