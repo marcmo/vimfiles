@@ -44,6 +44,7 @@ Plug 'marcmo/essentialColors'
 Plug 'leafo/moonscript-vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'lambdatoast/elm.vim'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 " UI Stuff {{{
@@ -501,6 +502,10 @@ call plug#end()
     let g:syntastic_always_populate_loc_list = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_rust_src_path = $HOME.'/rust/src/'
+    if !exists("g:ycm_semantic_triggers")
+      let g:ycm_semantic_triggers = {}
+    endif
+    let g:ycm_semantic_triggers['typescript'] = ['.']
 " }}}
 " ultisnips {{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
