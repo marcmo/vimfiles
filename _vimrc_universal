@@ -477,7 +477,7 @@ call plug#end()
     nnoremap <Leader>f :Autoformat<CR>
     let g:formatdef_rustfmt = '"rustfmt"'
     let g:formatters_rust = ['rustfmt']
-    let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwpxC100"'
+    let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwxC100"'
     let g:formatters_cpp = ['my_custom_cpp']
     " --style=allman / -A1 Allman style uses broken brackets.
     " --attach-namespaces / -xn Attach brackets to a namespace statement.
@@ -490,7 +490,6 @@ call plug#end()
     " --indent-switches / -S Indent 'switch' blocks
     " --convert-tabs / -c Converts tabs into spaces in the non-indentation part of the line
     " --indent-preproc-define / -w
-    " --pad-oper / -p  Insert space padding around operators
     " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
 " }}}
 " YouCompleteMe YCM {{{
