@@ -221,7 +221,7 @@ call plug#end()
         noremap ,e :e <C-R>=expand("%:p:h") . g:os_specific_delimiter <CR>
     " }}}
     " search and substitution {{{
-        noremap <silent> <space><space> :noh<cr>:call clearmatches()<cr>
+        noremap <silent> <space><leader> :noh<cr>:call clearmatches()<cr>
         " use normal regexes in search
         nnoremap / /\v
         vnoremap / /\v
@@ -578,7 +578,7 @@ call plug#end()
         \   'options':  '-m --reverse'
         \ })
       nnoremap <silent> [fzf]t :FZFCommandT<CR>
-      nnoremap <silent><leader><leader> :FZF<CR>
+      nnoremap <silent><space><space> :FZF<CR>
   " }}}
 
   " Choose a color scheme with fzf {{{
@@ -650,6 +650,7 @@ call plug#end()
     \   'options':  '-m --reverse',
     \ })
     nnoremap <silent> [fzf]n :FZFBuffers<CR>
+    nnoremap <silent><leader><leader> :FZFBuffer<CR>
   " }}}
 " }}} FZF
 " Spell check {{{
