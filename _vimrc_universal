@@ -54,6 +54,10 @@ call plug#end()
     set background=dark
     colorscheme lucius
     LuciusDark
+    nnoremap ,B :LuciusBlack<cr>
+    nnoremap ,W :LuciusWhite<cr>
+    nnoremap ,D :LuciusDark<cr>
+    nnoremap ,L :LuciusLight<cr>
     set cursorline                " highlight the screen line of the cursor
     if has('mouse') | set mouse=a | endif " enable mouse in all modes
     if has('gui_running')
