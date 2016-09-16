@@ -16,6 +16,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'wakatime/vim-wakatime'
 " Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
