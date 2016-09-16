@@ -154,13 +154,13 @@ call plug#end()
     " leave the cursor at the point where it was before editing started
     nnoremap . .`[
     " Go to newer/older text state
-    nnoremap <S-F11> g-
-    nnoremap <S-F12> g+
+    nnoremap <F23> g-
+    nnoremap <F24> g+
     " insert current date
-    cnoremap <S-F10> <C-R>=strftime("%Y%m%d-%H%M")<CR>
-    nnoremap <S-F10> "=strftime("%Y%m%d-%H%M")<CR>P
-    inoremap <S-F10> <C-R>=strftime("%Y%m%d-%H%M")<CR>
-    vnoremap <S-F10> c<C-R>=strftime("%Y%m%d-%H%M")<CR><Esc>gv
+    cnoremap <F22> <C-R>=strftime("%Y%m%d-%H%M")<CR>
+    nnoremap <F22> "=strftime("%Y%m%d-%H%M")<CR>P
+    inoremap <F22> <C-R>=strftime("%Y%m%d-%H%M")<CR>
+    vnoremap <F22> c<C-R>=strftime("%Y%m%d-%H%M")<CR><Esc>gv
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
@@ -247,8 +247,8 @@ call plug#end()
         " jump to next/previous quickfix
         nnoremap <F4> :cn<CR>
         inoremap <F4> <Esc>:cn<CR>a
-        nnoremap <S-F4> :cp<CR>
-        inoremap <S-F4> <Esc>:cp<CR>a
+        nnoremap <F16> :cp<CR>
+        inoremap <F16> <Esc>:cp<CR>a
     " }}}
     " hippie occurrence {{{
         " highlight current word with <F12> and on mouse click
@@ -282,7 +282,7 @@ call plug#end()
         let g:tcommentOptions = {'mixedindent':1}
     " }}}
     " tagbar {{{
-        nnoremap <silent> <S-F9> :TagbarOpen<CR>
+        nnoremap <silent> <F21> :TagbarOpen<CR>
         let g:tagbar_autoclose=1
     " }}}
     " ctags {{{
@@ -500,7 +500,7 @@ call plug#end()
 " }}}
 " YouCompleteMe YCM {{{
     nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    nnoremap <F6><F6> :YcmCompleter FixIt<CR>
+    nnoremap <F19> :YcmCompleter FixIt<CR>
     nnoremap <F7><F7> :YcmDiags<CR>
     "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
     "Do not ask when starting vim
@@ -555,7 +555,7 @@ call plug#end()
         execute "!" . g:clean_mru_file
     endfunction
 
-    nnoremap <S-F5> :call CleanVimMruFile()<CR>
+    nnoremap <F17> :call CleanVimMruFile()<CR>
 " }}}
 " vim-easy-align {{{
     " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
