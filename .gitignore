@@ -7,3 +7,5 @@ sessions
 .netrwhist
 autoload/
 .init.vim-rplugin~
+spell/en.utf-8.spl
+spell/en.utf-8.sug
