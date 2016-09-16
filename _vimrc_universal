@@ -4,6 +4,7 @@ call plug#begin('~/.config/nvim/plugged')
 " essential plugins
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
 Plug 'mru.vim'
