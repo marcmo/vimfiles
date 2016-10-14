@@ -20,7 +20,6 @@ Plug 'wakatime/vim-wakatime'
 " Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
-Plug 'esrlabs/syntastic'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
 " frequently used plugins
 Plug 'Chiel92/vim-autoformat'
@@ -314,39 +313,6 @@ call plug#end()
     " switch.vim {{{
         nnoremap - :Switch<cr>
     " }}}
-    " syntastic {{{
-        noremap <silent> ,SC :SyntasticReset<CR>
-        function! DebugSyntastic() " {{{
-          if g:syntastic_debug == 1
-            let g:syntastic_debug = 0
-            echo "turn off syntastic debugging"
-          else
-            let g:syntastic_debug = 1
-            let g:syntastic_debug_file = '~/syntastic.log'
-            exe ':e ' . g:syntastic_debug_file
-            echo "turn on syntastic debugging"
-          endif
-        endfunction " }}}
-        noremap <silent> <leader>DS :call DebugSyntastic()<CR>
-        let g:syntastic_auto_loc_list = 1
-        let g:syntastic_cpp_compiler = 'clang++'
-        " let g:syntastic_rust_rustc_args = '-Z no-trans'
-        let g:syntastic_cpp_compiler_options = ' -std=c++11'
-        let g:syntastic_check_on_wq = 0
-        let g:syntastic_error_symbol = '✗'
-        let g:syntastic_warning_symbol = '>'
-        let g:syntastic_always_populate_loc_list = 1
-        let g:syntastic_auto_jump = 2
-        let g:syntastic_quiet_messages = { "level": "warnings",
-                                        \ "type":  "style",
-                                        \ "regex": 'Top-level binding with no type signature' }
-        let g:syntastic_ruby_checkers = ['mri', 'ruby_lint']
-        let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
-        let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haskell','cpp'] }
-        let g:syntastic_elixir_checkers = ['elixir']
-        let g:syntastic_enable_elixir_checker = 1
-        nnoremap <leader>s :w<CR> :SyntasticCheck<CR>
-    " }}}
     " quickrun {{{
         let g:quickrun_config = {}
         let g:quickrun_config.haskell = {'eval' : 1 }
@@ -505,7 +471,6 @@ call plug#end()
     "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
     "Do not ask when starting vim
     let g:ycm_confirm_extra_conf = 0
-    let g:syntastic_always_populate_loc_list = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_rust_src_path = $HOME.'/rust/src/'
     if !exists("g:ycm_semantic_triggers")
@@ -532,7 +497,6 @@ call plug#end()
 " airline {{{
     let g:airline_powerline_fonts=1   " make sure powerline font is installed
     let g:airline#extensions#whitespace#mixed_indent_algo = 1
-    let g:airline#extensions#syntastic#enabled = 1
 " }}}
 " fugitiv {{{
     function! CloseFugitiveDiffAfterUsage() " {{{
