@@ -10,11 +10,26 @@ lazy. Merely switching to vim-plug without any lazy loading already gave a 10% b
 
 The drawback is that it requires +ruby (Neovim works out-of-the-box).
 
-## setting up vim in new environment:
+## needed 3rd party tools
+
+* fzf (will be installed automatically)
+* rust
+
+    curl https://sh.rustup.rs -sSf | sh
+
+* ripgrep
+
+    cargo install ripgrep
+
+* clang++
+
+    sudo apt install clang
+
+### ruby
 
 make sure ruby is installed (here I'm using rbenv and ruby-build):
 
-### rbenv
+* rbenv
 
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
@@ -26,7 +41,7 @@ If you've installed rbenv manually using git, you can upgrade your installation 
     $ cd ~/.rbenv
     $ git pull
 
-## ruby-build
+* ruby-build
 
 On Ubuntu ruby has some prerequisites:
 

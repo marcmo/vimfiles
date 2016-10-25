@@ -286,8 +286,8 @@ call plug#end()
     " }}}
     " ctags {{{
         set tags=.tags,$HOME,.git/tags
-        " Open the definition in a vertical split
-        noremap <F1> :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+        " Open the definition in a vertical split, <F15>=Shift+<F3>
+        noremap <F15> :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
         " lookup symbol in tags file
         inoremap <F3> <Esc><c-]><CR>
         noremap <F3> <c-]>
@@ -569,7 +569,7 @@ call plug#end()
               \ 'text': join(parts[3:], ':')}
       endfunction
 
-      function! s:ag_handler(lines)
+      function! s:rg_handler(lines)
         if len(a:lines) < 2 | return | endif
 
         let cmd = get({'ctrl-x': 'split',
@@ -589,17 +589,17 @@ call plug#end()
         endif
       endfunction
 
-      command! -nargs=* FzfAg call fzf#run({
-      \ 'source':  printf('ag --nogroup --column --color "%s"',
+      command! -nargs=* FzfRg call fzf#run({
+      \ 'source':  printf('rg --vimgrep --color always "%s"',
       \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
-      \ 'sink*':    function('<sid>ag_handler'),
+      \ 'sink*':    function('<sid>rg_handler'),
       \ 'options': '--reverse --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
       \            '--multi --bind ctrl-a:select-all,ctrl-d:deselect-all '.
       \            '--color hl:68,hl+:110',
       \ 'down':    '50%'
       \ })
-      nnoremap [fzf]a :FzfAg<Space>
-      nnoremap [fzf]q :FzfAg <C-r><C-w><CR>
+      nnoremap [fzf]a :FzfRg<Space>
+      nnoremap [fzf]q :FzfRg <C-r><C-w><CR>
   " }}}
   " search buffers {{{
     function! s:buflist()
