@@ -543,7 +543,7 @@ call plug#end()
       command! FZFCommandT call fzf#run({
         \   'source':'rg --files ',
         \   'sink':  'e ',
-        \   'options':  '-m --reverse',
+        \   'options':  '-m',
         \   'down':    '50%'
         \ })
       nnoremap <silent> [fzf]t :FZFCommandT<CR>
