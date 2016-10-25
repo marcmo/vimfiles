@@ -541,14 +541,13 @@ call plug#end()
 
   " command-T like listing of all files in current directory {{{
       command! FZFCommandT call fzf#run({
-        \   'source':'find . ' .
-        \   '\( \( \( -name .git -o -name .rim -o -name "build_*" \) -a -type d \) \) -prune ' .
-        \   '-o \( -name "*.d" -o -name "*.o" -o -name "*.a" \) -prune -o -type f -print',
+        \   'source':'rg --files ',
         \   'sink':  'e ',
-        \   'options':  '-m --reverse'
+        \   'options':  '-m --reverse',
+        \   'down':    '50%'
         \ })
       nnoremap <silent> [fzf]t :FZFCommandT<CR>
-      nnoremap <silent><space><space> :FZF<CR>
+      nnoremap <silent><space><space> :FZFCommandT<CR>
   " }}}
 
   " Choose a color scheme with fzf {{{
@@ -562,8 +561,8 @@ call plug#end()
       nnoremap <silent> <Leader>C :FZFColors<CR>
   " }}}
 
-  " search with ag {{{
-      function! s:ag_to_qf(line)
+  " search with rg {{{
+      function! s:rg_to_qf(line)
         let parts = split(a:line, ':')
         return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
               \ 'text': join(parts[3:], ':')}
@@ -575,7 +574,7 @@ call plug#end()
         let cmd = get({'ctrl-x': 'split',
                     \ 'ctrl-v': 'vertical split',
                     \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
-        let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
+        let list = map(a:lines[1:], 's:rg_to_qf(v:val)')
 
         let first = list[0]
         execute cmd escape(first.filename, ' %#\')
