@@ -29,7 +29,7 @@ Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
 Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'racer-rust/vim-racer', { 'for': 'rust', 'do': 'cargo install racer' }
 Plug 'AndrewRadev/switch.vim'
 " seldom used plugins
 Plug 'benekastah/neomake'
@@ -347,7 +347,9 @@ call plug#end()
     " rust {{{
         let g:rust_recommended_style = 1
         let g:racer_cmd ='racer'
-        let $RUST_SRC_PATH=$HOME.'/rust/src/'
+        let g:racer_experimental_completer = 1
+        " must be set: export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+        " let $RUST_SRC_PATH=$HOME.'/rust/src/'
 
         if !exists('g:cargo_command')
           let g:cargo_command = "make {cmd}"
