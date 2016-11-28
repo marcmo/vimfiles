@@ -8,7 +8,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
 Plug 'mru.vim'
-Plug 'Townk/vim-autoclose'
+Plug 'Raimondi/delimitMate'
 Plug 'matchit.zip'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -443,9 +443,6 @@ call plug#end()
           retab!
         endfunction " }}}
     " }}}
-" }}}
-" vim-autoclose {{{
-    let g:AutoClosePreserveDotReg = 0
 " }}}
 " vim-autoformat {{{
     nnoremap <Leader>f :Autoformat<CR>
