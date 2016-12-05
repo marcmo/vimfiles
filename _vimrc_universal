@@ -617,7 +617,7 @@ call plug#end()
     \   'sink':    function('<sid>bufopen'),
     \   'options':  '-m --reverse',
     \ })
-    nnoremap <silent> [fzf]n :FZFBuffers<CR>
+    nnoremap <silent> [fzf]b :FZFBuffers<CR>
     nnoremap <silent><leader><leader> :FZFBuffer<CR>
   " }}}
 " }}} FZF
