@@ -79,6 +79,8 @@ call plug#end()
 " basic settings {{{
     if !has('nvim')
         set encoding=utf-8
+        " use escape in terminal mode
+        " tnoremap <Esc> <C-\><C-n>
     endif
     set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.s
     set nofoldenable                " disable folding
@@ -164,8 +166,6 @@ call plug#end()
     nnoremap j gj
     nnoremap k gk
     nnoremap ,rc :e ~/.config/nvim/_vimrc_universal<CR>
-    " " use escape in terminal mode
-    " tnoremap <Esc> <C-\><C-n>
     nnoremap <leader>bc :e ~/.bashrc <CR>
     nnoremap <leader>zc :e ~/.zshrc <CR>
     " move lines up and down
@@ -538,7 +538,7 @@ call plug#end()
       nnoremap <silent> ,u :FZFMru<CR>
   " }}}
 
-  " command-T like listing of all files in current directory {{{
+  " command-T like listing of all files in current directory, using rip-grep {{{
       command! FZFCommandT call fzf#run({
         \   'source':'rg --files ',
         \   'sink':  'e ',
