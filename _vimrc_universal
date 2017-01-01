@@ -29,7 +29,7 @@ Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
 Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'racer-rust/vim-racer', { 'for': 'rust', 'do': 'cargo install racer' }
+Plug 'racer-rust/vim-racer', { 'for': 'rust', 'do': 'cargo install racer --force' }
 Plug 'AndrewRadev/switch.vim'
 " seldom used plugins
 Plug 'benekastah/neomake'

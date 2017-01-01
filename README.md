@@ -16,6 +16,7 @@ The drawback is that it requires +ruby (Neovim works out-of-the-box).
 * rust
 
     curl https://sh.rustup.rs -sSf | sh
+    rustup component add rust-src
 
 * ripgrep
 
