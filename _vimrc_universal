@@ -22,7 +22,7 @@ Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
 " frequently used plugins
-Plug 'Chiel92/vim-autoformat'
+Plug 'Chiel92/vim-autoformat', { 'do': 'cargo install rustfmt --force' }
 Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
