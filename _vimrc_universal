@@ -15,8 +15,8 @@ Plug 'honza/vim-snippets'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'wakatime/vim-wakatime'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 " Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
@@ -142,6 +142,7 @@ call plug#end()
     " quick way to escape from insert mode
     inoremap jj <ESC>
     inoremap kj <ESC>
+    inoremap jk <ESC>
     " use :w!! to write to a file using sudo
     cnoremap w!! w !sudo tee % >/dev/null
     nnoremap<leader>l :set list!<CR>
@@ -235,8 +236,18 @@ call plug#end()
         " search for visually highlighted text
         vnoremap // y/<C-R>"<CR>
         " Prepare a :substitute command using the current word or the selected text:
-        vnoremap <F6> y:%s/\v<<C-r>">//gc<Left><Left><Left>
-        nnoremap <F6> y:%s/\v<<C-r>=expand("<cword>")<CR>>//gc<Left><Left><Left>
+        vnoremap <leader>s y:%s/\v<<C-r>">//gc<Left><Left><Left>
+        nnoremap <leader>s y:%s/\v<<C-r>=expand("<cword>")<CR>>//gc<Left><Left><Left>
+    " }}}
+    " avoid escape and function keys {{{
+        " nnoremap <Tab> <Esc> ==> not possible, breaks jump list somehow
+        nnoremap <Leader><Tab> <Esc>
+        vnoremap <Tab> <Esc>gV
+        vnoremap <Leader><Tab> <Esc>gV
+        onoremap <Tab> <Esc>
+        onoremap <Leader><Tab> <Esc>
+        cnoremap <Leader><Tab> <Esc>
+        inoremap <Leader><Tab> <Esc>
     " }}}
     " movement {{{
         " jump back and forth between the last 2 files
@@ -286,11 +297,11 @@ call plug#end()
     " }}}
     " ctags {{{
         set tags=.tags,$HOME,.git/tags
-        " Open the definition in a vertical split, <F15>=Shift+<F3>
-        noremap <F15> :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-        " lookup symbol in tags file
-        inoremap <F3> <Esc><c-]><CR>
-        noremap <F3> <c-]>
+        " Open the definition in a vertical split, used to be <F15>=Shift+<F3>
+        noremap <leader>v :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+        " lookup symbol in tags file, used to be F3
+        nnoremap <silent><leader><leader> <c-]>
+        inoremap <silent><leader><leader> <Esc><c-]>
         " use tpope's awesome ctags git hooks (see http://bit.ly/gitctags)
         noremap <F8><F8> :!git ctags<CR>
         nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
@@ -600,27 +611,35 @@ call plug#end()
       nnoremap [fzf]q :FzfRg <C-r><C-w><CR>
   " }}}
   " search buffers {{{
-    function! s:buflist()
-      redir => ls
-      silent ls
-      redir END
-      return split(ls, '\n')
-    endfunction
+      function! s:buflist()
+        redir => ls
+        silent ls
+        redir END
+        return split(ls, '\n')
+      endfunction
 
-    function! s:bufopen(e)
-      execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-    endfunction
+      function! s:bufopen(e)
+        execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+      endfunction
 
-  " Choose a color scheme with fzf {{{
-    command! FZFBuffers call fzf#run({
-    \   'source':  reverse(<sid>buflist()),
-    \   'sink':    function('<sid>bufopen'),
-    \   'options':  '-m --reverse',
-    \ })
-    nnoremap <silent> [fzf]b :FZFBuffers<CR>
-    nnoremap <silent><leader><leader> :FZFBuffer<CR>
+      command! FZFBuffers call fzf#run({
+      \   'source':  reverse(<sid>buflist()),
+      \   'sink':    function('<sid>bufopen'),
+      \   'options':  '-m --reverse',
+      \ })
+      nnoremap <silent> [fzf]b :FZFBuffers<CR>
+  " }}}
+  " list dirty git files in fzf {{{
+      command! FZFDirty call fzf#run({
+        \   'source':'git diff-files --name-only',
+        \   'sink':  'e ',
+        \   'options':  '-m',
+        \   'down':    '50%'
+        \ })
+      nnoremap <silent> [fzf]g :FZFDirty<CR>
   " }}}
 " }}} FZF
+
 " Spell check {{{
     nnoremap <F9> :call ToggleSpell()<CR>
     inoremap <F9> <Esc>:call ToggleSpell()<CR>a
