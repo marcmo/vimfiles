@@ -7,9 +7,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
-Plug 'mru.vim'
+Plug 'yegappan/mru'
 Plug 'Raimondi/delimitMate'
-Plug 'matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
@@ -22,7 +22,7 @@ Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
 " frequently used plugins
-Plug 'Chiel92/vim-autoformat', { 'do': 'cargo install rustfmt --force' }
+Plug 'Chiel92/vim-autoformat'
 Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
@@ -370,7 +370,7 @@ call plug#end()
         com! CargoRun call CargoRunCmd('run')
         com! CargoTest call CargoRunCmd('test --no-run')
         com! CargoBench call CargoRunCmd('bench')
-        com! CargoCheck call CargoRunCmd('rustc -- -Z no-trans')
+        com! CargoCheck call CargoRunCmd('check')
         com! CargoLibCheck call CargoRunCmd('rustc --lib -- -Z no-trans')
 
         func! CargoRunCmd(cmd)
@@ -456,7 +456,7 @@ call plug#end()
     " }}}
 " }}}
 " vim-autoformat {{{
-    nnoremap <Leader>f :Autoformat<CR>
+    nnoremap <Leader>f :Autoformat<CR>:w<CR>
     let g:formatdef_rustfmt = '"rustfmt"'
     let g:formatters_rust = ['rustfmt']
     let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwxC100"'
@@ -683,7 +683,7 @@ augroup FTOptions " {{{
   autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+  autocmd FileType python setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType c,cpp,java setlocal ts=4 sts=4 sw=4 expandtab
   autocmd FileType c,cpp setlocal iskeyword-=?,!
   autocmd FileType hs setlocal iskeyword-=.
