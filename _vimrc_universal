@@ -20,16 +20,22 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 " Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
+Plug 'roxma/clang_complete'
 " frequently used plugins
+Plug 'roxma/nvim-completion-manager'
+
 Plug 'Chiel92/vim-autoformat'
 Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
 Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'racer-rust/vim-racer', { 'for': 'rust', 'do': 'cargo install racer --force' }
+" rust {{{
+  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+  Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+  Plug 'roxma/nvim-cm-racer'
+" }}}
 Plug 'AndrewRadev/switch.vim'
 " seldom used plugins
 Plug 'benekastah/neomake'
@@ -47,6 +53,18 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'lambdatoast/elm.vim'
 Plug 'leafgarland/typescript-vim'
 call plug#end()
+
+let g:clang_library_path='/usr/local/opt/llvm/lib'
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:cm_refresh_default_min_word_len = [[1,4],[7,2]]
+
+" optional
+inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 
 " UI Stuff {{{
     syntax on
@@ -474,20 +492,20 @@ call plug#end()
     " --indent-preproc-define / -w
     " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
 " }}}
-" YouCompleteMe YCM {{{
-    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    nnoremap <F19> :YcmCompleter FixIt<CR>
-    nnoremap <F7><F7> :YcmDiags<CR>
-    "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-    "Do not ask when starting vim
-    let g:ycm_confirm_extra_conf = 0
-    let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_rust_src_path = $HOME.'/rust/src/'
-    if !exists("g:ycm_semantic_triggers")
-      let g:ycm_semantic_triggers = {}
-    endif
-    let g:ycm_semantic_triggers['typescript'] = ['.']
-" }}}
+" " YouCompleteMe YCM {{{
+"     nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"     nnoremap <F19> :YcmCompleter FixIt<CR>
+"     nnoremap <F7><F7> :YcmDiags<CR>
+"     "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"     "Do not ask when starting vim
+"     let g:ycm_confirm_extra_conf = 0
+"     let g:ycm_collect_identifiers_from_tags_files = 1
+"     let g:ycm_rust_src_path = $HOME.'/rust/src/'
+"     if !exists("g:ycm_semantic_triggers")
+"       let g:ycm_semantic_triggers = {}
+"     endif
+"     let g:ycm_semantic_triggers['typescript'] = ['.']
+" " }}}
 " ultisnips {{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
     let g:UltiSnipsExpandTrigger = "<nop>"
