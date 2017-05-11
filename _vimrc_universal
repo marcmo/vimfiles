@@ -20,8 +20,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 " Plug 'tpope/vim-fugitive'
 Plug 'thinca/vim-quickrun'
 Plug 'derekwyatt/vim-fswitch'
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer' }
-Plug 'roxma/clang_complete'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " frequently used plugins
 Plug 'roxma/nvim-completion-manager'
 
@@ -48,13 +47,11 @@ Plug 'mbbill/undotree'
 Plug 'godlygeek/csapprox'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'marcmo/essentialColors'
-Plug 'leafo/moonscript-vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'lambdatoast/elm.vim'
 Plug 'leafgarland/typescript-vim'
 call plug#end()
 
-let g:clang_library_path='/usr/local/opt/llvm/lib'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
