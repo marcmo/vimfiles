@@ -100,7 +100,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         " use escape in terminal mode
         " tnoremap <Esc> <C-\><C-n>
     endif
-    set wildignore+=*.o,*.obj,*.o.d,.git,*.a,*.s
+    set wildignore+=*.o,*.obj,*.o.d,.git,*.a
     set nofoldenable                " disable folding
     set showmode                    " always show what mode we're currently editing in
     set nowrap                      " don't wrap lines
@@ -158,9 +158,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     " paste in visual mode without updating the default register
     vnoremap p p:let @"=@0<CR>
     " quick way to escape from insert mode
-    inoremap jj <ESC>
     inoremap kj <ESC>
-    inoremap jk <ESC>
     " use :w!! to write to a file using sudo
     cnoremap w!! w !sudo tee % >/dev/null
     nnoremap<leader>l :set list!<CR>
@@ -477,8 +475,8 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     nnoremap <Leader>f :Autoformat<CR>:w<CR>
     let g:formatdef_rustfmt = '"rustfmt"'
     let g:formatters_rust = ['rustfmt']
-    let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwxC100"'
-    let g:formatters_cpp = ['my_custom_cpp']
+    " let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwxC100"'
+    " let g:formatters_cpp = ['my_custom_cpp']
     " --style=allman / -A1 Allman style uses broken brackets.
     " --attach-namespaces / -xn Attach brackets to a namespace statement.
     " --indent=spaces / -s# Indent using # spaces per indent (e.g. -s3 --indent=spaces=4).
