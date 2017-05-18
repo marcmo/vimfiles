@@ -555,11 +555,17 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     map <Space> [fzf]
   " {{{ MRU search using mru.vim history file
       command! FZFMru call fzf#run({
-        \   'source': 'tail -n +2 ~/.vim_mru_files',
+        \   'source': 'tail -n +2 ~/.vim_mru_files | xargs ls -d 2>/dev/null',
         \   'sink' : 'e ',
         \   'options' : '--multi --reverse --tiebreak=end',
         \ })
       nnoremap <silent> ,u :FZFMru<CR>
+      command! FZFMruOnlyCurrentDir call fzf#run({
+        \   'source': 'tail -n +2 ~/.vim_mru_files | rg `pwd` | xargs ls -d 2>/dev/null',
+        \   'sink' : 'e ',
+        \   'options' : '--multi --reverse --tiebreak=end',
+        \ })
+      nnoremap <silent> ,U :FZFMruOnlyCurrentDir<CR>
   " }}}
 
   " command-T like listing of all files in current directory, using rip-grep {{{
@@ -621,7 +627,15 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
       \ 'down':    '50%'
       \ })
       nnoremap [fzf]a :FzfRg<Space>
-      nnoremap [fzf]q :FzfRg <C-r><C-w><CR>
+      nnoremap [fzf]w :FzfRg <C-r><C-w><CR>
+      command! -nargs=* FzfRgFileOnly call fzf#run({
+      \ 'source':  printf('rg -l "%s"',
+      \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
+      \ 'sink':    'e ',
+      \ 'options': '--multi --reverse --tiebreak=end',
+      \ 'down':    '50%'
+      \ })
+      nnoremap [fzf]q :FzfRgFileOnly <C-r><C-w><CR>
   " }}}
   " search buffers {{{
       function! s:buflist()
