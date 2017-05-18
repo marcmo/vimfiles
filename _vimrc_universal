@@ -442,7 +442,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
           autocmd bufenter *.h++ set ft=cpp
           autocmd bufenter *.cpp,*.c,*.h,*.h++,*.hpp setlocal mp=clang++\ -std=c++11\ -Iinclude\ -I$HOME/dev/git/boost.git/\ -o\ %<\ %
           autocmd bufenter *.cpp,*.c nnoremap <F5> :update<CR>:call MakeCpp()<CR>
-          autocmd bufenter *.cpp,*.c nnoremap <silent> ,m :update<CR>:call MakeCpp()<CR>
+          autocmd BufRead,BufNewFile *.cpp,*c nnoremap <silent> ,m :update<CR>:YcmForceCompileAndDiagnostics<CR>
           autocmd BufRead,BufNewFile *.cpp set tw=100 fo=tcroql
           autocmd QuickFixCmdPost [^l]* nested cwindow
           autocmd QuickFixCmdPost    l* nested lwindow
@@ -487,20 +487,20 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     " --indent-preproc-define / -w
     " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
 " }}}
-" " YouCompleteMe YCM {{{
-"     nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"     nnoremap <F19> :YcmCompleter FixIt<CR>
-"     nnoremap <F7><F7> :YcmDiags<CR>
-"     "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-"     "Do not ask when starting vim
-"     let g:ycm_confirm_extra_conf = 0
-"     let g:ycm_collect_identifiers_from_tags_files = 1
-"     let g:ycm_rust_src_path = $HOME.'/rust/src/'
-"     if !exists("g:ycm_semantic_triggers")
-"       let g:ycm_semantic_triggers = {}
-"     endif
-"     let g:ycm_semantic_triggers['typescript'] = ['.']
-" " }}}
+" YouCompleteMe YCM {{{
+    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    nnoremap <F19> :YcmCompleter FixIt<CR>
+    nnoremap <F7><F7> :YcmDiags<CR>
+    "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+    "Do not ask when starting vim
+    let g:ycm_confirm_extra_conf = 0
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    let g:ycm_rust_src_path = $HOME.'/rust/src/'
+    if !exists("g:ycm_semantic_triggers")
+      let g:ycm_semantic_triggers = {}
+    endif
+    let g:ycm_semantic_triggers['typescript'] = ['.']
+" }}}
 " ultisnips {{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
     let g:UltiSnipsExpandTrigger = "<nop>"
