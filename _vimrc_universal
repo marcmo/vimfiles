@@ -394,6 +394,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
           autocmd!
           autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
           autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs setlocal makeprg=cargo
+          autocmd BufRead,BufNewFile *.rs inoremap <silent> ,m <ESC>:update<CR>:CargoCheck<CR><CR><CR>
           autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,m :update<CR>:CargoCheck<CR><CR><CR>
           autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,b :update<CR>:CargoBuild<CR><CR><CR>
           autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,t :update<CR>:CargoTest<CR><CR><CR>
