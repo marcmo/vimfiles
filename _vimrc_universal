@@ -18,13 +18,13 @@ Plug 'bling/vim-airline'
 Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'w0rp/ale', { 'for': 'javascript' }
+Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'derekwyatt/vim-fswitch'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " frequently used plugins
 Plug 'thinca/vim-quickrun'
 Plug 'roxma/nvim-completion-manager'
-
-Plug 'Chiel92/vim-autoformat'
+Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
@@ -37,7 +37,6 @@ Plug 'roxma/nvim-cm-racer'
 " }}}
 Plug 'AndrewRadev/switch.vim'
 " seldom used plugins
-Plug 'ruanyl/vim-fixmyjs', { 'for': 'javascript' }
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -46,7 +45,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
 " colors & syntax highlighting
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'godlygeek/csapprox'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'marcmo/essentialColors'
@@ -222,7 +220,7 @@ augroup whitespaces " {{{
   autocmd InsertEnter * if &modifiable | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
   autocmd InsertLeave * if &modifiable | match ExtraWhitespace /\s\+$/ | endif
   autocmd BufWinLeave * if &modifiable | call clearmatches() | endif
-  nnoremap <Leader>c :call ClearWhitespaces()<CR>:w<CR>
+  nnoremap <Leader>c :call CleanBuffer()<CR>:w<CR>
 augroup END " }}}
 " }}}
 " directories and files {{{
@@ -421,36 +419,12 @@ augroup hs " {{{
 augroup END " }}}
 " }}}
 " javascript {{{
-" ruanyl/vim-fixmyjs {{{
-let g:fixmyjs_rc_filename = ['.eslintrc', '.eslintrc.json']
-let g:fixmyjs_use_local = 1
-let g:fixmyjs_engine = './node_modules/.bin/eslint'
-" }}}
-" jsx {{{
-let g:jsx_ext_required = 0
-" }}}
-" syntastic eslint {{{
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
-let g:ale_fixers['javascript'] = ['prettier']
-let g:ale_javascript_prettier_options = '--single-quote --jsx-bracket-same-line'
-" function! SyntasticESlintChecker()
-"   let l:npm_bin = ''
-"   let l:eslint = 'eslint'
-"   if executable('npm')
-"     let l:npm_bin = split(system('npm bin'), '\n')[0]
-"   endif
-"   if strlen(l:npm_bin) && executable(l:npm_bin . '/eslint')
-"     let l:eslint = l:npm_bin . '/eslint'
-"   endif
-"   let b:syntastic_javascript_eslint_exec = l:eslint
-" endfunction
-"
-" let g:syntastic_javascript_checkers = ["eslint"]
-" autocmd FileType javascript :call SyntasticESlintChecker()
-" }}}
 
 augroup js " {{{
   autocmd!
+" ale {{{
+  autocmd FileType javascript let g:ale_fixers['javascript'] = ['eslint']
+" }}}
   autocmd FileType html,javascript setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType html,javascript setlocal makeprg=jslint\ % | setlocal efm=%f:%l:%c:%m
 augroup END " }}}
@@ -504,12 +478,20 @@ endfunction " }}}
 let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=2
 " }}}
+" vim-flow {{{
+let g:flow#enable = 0
+let g:flow#flowpath = './node_modules/.bin/flow'
+" }}}
 " vim-autoformat {{{
-nnoremap <Leader>f :Autoformat<CR>:w<CR>
-let g:formatdef_rustfmt = '"rustfmt"'
-let g:formatters_rust = ['rustfmt']
-let g:formatdef_prettier = '"prettier"'
-let g:formatters_javascript = ['prettier']
+nnoremap <silent> <Leader>f :Neoformat<CR>:silent write<CR>
+" let g:formatdef_rustfmt = '"rustfmt"'
+" let g:formatters_rust = ['rustfmt']
+let g:neoformat_javascript_prettier = {
+            \ 'exe': 'prettier',
+            \ 'args': ['--stdin', '--single-quote', '--parser flow'],
+            \ 'stdin': 1,
+            \ }
+let g:neoformat_enabled_javascript = ['prettier']
 " let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwxC100"'
 " let g:formatters_cpp = ['my_custom_cpp']
 " --style=allman / -A1 Allman style uses broken brackets.
@@ -795,13 +777,21 @@ function! Text2html() " {{{
 endfunction " }}}
 
 " Remove trailing whitespaces and ^M chars on write
-command! ClearWhitespaces :call ClearWhitespaces()
+command! CleanBuffer :call CleanBuffer()
 function! ClearWhitespaces() " {{{
   :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
   if has("unix") " remove DOS style line endings
     :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\r\\+$","","")'))
   endif
   execute "silent! %s//\r/g"
+endfunction " }}}
+function! CleanBuffer() " {{{
+  :call ClearWhitespaces()
+  :call ReplaceUmlauts()
+  if (&ft=='javascript')
+    :ALEFix
+    :w
+  endif
 endfunction " }}}
 
 " replace german Umlauts
