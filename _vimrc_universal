@@ -642,7 +642,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
               \ 'down':    '50%'
               \ })
         nnoremap [fzf]a :FzfRg<Space>
-        nnoremap [fzf]w :FzfRg <C-r><C-w><CR>
+        nnoremap [fzf]q :FzfRg <C-r><C-w><CR>
         command! -nargs=* FzfRgFileOnly call fzf#run({
               \ 'source':  printf('rg -l "%s"',
               \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
@@ -650,7 +650,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
               \ 'options': '--multi --reverse --tiebreak=end',
               \ 'down':    '50%'
               \ })
-        nnoremap [fzf]q :FzfRgFileOnly <C-r><C-w><CR>
+        nnoremap [fzf]w :FzfRgFileOnly <C-r><C-w><CR>
     " }}}
     " search buffers {{{
         function! s:buflist()
