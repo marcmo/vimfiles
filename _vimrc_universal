@@ -584,11 +584,11 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     " }}}
 
     " command-T like listing of all files in current directory, using rip-grep {{{
-        command! FZFCommandT call fzf#run}({
+        command! FZFCommandT call fzf#run({
               \   'source':'rg --files ',
               \   'sink':  'e ',
               \   'options':  '-m',
-              \   'down':    '50%'
+              \   'down':    '50%',
               \ })
         nnoremap <silent> [fzf]t :FZFCommandT<CR>
         nnoremap <silent><space><space> :FZFCommandT<CR>
