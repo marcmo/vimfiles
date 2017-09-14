@@ -36,6 +36,7 @@ Plug 'embear/vim-localvimrc'
     Plug 'roxma/nvim-cm-racer'
 " }}}
 Plug 'AndrewRadev/switch.vim'
+Plug 'editorconfig/editorconfig-vim'
 " seldom used plugins
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'airblade/vim-gitgutter'
@@ -422,6 +423,9 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         " }}}
           autocmd FileType html,javascript setlocal ts=2 sts=2 sw=2 expandtab
           autocmd FileType html,javascript setlocal makeprg=jslint\ % | setlocal efm=%f:%l:%c:%m
+
+          autocmd bufenter javascript nnoremap <silent><leader><leader> :FlowJumpToDef<CR>
+          autocmd bufenter javascript inoremap <silent><leader><leader> <Esc>:FlowJumpToDef<CR>
         augroup END " }}}
     " }}}
     " lua {{{
