@@ -17,7 +17,7 @@ Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
 Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'w0rp/ale', { 'for': 'javascript' }
+Plug 'w0rp/ale'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'derekwyatt/vim-fswitch'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
@@ -38,6 +38,7 @@ Plug 'embear/vim-localvimrc'
 Plug 'AndrewRadev/switch.vim'
 Plug 'editorconfig/editorconfig-vim'
 " seldom used plugins
+Plug 'ap/vim-css-color'
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -52,6 +53,7 @@ Plug 'marcmo/essentialColors'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'lambdatoast/elm.vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'prognostic/plasticine'
 call plug#end()
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -74,6 +76,8 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     nnoremap ,W :LuciusWhite<cr>
     nnoremap ,D :LuciusDark<cr>
     nnoremap ,L :LuciusLight<cr>
+    nnoremap ,A :colorscheme aldmeris<cr>
+    nnoremap ,P :colorscheme plasticine<cr>
     set cursorline                " highlight the screen line of the cursor
     if has('mouse') | set mouse=a | endif " enable mouse in all modes
     if has('gui_running')
@@ -100,6 +104,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
       " tnoremap <Esc> <C-\><C-n>
     endif
     set wildignore+=*.o,*.obj,*.o.d,.git,*.a
+    set backupcopy=yes              " allow FS watchers to work, make a copy of the file and overwrite the original one
     set nofoldenable                " disable folding
     set showmode                    " always show what mode we're currently editing in
     set nowrap                      " don't wrap lines
@@ -306,6 +311,9 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         nnoremap <silent> <F21> :TagbarOpen<CR>
         let g:tagbar_autoclose=1
     " }}}
+    " ALE {{{
+        nnoremap <silent> <leader>A :ALEToggle<CR>
+    " }}}
     " ctags {{{
         set tags=.tags,$HOME,.git/tags
         " Open the definition in a vertical split, used to be <F15>=Shift+<F3>
@@ -416,16 +424,28 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         augroup END " }}}
     " }}}
     " javascript {{{
+        " ale {{{
+          let g:ale_fixers = {
+          \   'javascript': ['standard'],
+          \   'typescript': ['tslint']
+          \}
+          let g:ale_linters = {
+          \   'javascript': ['standard'],
+          \   'typescript': ['tslint']
+          \}
+        " }}}
+        augroup typescript " {{{
+          autocmd!
+          autocmd bufenter *.ts,*.tsx,*.js set iskeyword-=?
+          autocmd bufenter *.ts,*.tsx,*.js nnoremap <silent><leader><leader> :YcmCompleter GoToDefinition<CR>
+          autocmd bufenter *.ts,*.tsx,*.js inoremap <silent><leader><leader> <Esc>:YcmCompleter GoToDefinition<CR>
+          autocmd bufenter *.ts,*.tsx,*.js nnoremap <leader>v :only <CR> :vsp <CR>:YcmCompleter GoToDefinition<CR>
+        augroup END " }}}
         augroup js " {{{
           autocmd!
-        " ale {{{
-          autocmd FileType javascript let g:ale_fixers['javascript'] = ['eslint']
-        " }}}
           autocmd FileType html,javascript setlocal ts=2 sts=2 sw=2 expandtab
           autocmd FileType html,javascript setlocal makeprg=jslint\ % | setlocal efm=%f:%l:%c:%m
 
-          autocmd bufenter javascript nnoremap <silent><leader><leader> :FlowJumpToDef<CR>
-          autocmd bufenter javascript inoremap <silent><leader><leader> <Esc>:FlowJumpToDef<CR>
         augroup END " }}}
     " }}}
     " lua {{{
@@ -476,21 +496,33 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
 " vim-markdown-preview {{{
     let vim_markdown_preview_github=1
     let vim_markdown_preview_toggle=2
+    let vim_markdown_preview_hotkey='<Leader>p'
 " }}}
 " vim-flow {{{
     let g:flow#enable = 0
     let g:flow#flowpath = './node_modules/.bin/flow'
 " }}}
 " vim-autoformat {{{
-    nnoremap <silent> <Leader>f :Neoformat<CR>:silent write<CR>
+    nnoremap <silent> <Leader>f :Neoformat<CR>
     " let g:formatdef_rustfmt = '"rustfmt"'
     " let g:formatters_rust = ['rustfmt']
-    let g:neoformat_javascript_prettier = {
-                \ 'exe': 'prettier',
-                \ 'args': ['--stdin', '--single-quote', '--parser flow'],
+    " let g:neoformat_javascript_prettier = {
+    "             \ 'exe': 'prettier',
+    "             \ 'args': ['--stdin', '--single-quote', '--no-semi', '--parser flow'],
+    "             \ 'stdin': 1,
+    "             \ }
+    let g:neoformat_javascript_standard = {
+                \ 'exe': './node_modules/.bin/standard',
+                \ 'args': ['--stdin','--fix'],
                 \ 'stdin': 1,
                 \ }
-    let g:neoformat_enabled_javascript = ['prettier']
+    let g:neoformat_typescript_tsfmt = {
+              \ 'exe': './node_modules/.bin/tsfmt',
+              \ 'args': ['--stdin', '%:p'],
+              \ 'stdin': 1,
+              \ }
+    let g:neoformat_enabled_javascript = ['standard']
+    let g:neoformat_enabled_typescript = ['tsfmt']
     " let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwxC100"'
     " let g:formatters_cpp = ['my_custom_cpp']
     " --style=allman / -A1 Allman style uses broken brackets.
