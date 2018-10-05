@@ -323,8 +323,8 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         " Open the definition in a vertical split, used to be <F15>=Shift+<F3>
         noremap <leader>v :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
         " lookup symbol in tags file, used to be F3
-        nnoremap <silent><leader><leader> <c-]>
-        inoremap <silent><leader><leader> <Esc><c-]>
+        nnoremap <silent>,, <c-]>
+        inoremap <silent>,, <Esc><c-]>
         " use tpope's awesome ctags git hooks (see http://bit.ly/gitctags)
         noremap <F8><F8> :!git ctags<CR>
         nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
@@ -341,8 +341,8 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
           autocmd BufEnter *.c,*.cpp,*.cc,*.hpp  let b:fswitchdst  = 'h,H'
           autocmd BufEnter *.cpp,*.cc,*.c,*.hpp,*.h++  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
         augroup END " }}}
-        nnoremap <silent>,, :FSHere<cr>
-        vnoremap <silent>,, :FSHere<cr>
+        nnoremap <silent><leader><leader> :FSHere<cr>
+        vnoremap <silent><leader><leader> :FSHere<cr>
     " }}}
     " switch.vim {{{
         nnoremap - :Switch<cr>
