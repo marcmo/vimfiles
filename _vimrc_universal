@@ -15,10 +15,11 @@ Plug 'honza/vim-snippets'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neomru.vim'
 Plug 'bling/vim-airline'
-Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'w0rp/ale'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-*-x86_64-apple-darwin'}
+Plug 'reasonml-editor/vim-reason-plus'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " frequently used plugins
@@ -30,6 +31,9 @@ Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
 Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
+" golang {{{
+Plug 'fatih/vim-go'
+" }}}
 " rust {{{
     Plug 'rust-lang/rust.vim', { 'for': 'rust' }
     Plug 'racer-rust/vim-racer', { 'for': 'rust' }
@@ -305,7 +309,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         nnoremap ,s :call UseSpacesNotTabs()<CR>:w<CR>:echo "tabs->spaces"<CR>
     " }}}
     " tcomment {{{
-        let g:tcommentOptions = {'mixedindent':1}
+        let g:tcomment#options = {'mixedindent':1}
     " }}}
     " tagbar {{{
         nnoremap <silent> <F21> :TagbarOpen<CR>
@@ -422,6 +426,18 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
           autocmd bufenter *.hs,*.lhs setlocal ts=2 sts=2 sw=2 expandtab
           autocmd bufenter *.hs,*.lhs nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
         augroup END " }}}
+    " }}}
+    " reasonml {{{
+        augroup reasonml " {{{
+          autocmd!
+          autocmd BufRead,BufNewFile *.re nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
+          autocmd BufRead,BufNewFile *.re nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
+          autocmd bufenter *.re setlocal ts=2 sts=2 sw=2 expandtab
+        augroup END " }}}
+        let g:LanguageClient_serverCommands = {
+        \ 'reason': ['ocaml-language-server', '--stdio'],
+        \ 'ocaml': ['ocaml-language-server', '--stdio'],
+        \ }
     " }}}
     " javascript {{{
         " ale {{{
