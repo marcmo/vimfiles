@@ -24,7 +24,6 @@ Plug 'derekwyatt/vim-fswitch'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " frequently used plugins
 Plug 'thinca/vim-quickrun'
-Plug 'roxma/nvim-completion-manager'
 Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-repeat'
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
@@ -323,8 +322,8 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         " Open the definition in a vertical split, used to be <F15>=Shift+<F3>
         noremap <leader>v :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
         " lookup symbol in tags file, used to be F3
-        nnoremap <silent>,, <c-]>
-        inoremap <silent>,, <Esc><c-]>
+        " nnoremap <silent>,, <c-]>
+        " inoremap <silent>,, <Esc><c-]>
         " use tpope's awesome ctags git hooks (see http://bit.ly/gitctags)
         noremap <F8><F8> :!git ctags<CR>
         nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
@@ -556,6 +555,8 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
 " }}}
 " YouCompleteMe YCM {{{
     nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    nnoremap <silent>,, :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    inoremap <silent>,, <Esc>:YcmCompleter GoToDefinitionElseDeclaration<CR>
     nnoremap <F19> :YcmCompleter FixIt<CR>
     nnoremap <F7><F7> :YcmDiags<CR>
     "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -567,6 +568,7 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
       let g:ycm_semantic_triggers = {}
     endif
     let g:ycm_semantic_triggers['typescript'] = ['.']
+    let g:ycm_max_diagnostics_to_display = 100
 " }}}
 " ultisnips {{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
