@@ -21,33 +21,14 @@ Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-*-x86_64-apple-darwin'}
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'derekwyatt/vim-fswitch'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " frequently used plugins
 Plug 'thinca/vim-quickrun'
 Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-repeat'
-Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
-Plug 'ujihisa/neco-ghc', { 'for': 'haskell' }
 Plug 'godlygeek/tabular'
 Plug 'embear/vim-localvimrc'
-" golang {{{
-Plug 'fatih/vim-go'
-" }}}
-" rust {{{
-    Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-    Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-    Plug 'roxma/nvim-cm-racer'
-" }}}
 Plug 'AndrewRadev/switch.vim'
 Plug 'editorconfig/editorconfig-vim'
-" seldom used plugins
-Plug 'ap/vim-css-color'
-Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
-Plug 'airblade/vim-gitgutter'
-Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
-Plug 'junegunn/vim-easy-align'
-Plug 'mbbill/undotree'
 " colors & syntax highlighting
 Plug 'pangloss/vim-javascript'
 Plug 'godlygeek/csapprox'
@@ -359,85 +340,6 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         nnoremap <silent> ,rr :QuickRun -mode n<CR>
         vnoremap <silent> ,rr :QuickRun -mode v<CR>
     " }}}
-    " ghcmod-vim {{{
-        let g:ghcmod_hlint_options = ['--ignore=Use camelCase']
-        let g:ghcmod_ghc_options = ['-fno-warn-missing-signatures','-fno-warn-type-defaults','-fno-warn-unused-binds']
-        augroup ghcmod " {{{
-          autocmd!
-          " autocmd BufWritePost *.hs GhcModCheckAndLintAsync
-          autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gh :GhcModType<CR>
-          autocmd bufenter *.hs,*.lhs nnoremap <buffer> ,gc :GhcModTypeClear<CR>
-          autocmd bufenter *.hs,*.lhs nnoremap <silent> _T :GhcModTypeInsert<CR>:w<CR>
-          autocmd bufenter *.hs,*.lhs nnoremap <silent> _I :GhcModType<CR>
-          autocmd bufenter *.hs,*.lhs nnoremap <silent> _C :GhcModTypeClear<CR>
-          autocmd bufenter *.hs,*.lhs nnoremap <silent> _X :GhcModCheckAndLintAsync<CR>
-          autocmd bufenter *.hs,*.lhs nnoremap <silent> ,m :update<CR>:GhcModCheck<CR>
-        augroup END " }}}
-    " }}}
-    " go {{{
-        let g:go_bin_path = ""
-    " }}}
-    " rust {{{
-        let g:rust_recommended_style = 1
-        let g:racer_cmd ='racer'
-        let g:racer_experimental_completer = 1
-        " must be set: export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-        " let $RUST_SRC_PATH=$HOME.'/rust/src/'
-
-        if !exists('g:cargo_command')
-          let g:cargo_command = "make {cmd}"
-        endif
-
-        com! CargoBuild call CargoRunCmd('build')
-        com! CargoRun call CargoRunCmd('run')
-        com! CargoTest call CargoRunCmd('test --no-run')
-        com! CargoBench call CargoRunCmd('bench')
-        com! CargoCheck call CargoRunCmd('check')
-        com! CargoLibCheck call CargoRunCmd('rustc --lib -- -Z no-trans')
-
-        func! CargoRunCmd(cmd)
-          let s:cargo_command = substitute(g:cargo_command, "{cmd}", a:cmd, 'g')
-          execute s:cargo_command
-        endf
-        augroup rust " {{{
-          autocmd!
-          autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
-          autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs setlocal makeprg=cargo
-          autocmd BufRead,BufNewFile *.rs inoremap <silent> ,m <ESC>:update<CR>:CargoCheck<CR><CR><CR>
-          autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,m :update<CR>:CargoCheck<CR><CR><CR>
-          autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,b :update<CR>:CargoBuild<CR><CR><CR>
-          autocmd BufRead,BufNewFile *.rs nnoremap <silent> ,t :update<CR>:CargoTest<CR><CR><CR>
-          autocmd bufenter *.rs setlocal ts=4 sts=4 sw=4 expandtab
-        augroup END " }}}
-    " }}}
-    " haskell {{{
-        " use ghc functionality for haskell files
-        function! EvaluateInGhc() range " {{{
-          let current = GetVisualSelection()
-          let result = system('ghc -e '.shellescape(current))
-          call setline(".", result)
-        endfunction " }}}
-        vnoremap <leader>e :call EvaluateInGhc()<CR>$x<esc>0
-
-        augroup hs " {{{
-          autocmd!
-          autocmd bufenter *.hs,*.lhs noremap <F5> :call OpenInGhci()<CR><CR>
-          autocmd bufenter *.hs,*.lhs setlocal ts=2 sts=2 sw=2 expandtab
-          autocmd bufenter *.hs,*.lhs nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
-        augroup END " }}}
-    " }}}
-    " reasonml {{{
-        augroup reasonml " {{{
-          autocmd!
-          autocmd BufRead,BufNewFile *.re nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
-          autocmd BufRead,BufNewFile *.re nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
-          autocmd bufenter *.re setlocal ts=2 sts=2 sw=2 expandtab
-        augroup END " }}}
-        let g:LanguageClient_serverCommands = {
-        \ 'reason': ['ocaml-language-server', '--stdio'],
-        \ 'ocaml': ['ocaml-language-server', '--stdio'],
-        \ }
-    " }}}
     " javascript {{{
         " ale {{{
           let g:ale_fixers = {
@@ -552,23 +454,6 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     " --convert-tabs / -c Converts tabs into spaces in the non-indentation part of the line
     " --indent-preproc-define / -w
     " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
-" }}}
-" YouCompleteMe YCM {{{
-    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    nnoremap <silent>,, :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    inoremap <silent>,, <Esc>:YcmCompleter GoToDefinitionElseDeclaration<CR>
-    nnoremap <F19> :YcmCompleter FixIt<CR>
-    nnoremap <F7><F7> :YcmDiags<CR>
-    "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-    "Do not ask when starting vim
-    let g:ycm_confirm_extra_conf = 0
-    let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_rust_src_path = $HOME.'/rust/src/'
-    if !exists("g:ycm_semantic_triggers")
-      let g:ycm_semantic_triggers = {}
-    endif
-    let g:ycm_semantic_triggers['typescript'] = ['.']
-    let g:ycm_max_diagnostics_to_display = 100
 " }}}
 " ultisnips {{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
