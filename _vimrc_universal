@@ -2,54 +2,36 @@ set nocompatible                " make Vim behave in a more useful way, less vi 
 
 call plug#begin('~/.config/nvim/plugged')
 " essential plugins
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-abolish'
-Plug 'tomtom/tcomment_vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
+Plug 'tpope/vim-surround' " mini surround
+Plug 'tpope/vim-unimpaired' " mini unimpaired
+Plug 'tomtom/tcomment_vim' " ts-comment
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' } " neotree & oil.nvim
 Plug 'yegappan/mru'
-Plug 'jiangmiao/auto-pairs'
-Plug 'vim-scripts/matchit.zip'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/neomru.vim'
+Plug 'jiangmiao/auto-pairs' " mini-paired
 Plug 'bling/vim-airline'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' } " telescope
 Plug 'w0rp/ale'
-Plug 'flowtype/vim-flow', { 'for': 'javascript' }
-Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-*-x86_64-apple-darwin'}
-Plug 'reasonml-editor/vim-reason-plus'
 Plug 'derekwyatt/vim-fswitch'
 " frequently used plugins
 Plug 'thinca/vim-quickrun'
 Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-repeat'
 Plug 'godlygeek/tabular'
-Plug 'embear/vim-localvimrc'
 Plug 'AndrewRadev/switch.vim'
 Plug 'editorconfig/editorconfig-vim'
 " colors & syntax highlighting
-Plug 'pangloss/vim-javascript'
 Plug 'godlygeek/csapprox'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'marcmo/essentialColors'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'lambdatoast/elm.vim'
-Plug 'leafgarland/typescript-vim'
 Plug 'prognostic/plasticine'
 call plug#end()
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-let g:UltiSnipsExpandTrigger    = "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger  = "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:cm_refresh_default_min_word_len = [[1,4],[7,2]]
 
 " optional
-inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 
 " UI Stuff {{{
     syntax on
@@ -279,9 +261,6 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         "auto close the preview window when exiting insert mode
         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
     " }}}
-    " localvimrc {{{
-        let g:localvimrc_whitelist=expand("~") . "/dev/git/.*"
-    " }}}
 " }}}
 " programming {{{
     nnoremap <silent>,m :execute 'make'<CR>
@@ -297,32 +276,6 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
     " }}}
     " ALE {{{
         nnoremap <silent> <leader>A :ALEToggle<CR>
-    " }}}
-    " ctags {{{
-        set tags=.tags,$HOME,.git/tags
-        " Open the definition in a vertical split, used to be <F15>=Shift+<F3>
-        noremap <leader>v :only <CR> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-        " lookup symbol in tags file, used to be F3
-        " nnoremap <silent>,, <c-]>
-        " inoremap <silent>,, <Esc><c-]>
-        " use tpope's awesome ctags git hooks (see http://bit.ly/gitctags)
-        noremap <F8><F8> :!git ctags<CR>
-        nnoremap <Leader>ht :! find . \| egrep '\.hs$' \| xargs hothasktags > tags<CR>
-    " }}}
-    " fswitch {{{
-        let g:fsnonewfiles=1
-        let g:fswitchnonewfiles=1
-        " Create the destination path by substituting any 'include' string from the pathname with 'src'
-        let b:fswitchlocs = 'reg:/include/src/'
-        augroup mycppfiles " {{{
-          autocmd!
-          autocmd BufEnter *.h let b:fswitchdst  = 'cpp,CPP,cc,CC,c,C,hpp,HPP'
-          autocmd BufEnter *.h let b:fswitchlocs = 'reg:/include/src/'
-          autocmd BufEnter *.c,*.cpp,*.cc,*.hpp  let b:fswitchdst  = 'h,H'
-          autocmd BufEnter *.cpp,*.cc,*.c,*.hpp,*.h++  let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include,include'
-        augroup END " }}}
-        nnoremap <silent><leader><leader> :FSHere<cr>
-        vnoremap <silent><leader><leader> :FSHere<cr>
     " }}}
     " switch.vim {{{
         nnoremap - :Switch<cr>
@@ -340,42 +293,11 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
         nnoremap <silent> ,rr :QuickRun -mode n<CR>
         vnoremap <silent> ,rr :QuickRun -mode v<CR>
     " }}}
-    " javascript {{{
-        " ale {{{
-          let g:ale_fixers = {
-          \   'javascript': ['standard'],
-          \   'typescript': ['tslint']
-          \}
-          let g:ale_linters = {
-          \   'javascript': ['standard'],
-          \   'typescript': ['tslint']
-          \}
-        " }}}
-        augroup typescript " {{{
-          autocmd!
-          autocmd bufenter *.ts,*.tsx,*.js set iskeyword-=?
-          autocmd bufenter *.ts,*.tsx,*.js nnoremap <silent><leader><leader> :YcmCompleter GoToDefinition<CR>
-          autocmd bufenter *.ts,*.tsx,*.js inoremap <silent><leader><leader> <Esc>:YcmCompleter GoToDefinition<CR>
-          autocmd bufenter *.ts,*.tsx,*.js nnoremap <leader>v :only <CR> :vsp <CR>:YcmCompleter GoToDefinition<CR>
-        augroup END " }}}
-        augroup js " {{{
-          autocmd!
-          autocmd FileType html,javascript setlocal ts=2 sts=2 sw=2 expandtab
-          autocmd FileType html,javascript setlocal makeprg=jslint\ % | setlocal efm=%f:%l:%c:%m
-
-        augroup END " }}}
-    " }}}
     " lua {{{
         augroup lua " {{{
           autocmd!
           autocmd FileType lua setlocal mp=lua\ % ts=2 sts=2 sw=2 noexpandtab
           autocmd FileType lua noremap <F5> :call OpenWithLua()<CR><CR>
-        augroup END " }}}
-    " }}}
-    " ruby {{{
-        augroup ruby " {{{
-          autocmd!
-          autocmd bufenter Project.meta set ft=ruby
         augroup END " }}}
     " }}}
     " c++ {{{
@@ -421,13 +343,6 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
 " }}}
 " vim-autoformat {{{
     nnoremap <silent> <Leader>f :Neoformat<CR>
-    " let g:formatdef_rustfmt = '"rustfmt"'
-    " let g:formatters_rust = ['rustfmt']
-    " let g:neoformat_javascript_prettier = {
-    "             \ 'exe': 'prettier',
-    "             \ 'args': ['--stdin', '--single-quote', '--no-semi', '--parser flow'],
-    "             \ 'stdin': 1,
-    "             \ }
     let g:neoformat_javascript_standard = {
                 \ 'exe': './node_modules/.bin/standard',
                 \ 'args': ['--stdin','--fix'],
@@ -440,49 +355,10 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
               \ }
     let g:neoformat_enabled_javascript = ['standard']
     let g:neoformat_enabled_typescript = ['tsfmt']
-    " let g:formatdef_my_custom_cpp = '"astyle -A1xns4YHjk1W1ScwxC100"'
-    " let g:formatters_cpp = ['my_custom_cpp']
-    " --style=allman / -A1 Allman style uses broken brackets.
-    " --attach-namespaces / -xn Attach brackets to a namespace statement.
-    " --indent=spaces / -s# Indent using # spaces per indent (e.g. -s3 --indent=spaces=4).
-    " --indent-col1-comments / -Y Indent C++ comments beginning in column one
-    " --pad-header / -H Insert space padding between a header (e.g. 'if', 'for', 'while'...)
-    " --add-brackets / -j Add brackets to unbracketed one line conditional statements
-    " --align-pointer=type   / -k1
-    " --align-reference=type / -W1
-    " --indent-switches / -S Indent 'switch' blocks
-    " --convert-tabs / -c Converts tabs into spaces in the non-indentation part of the line
-    " --indent-preproc-define / -w
-    " --max-code-length=#   / -xC# will break a line if the code exceeds # characters
-" }}}
-" ultisnips {{{
-    " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-    let g:UltiSnipsExpandTrigger = "<nop>"
-    let g:ulti_expand_or_jump_res = 0
-    function! ExpandSnippetOrCarriageReturn()
-      let snippet = UltiSnips#ExpandSnippetOrJump()
-      if g:ulti_expand_or_jump_res > 0
-        return snippet
-      else
-        return "\<CR>"
-      endif
-    endfunction
-    inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
-    let g:UltiSnipsJumpForwardTrigger="<c-b>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " }}}
 " airline {{{
     let g:airline_powerline_fonts=1   " make sure powerline font is installed
     let g:airline#extensions#whitespace#mixed_indent_algo = 1
-" }}}
-" fugitiv {{{
-    function! CloseFugitiveDiffAfterUsage() " {{{
-      diffoff!
-      close
-      wincmd k
-    endfunction " }}}
-    autocmd BufReadPost fugitive://* set bufhidden=delete
-    noremap ,k :call CloseFugitiveDiffAfterUsage()<CR>
 " }}}
 " mru {{{
     let MRU_Max_Entries = 200
@@ -636,14 +512,6 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
 " }}}
 " undotree {{{
     nnoremap <F10> :UndotreeToggle<CR>
-" }}}
-" Rake {{{
-    function! RakeCommand(command) " {{{
-      cexpr system("rake " . a:command)
-      cw " show quickfix window already
-    endfunction " }}}
-    command! -nargs=+ -complete=file Rake call RakeCommand(<q-args>)
-    noremap <leader>r :Rake<space>
 " }}}
 
 " Convenient command to see the difference between the current buffer and the
