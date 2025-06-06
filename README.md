@@ -1,6 +1,5 @@
 # vim configuration
 
-this repository contains configurations for linux,mac and windows
 
 ## Plugin Management
 
@@ -15,44 +14,35 @@ The drawback is that it requires +ruby (Neovim works out-of-the-box).
 * fzf (will be installed automatically)
 * rust
 
-    curl https://sh.rustup.rs -sSf | sh
-    rustup component add rust-src
+        curl https://sh.rustup.rs -sSf | sh
+        rustup component add rust-src
 
 * ripgrep
 
-    cargo install ripgrep
+Used for Telescope's live_grep functionality.
 
-* clang++
+        brew install ripgrep   # macOS
 
-    sudo apt install clang
+        sudo apt install ripgrep   # Linux
 
-### ruby
+* rust (for LSPs, tooling, formatters)
 
-make sure ruby is installed (here I'm using rbenv and ruby-build):
+        curl https://sh.rustup.rs -sSf | sh
+        rustup component add rust-src
 
-* rbenv
+* fzf (for fuzzy search, optional if using Telescope's native fzf extension)
 
-    git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-    echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-    . ~/.bashrc
+        brew install fzf
 
-If you've installed rbenv manually using git, you can upgrade your installation to the cutting-edge version at any time.
+* clang++ (for C/C++ LSP support)
 
-    $ cd ~/.rbenv
-    $ git pull
+        sudo apt install clang   # Linux
+        brew install llvm        # macOS
 
-* ruby-build
+* Fonts
 
-On Ubuntu ruby has some prerequisites:
+Use a Nerd Font (e.g., JetBrainsMono Nerd Font) to render all icons correctly.
 
-    sudo apt-get install libc6-dev libssl-dev libmysql++-dev libsqlite3-dev make build-essential
-    sudo apt-get install libffi-dev libreadline6-dev zlib1g-dev libyaml-dev
-
-    git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-    rbenv install 2.2.0
-    rbenv rehash
-    rbenv global 2.2.0
 
 ## Now clone the vim config
 
@@ -64,42 +54,18 @@ alternatively over ssh:
 
     git clone git@github.com:marcmo/vimfiles.git ~/.config/nvim
 
-the `init.vim` file will work per default for linux systems, for MacOS change it to:
+this will be the layout
 
-    source $HOME/.config/nvim/_vimrc_universal
-    source $HOME/.config/nvim/_vimrc_mac
-
-Install the awesome plug plugin-manager:
-
-    curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-to setup vim with all plugins: start vim and install plugins using
-
-    :PlugInstall
-
-
-enable Python3 interface with pip
-
-    sudo pip3 install neovim
-
-enable remote plugins for neovim
-
-    :UpdateRemotePlugins
-
-# Trouble Shooting
-
-## neovim python interface
-
-make sure the python plugin is up to date for both pip2 and pip3
-
-    pip2 show neovim
-    pip3 show neovim
-
-has to be the same. Upgrade with:
-
-    sudo pip2 install neovim --upgrade
-    sudo pip3 install neovim --upgrade
+```
+~/.config/nvim/
+├── init.lua             -- entry point
+└── lua/
+    ├── options.lua      -- general settings
+    ├── keymaps.lua      -- custom keybindings
+    ├── autocmds.lua     -- autocommands
+    └── plugins/
+        └── init.lua     -- lazy.nvim plugin setup
+```
 
 # VIM cheatsheet
 
