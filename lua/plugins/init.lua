@@ -8,7 +8,20 @@ return {
   { "numToStr/Comment.nvim", config = true },
 
   -- Navigation
-  { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" }, config = true },
+  {
+    "preservim/nerdtree",
+    cmd = { "NERDTreeToggle", "NERDTreeFind" },
+    init = function()
+      vim.g.NERDTreeShowHidden = 1
+      vim.g.NERDTreeQuitOnOpen = 1
+      vim.keymap.set("n", ",d", function()
+        vim.cmd("execute 'NERDTreeToggle ' . getcwd()")
+        vim.cmd("wincmd b") -- like <C-W>b
+      end, { desc = "NERDTree toggle at cwd" })
+
+      vim.keymap.set("n", ",f", ":NERDTreeFind<CR>", { silent = true, desc = "NERDTree find current file" })
+    end,
+  },
   { "nvim-telescope/telescope.nvim", tag = "0.1.4", dependencies = { "nvim-lua/plenary.nvim" } },
 
   -- UI

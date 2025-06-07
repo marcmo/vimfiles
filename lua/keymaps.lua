@@ -31,10 +31,6 @@ map("n", "<leader>S", "^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>", opts)
 map("n", "<leader>w", ":set wrap!<CR>", opts)
 map("n", "<leader>l", ":set list!<CR>", opts)
 
--- nvim tree
-map("n", ",d", ":NvimTreeToggle<CR>", opts)
-map("n", ",f", ":NvimTreeFindFile<CR>", opts)
-
 -- Split nav
 map("n", ",v", ":vsp<CR><C-w><C-w>", opts)
 map("n", ",h", ":sp<CR><C-w><C-w>", opts)
