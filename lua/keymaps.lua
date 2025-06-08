@@ -54,16 +54,16 @@ map("o", "<Leader><Tab>", "<Esc>", opts)
 map("c", "<Leader><Tab>", "<Esc>", opts)
 map("i", "<Leader><Tab>", "<Esc>", opts)
 
--- Telescope
-map("n", "<C-p>", ":Telescope find_files<CR>", opts)
-map("n", ",u", ":Telescope oldfiles<CR>", opts)
-map("n", "<leader>a", ":Telescope live_grep<cr>", opts)
-map("n", "<leader>fb", ":Telescope buffers<CR>", opts)
-map("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
-
--- Git
-map("n", "<leader>gs", ":Telescope git_status<CR>", opts)
-map("n", "<leader>gc", ":Telescope git_commits<CR>", opts)
+-- fzf setup
+map("n", ",u", "<cmd>FzfLua oldfiles<CR>")
+map("n", "<space><space>", "<cmd>FzfLua files<CR>")
+map("n", "<leader>a", "<cmd>FzfLua live_grep<CR>")
+map("n", "<leader>q", function()
+  require("fzf-lua").live_grep({ default_text = vim.fn.expand("<cword>") })
+end, { desc = "live grep word under cursor" })
+map("n", "<C-p>", "<cmd>FzfLua buffers<CR>")
+map("n", "<leader>gd", "<cmd>FzfLua git_diff<CR>")
+map("n", "<leader>gs", "<cmd>FzfLua git_status<CR>")
 
 -- LSP
 map("n", "gd", vim.lsp.buf.definition, opts)

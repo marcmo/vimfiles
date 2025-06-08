@@ -31,3 +31,9 @@ require("lazy").setup({
 
 -- Set colorscheme
 vim.cmd.colorscheme("onedark")
+
+-- stop command suggestions from auto-selecting the first item:
+vim.o.wildmode = "longest:full,full" -- disables preselection
+vim.o.wildmenu = true
+vim.o.pumblend = 0       -- disable transparency
+vim.o.completeopt = "menu,menuone,noselect"

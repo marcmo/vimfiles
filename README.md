@@ -19,7 +19,7 @@ The drawback is that it requires +ruby (Neovim works out-of-the-box).
 
 * ripgrep
 
-Used for Telescope's live_grep functionality.
+Used for fzf's grep functionality.
 
         brew install ripgrep   # macOS
 
@@ -30,7 +30,7 @@ Used for Telescope's live_grep functionality.
         curl https://sh.rustup.rs -sSf | sh
         rustup component add rust-src
 
-* fzf (for fuzzy search, optional if using Telescope's native fzf extension)
+* fzf (for fuzzy search)
 
         brew install fzf
 

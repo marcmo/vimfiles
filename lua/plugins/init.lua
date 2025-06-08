@@ -22,8 +22,19 @@ return {
       vim.keymap.set("n", ",f", ":NERDTreeFind<CR>", { silent = true, desc = "NERDTree find current file" })
     end,
   },
-  { "nvim-telescope/telescope.nvim", tag = "0.1.4", dependencies = { "nvim-lua/plenary.nvim" } },
-
+  {
+    "junegunn/fzf",
+    build = "./install --bin", -- installs fzf binary locally
+    lazy = true,
+  },
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("fzf-lua").setup({})
+    end,
+    cmd = "FzfLua", -- lazy load on use
+  },
   -- UI
   { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, config = true },
   {
